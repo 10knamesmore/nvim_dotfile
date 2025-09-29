@@ -1,0 +1,29 @@
+-- mini file 文件浏览/管理
+-- <leader>e 打开于当前文件
+-- <leader>E 打开于根目录
+return {
+    "nvim-mini/mini.files",
+    lazy = false,
+    keys = {
+        {
+            "<leader>e",
+            function()
+                require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+            end,
+            desc = "Open mini.files (current file)",
+        },
+        {
+            "<leader>E",
+            function()
+                require("mini.files").open(LazyVim.root(), true)
+            end,
+            desc = "open mini.files (root)",
+        },
+    },
+    opts = {
+        windows = {
+            preview = true,
+            width_preview = 80,
+        },
+    },
+}
