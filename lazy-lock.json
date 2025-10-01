@@ -6,7 +6,7 @@
   "blink.cmp": { "branch": "main", "commit": "327fff91fe6af358e990be7be1ec8b78037d2138" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
   "catppuccin": { "branch": "main", "commit": "c89184526212e04feffbddda9d06b041a8fca416" },
-  "checkmate.nvim": { "branch": "main", "commit": "ea6250cbe72af6e54d4babe4f796be6183e685fd" },
+  "checkmate.nvim": { "branch": "main", "commit": "573a853016f3ccc3c4e5a190614a649aaf6e17ac" },
   "clangd_extensions.nvim": { "branch": "main", "commit": "b67cc417d9020fb4b83d46662351b4d16894905e" },
   "cmake-tools.nvim": { "branch": "master", "commit": "88e07c6bff838a5bda2f461e9c1122b79ff0829f" },
   "colorful-menu.nvim": { "branch": "master", "commit": "d5b97d247528be308b6b69d96b5950a30e470f3d" },
