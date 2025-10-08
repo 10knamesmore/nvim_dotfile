@@ -20,3 +20,5 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         vim.opt_local.wrap = false
     end,
 })
+
+vim.api.nvim_clear_autocmds({ group = "lazyvim_wrap_spell" })
