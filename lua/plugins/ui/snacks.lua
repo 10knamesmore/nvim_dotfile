@@ -1,4 +1,5 @@
 -- 定义仪表盘各个部分的配置
+--- @type snacks.dashboard.Section
 local dashboard_sections = {
     { section = "header" }, -- 显示头部内容（通常是 ASCII 艺术字或 Logo）
     {

@@ -46,4 +46,5 @@ keymap("n", "<Down>", "", opts())
 
 -- -- -- -- -- -- 插件相关 -- -- -- -- -- --
 keymap("n", "<leader>cs", ":AerialToggle left<Cr>", opts())
+keymap("n", "?", ":Telescope current_buffer_fuzzy_find<Cr>", opts("切换Buffer"))
 keymap("n", "<leader>sB", ":Telescope buffers sort_mru=true sort_lastused=true<Cr>", opts("切换Buffer"))

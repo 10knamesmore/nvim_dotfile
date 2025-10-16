@@ -12,7 +12,7 @@ return {
     },
     keys = {
         {
-            "<leader>p",
+            "<leader>sp",
             function()
                 if LazyVim.pick.picker.name == "telescope" then
                     require("telescope").extensions.yank_history.yank_history({})
@@ -21,7 +21,7 @@ return {
                 end
             end,
             mode = { "n", "x" },
-            desc = "Open Yank History",
+            desc = "search Yank History",
         },
         -- stylua: ignore
     { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },

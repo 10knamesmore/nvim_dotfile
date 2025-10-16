@@ -14,6 +14,13 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
     end,
 })
 
+vim.api.nvim_create_autocmd({ "BufRead" }, {
+    pattern = "Dockerfile*",
+    callback = function()
+        vim.bo.filetype = "dockerfile"
+    end,
+})
+
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = "*.csv",
     callback = function()
