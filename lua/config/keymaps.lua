@@ -180,8 +180,8 @@ map("n", "<C-i>", "<C-o>", opts("LSP跳转返回"))
 map({ "n", "v" }, "J", "7gj", opts())
 map({ "n", "v" }, "K", "7gk", opts())
 -- -- 空格 + o/O 插入一行而不进入插入模式
-map("n", "<leader>o", "o<Esc>", opts())
-map("n", "<leader>O", "O<Esc>", opts())
+map("n", "<leader>o", "o<Esc>", opts("new line below"))
+map("n", "<leader>O", "O<Esc>", opts("new line above"))
 map("n", "gm", "'", opts("跳转到标签"))
 -- 目前让 <> 什么都不做
 map({ "n", "v" }, "<", "<Nop>")

@@ -51,7 +51,7 @@ return {
     ---@type snacks.Config
     opts = {
         animate = { enabled = true, fps = 180 }, -- 启用动画效果，帧率为 180
-        bigfile = { enabled = false }, -- 启用大文件处理优化
+        bigfile = { enabled = false }, -- 启用大文件处理优化, 交给bigfil.lua处理
         dashboard = { enabled = true, sections = dashboard_sections }, -- 启用仪表盘功能并加载定义的各部分
         explorer = { enabled = false, replace_netrw = false }, -- 文件浏览器功能禁用
         input = { enabled = true }, -- 启用输入增强（如 float 弹窗输入）
@@ -112,5 +112,10 @@ return {
                 height = 48,
             },
         },
+    },
+    keys = {
+        -- 禁用snacks exploers
+        { "<leader>fe", mode = "n", false },
+        { "<leader>fE", mode = "n", false },
     },
 }

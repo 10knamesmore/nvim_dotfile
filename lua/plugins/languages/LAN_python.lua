@@ -16,4 +16,13 @@ return {
             { "<leader>vc", "<cmd>VenvSelectCached<cr>" },
         },
     },
+    {
+        "folke/which-key.nvim",
+        optional = true,
+        opts = {
+            spec = {
+                { "<leader>v", group = "python venv" },
+            },
+        },
+    },
 }
