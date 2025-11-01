@@ -1,4 +1,17 @@
+--- TODO: 配置rustlsp server
+vim.g.lazyvim_rust_diagnostics = "bacon-ls"
+
+local diagnostics = vim.g.lazyvim_rust_diagnostics or "rust-analyzer"
+
 return {
+    recommended = function()
+        return LazyVim.extras.wants({
+            ft = "rust",
+            root = { "Cargo.toml", "rust-project.json" },
+        })
+    end,
+
+    -- rust 生命周期可视化
     {
         "cordx56/rustowl",
         version = "*", -- Latest stable version
@@ -16,9 +29,49 @@ return {
             },
         },
     },
+
+    -- LSP for Cargo.toml
+    {
+        "Saecki/crates.nvim",
+        event = { "BufRead Cargo.toml" },
+        opts = {
+            completion = {
+                crates = {
+                    enabled = true,
+                },
+            },
+            lsp = {
+                enabled = true,
+                actions = true,
+                completion = true,
+                hover = true,
+            },
+        },
+    },
+
+    -- Add Rust & related to treesitter
+    {
+        "nvim-treesitter/nvim-treesitter",
+        opts = { ensure_installed = { "rust", "ron" } },
+    },
+
+    -- Ensure Rust debugger is installed
+    {
+        "mason-org/mason.nvim",
+        optional = true,
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { "codelldb" })
+            if diagnostics == "bacon-ls" then
+                vim.list_extend(opts.ensure_installed, { "bacon" })
+            end
+        end,
+    },
+
     {
         "mrcjkb/rustaceanvim",
         ft = { "rust" },
+        --- @type rustaceanvim.Opts
         opts = {
             server = {
                 on_attach = function(_, bufnr)
@@ -29,11 +82,13 @@ return {
                         vim.cmd.RustLsp("debuggables")
                     end, { desc = "Rust Debuggables", buffer = bufnr })
                 end,
+                -- see https://rust-analyzer.github.io/book/configuration
                 default_settings = {
                     -- rust-analyzer language server configuration
                     ["rust-analyzer"] = {
                         cargo = {
-                            -- allFeatures = true,
+                            -- TODO: 想一个方法能配置传给cargo的features
+                            allFeatures = true,
                             loadOutDirsFromCheck = true,
                             buildScripts = {
                                 enable = true,
@@ -44,6 +99,12 @@ return {
                         -- Enable diagnostics if using rust-analyzer
                         diagnostics = {
                             enable = diagnostics == "rust-analyzer",
+                        },
+                        inlayHints = {
+                            closureCaptureHints = {
+                                enable = true,
+                            },
+                            genericParameterHints = { type = { enable = true } },
                         },
                         procMacro = {
                             enable = true,
@@ -85,5 +146,28 @@ return {
                 )
             end
         end,
+    },
+
+    -- Correctly setup lspconfig for Rust 🚀
+    {
+        "neovim/nvim-lspconfig",
+        opts = {
+            servers = {
+                bacon_ls = {
+                    enabled = diagnostics == "bacon-ls",
+                },
+                rust_analyzer = { enabled = false },
+            },
+        },
+    },
+
+    {
+        "nvim-neotest/neotest",
+        optional = true,
+        opts = {
+            adapters = {
+                ["rustaceanvim.neotest"] = {},
+            },
+        },
     },
 }
