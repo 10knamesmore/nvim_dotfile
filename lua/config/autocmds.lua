@@ -1,31 +1,36 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
---
--- Add any additional autocmds here
--- with `vim.api.nvim_create_autocmd`
---
--- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
--- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
---
-vim.api.nvim_create_autocmd({ "BufRead" }, {
+local cmd = vim.api.nvim_create_autocmd
+
+-- sh 支持
+cmd({ "BufRead" }, {
     pattern = { ".alias", ".zshfunc" },
     callback = function()
         vim.bo.filetype = "sh"
     end,
 })
 
-vim.api.nvim_create_autocmd({ "BufRead" }, {
+-- dockerfile 支持
+cmd({ "BufRead" }, {
     pattern = "Dockerfile*",
     callback = function()
         vim.bo.filetype = "dockerfile"
     end,
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+-- 在 csv 文件中打开spell检查
+cmd({ "BufRead", "BufNewFile" }, {
     pattern = "*.csv",
     callback = function()
         vim.opt_local.wrap = false
     end,
 })
 
+-- 在markdown中关闭diagnostic
+cmd("filetype", {
+    pattern = "markdown",
+    callback = function()
+        vim.diagnostic.enable(false)
+    end,
+})
+
+-- 禁用lazivim自带的spell检查
 vim.api.nvim_clear_autocmds({ group = "lazyvim_wrap_spell" })

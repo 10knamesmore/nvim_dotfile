@@ -4,7 +4,7 @@ if vim.g.neovide then
     require("config.keymaps")
     require("config.options")
     -- 字体
-    vim.o.guifont = "Hack Nerd Font:h15"
+    vim.o.guifont = "Hack Nerd Font:h11"
 
     -- 滚动动画
     vim.g.neovide_scroll_animation_length = 0.2

@@ -29,10 +29,14 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPost", "BufNewFile" },
-        opts = function()
-            local keys = require("lazyvim.plugins.lsp.keymaps").get()
-            -- change a keymap
-            keys[#keys + 1] = { "K", "7gk" }
-        end,
+        opts = {
+            servers = {
+                ["*"] = {
+                    keys = {
+                        { "K", "7gk", desc = "Move up 7 lines" },
+                    },
+                },
+            },
+        },
     },
 }
