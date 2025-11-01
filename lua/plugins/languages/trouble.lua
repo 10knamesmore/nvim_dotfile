@@ -24,7 +24,5 @@ return {
             ["l"] = "jump", -- 跳转到选中的条目
         },
     },
-    keys = {
-        { "<leader>gd", "<CMD>Trouble diagnostics toggle<CR>", desc = "[Trouble Toggle buffer diagnostics]" },
-    },
+    keys = {},
 }
