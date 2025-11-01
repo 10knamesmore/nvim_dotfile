@@ -73,7 +73,19 @@ vim.api.nvim_create_autocmd("User", {
 
         map("n", "<leader>gl", function()
             Snacks.picker.git_log()
-        end, { desc = "Git Log (cwd)" })
+        end, { desc = "Git Log" })
+
+        map("n", "<leader>gc", function()
+            Snacks.picker.git_log()
+        end, { desc = "Git commits" })
+
+        map("n", "<leader>gs", function()
+            Snacks.picker.git_status()
+        end, { desc = "Git Status" })
+
+        map("n", "<leader>gS", function()
+            Snacks.picker.git_stash()
+        end, { desc = "Git stash" })
 
         map("n", "<leader>gd", function()
             Snacks.picker.git_diff()
@@ -183,7 +195,3 @@ map("n", "<Left>", ":bp<CR>", opts())
 map("n", "<Right>", ":bn<CR>", opts())
 map("n", "<Up>", "", opts())
 map("n", "<Down>", "", opts())
-
--- -- -- -- -- -- 插件相关 -- -- -- -- -- --
-map("n", "?", ":Telescope current_buffer_fuzzy_find<Cr>", opts("文件内查找"))
-map("n", "<leader>sB", ":Telescope buffers sort_mru=true sort_lastused=true<Cr>", opts("切换Buffer"))
