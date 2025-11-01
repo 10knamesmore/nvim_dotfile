@@ -93,6 +93,7 @@ return {
         },
         notifier = { enabled = true }, -- 启用消息通知系统
         quickfile = { enabled = true }, -- 启用快速文件访问
+        scroll = { enabled = false },
         scratch = {
             enabled = true,
             name = "草稿",
