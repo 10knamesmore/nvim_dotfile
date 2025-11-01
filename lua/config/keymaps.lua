@@ -87,6 +87,10 @@ vim.api.nvim_create_autocmd("User", {
             Snacks.picker.git_stash()
         end, { desc = "Git stash" })
 
+        map("n", "<leader>gb", function()
+            Snacks.picker.git_log_line()
+        end, { desc = "Git blame line" })
+
         map("n", "<leader>gd", function()
             Snacks.picker.git_diff()
         end, { desc = "Git Diff" })
