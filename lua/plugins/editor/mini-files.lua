@@ -26,4 +26,14 @@ return {
             width_preview = 80,
         },
     },
+    config = function(_, opts)
+        require("mini.files").setup(opts)
+
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "MiniFilesActionRename",
+            callback = function(event)
+                require("snacks").rename.on_rename_file(event.data.from, event.data.to)
+            end,
+        })
+    end,
 }
