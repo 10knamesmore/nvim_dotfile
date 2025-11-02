@@ -31,6 +31,7 @@ return {
             { "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
             { "<leader>sD", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics" },
             { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+            { "<leader>sf", "<cmd>Telescope filetypes<cr>", desc = "Change Current Filetypes" },
             { "<leader>sl", "<cmd>Telescope loclist<cr>", desc = "Location List" },
             { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
             { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
