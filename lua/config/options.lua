@@ -21,6 +21,7 @@ opt.listchars = { tab = ">-", trail = "-" }
 
 opt.undofile = false
 opt.undodir = vim.fn.stdpath("state") .. "/nvim/undo"
+opt.swapfile = false
 
 -- 设置领导键为空格
 vim.g.mapleader = " "
