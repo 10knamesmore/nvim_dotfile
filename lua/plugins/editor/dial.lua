@@ -1,8 +1,8 @@
-local M = {}
+--- 更多的ctrl a/x 的增减
 
 ---@param increment boolean 是否递增（true为递增，false为递减）
 ---@param g? boolean 是否对操作所有匹配到的对象
-function M.dial(increment, g)
+local function dial(increment, g)
     local mode = vim.fn.mode(true) -- 获取当前模式
     -- 对 VISUAL 'v'、VISUAL LINE 'V' 和 VISUAL BLOCK '\22' 使用可视命令
     local is_visual = mode == "v" or mode == "V" or mode == "\22"
@@ -16,13 +16,44 @@ return {
     "monaqa/dial.nvim",
     recommended = true,
     desc = "Increment and decrement numbers, dates, and more",
-  -- stylua: ignore
-  keys = {
-    { "<C-a>", function() return M.dial(true) end, expr = true, desc = "Increment", mode = {"n", "v"} },
-    { "<C-x>", function() return M.dial(false) end, expr = true, desc = "Decrement", mode = {"n", "v"} },
-    { "g<C-a>", function() return M.dial(true, true) end, expr = true, desc = "Increment", mode = {"n", "x"} },
-    { "g<C-x>", function() return M.dial(false, true) end, expr = true, desc = "Decrement", mode = {"n", "x"} },
-  },
+    keys = {
+        {
+            "<C-a>",
+            function()
+                return dial(true)
+            end,
+            expr = true,
+            desc = "Increment",
+            mode = { "n", "v" },
+        },
+        {
+            "<C-x>",
+            function()
+                return dial(false)
+            end,
+            expr = true,
+            desc = "Decrement",
+            mode = { "n", "v" },
+        },
+        {
+            "g<C-a>",
+            function()
+                return dial(true, true)
+            end,
+            expr = true,
+            desc = "Increment",
+            mode = { "n", "x" },
+        },
+        {
+            "g<C-x>",
+            function()
+                return dial(false, true)
+            end,
+            expr = true,
+            desc = "Decrement",
+            mode = { "n", "x" },
+        },
+    },
     opts = function()
         local augend = require("dial.augend")
 
@@ -104,12 +135,14 @@ return {
                 typescript = "typescript",
                 typescriptreact = "typescript",
                 javascriptreact = "typescript",
-                json = "json",
+                json = "conf_file",
+                toml = "conf_file",
                 lua = "lua",
                 markdown = "markdown",
                 sass = "css",
                 scss = "css",
                 python = "python",
+                rust = "rust",
             },
             groups = {
                 default = {
@@ -148,7 +181,7 @@ return {
                     }),
                     augend.misc.alias.markdown_header,
                 },
-                json = {
+                conf_file = {
                     augend.semver.alias.semver, -- versioning (v1.1.2)
                 },
                 lua = {
@@ -161,6 +194,13 @@ return {
                 python = {
                     augend.constant.new({
                         elements = { "and", "or" },
+                    }),
+                },
+                rust = {
+                    augend.constant.new({
+                        elements = { "let mut", "mut" },
+                        word = true,
+                        cyclic = true,
                     }),
                 },
             },

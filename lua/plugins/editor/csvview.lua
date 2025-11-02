@@ -1,3 +1,4 @@
+--- 更好的csv预览
 return {
     "hat0uma/csvview.nvim",
     ---@module "csvview"
