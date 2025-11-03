@@ -4,30 +4,32 @@ return {
         "CopilotC-Nvim/CopilotChat.nvim",
         branch = "main",
         cmd = "CopilotChat", -- 通过 :CopilotChat 命令懒加载
-        opts =
-            --- @return CopilotChat.config.Config
-            function()
-                -- 获取当前用户名，用于聊天头部显示
-                local user = vim.env.USER or "User"
-                user = user:sub(1, 1):upper() .. user:sub(2)
+        opts = function()
+            -- 获取当前用户名，用于聊天头部显示
+            local user = vim.env.USER or "User"
+            user = user:sub(1, 1):upper() .. user:sub(2)
 
-                return {
-                    auto_insert_mode = false, -- 聊天窗口不自动进入插入模式
-                    language = "中文",
-                    headers = {
-                        user = "  " .. user .. " ", -- 用户头部图标和名称
-                        assistant = "  Copilot ", -- AI 助手头部图标
-                        tool = "󰊳  Tool ", -- 工具头部图标
-                    },
-                    window = {
-                        width = 0.4,
-                        border = "rounded",
-                    },
-                }
-            end,
+            --- @type CopilotChat.config.Config
+            return {
+                auto_insert_mode = false, -- 聊天窗口不自动进入插入模式
+                language = "中文",
+                resources = {}, -- 默认通过 # 传过去的, 什么都不传
+                remember_as_sticky = false, --不把 models, tools, resources system_prompt 记为 sticky
+
+                headers = {
+                    user = "  " .. user .. " ", -- 用户头部图标和名称
+                    assistant = "  Copilot ", -- AI 助手头部图标
+                    tool = "󰊳  Tool ", -- 工具头部图标
+                },
+                window = {
+                    width = 0.4,
+                    border = "rounded",
+                },
+            }
+        end,
         keys = {
             -- CopilotChat 的快捷键映射
-            { "<c-s>", "<CR>", ft = "copilot-chat", desc = "提交问题", remap = true },
+            { "<c-s>", "<CR>", ft = "CopilotChat", desc = "提交问题", remap = true },
             { "<leader>a", "", desc = "+ai", mode = { "n", "x" } }, -- AI 分组前缀
             {
                 "<leader>aa",
@@ -35,7 +37,7 @@ return {
                     return require("CopilotChat").toggle() -- 切换聊天窗口显示/隐藏
                 end,
                 desc = "切换 CopilotChat",
-                mode = { "n", "x" },
+                mode = { "v", "n", "x" },
             },
             {
                 "<leader>ax",
@@ -53,12 +55,14 @@ return {
                         prompt = "快速提问: ",
                     }, function(input)
                         if input ~= "" then
-                            require("CopilotChat").ask(input)
+                            require("CopilotChat").ask(input, {
+                                resources = { "selection", "buffer:active" }, -- 如果有选中内容，则将其作为资源传递给 AI
+                            })
                         end
                     end)
                 end,
                 desc = "快速提问 CopilotChat",
-                mode = { "n", "x" },
+                mode = { "v", "n", "x" },
             },
             {
                 "<leader>ap",
@@ -76,6 +80,14 @@ return {
                 desc = "选择模型 CopilotChat",
                 mode = { "n", "x" },
             },
+            {
+                "<leader>ao",
+                function()
+                    require("CopilotChat").open()
+                end,
+                desc = "打开 CopilotChat 窗口",
+                mode = { "v", "n", "x" },
+            },
         },
         config = function(_, opts)
             local chat = require("CopilotChat")
@@ -84,8 +96,8 @@ return {
             vim.api.nvim_create_autocmd("BufEnter", {
                 pattern = "copilot-chat",
                 callback = function()
-                    vim.opt_local.relativenumber = false
-                    vim.opt_local.number = false
+                    -- TODO
+                    vim.wo.signcolumn = "no"
                 end,
             })
 
@@ -128,5 +140,9 @@ return {
                 },
             },
         },
+    },
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "copilot-chat" },
     },
 }
