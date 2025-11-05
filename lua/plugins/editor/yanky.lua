@@ -1,5 +1,5 @@
 -- 更好的yank
--- <leader>p 打开复制的历史
+-- <leader>sp 打开复制的历史
 -- p 复制到光标后
 -- P 复制到光标前
 return {
