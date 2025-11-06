@@ -201,8 +201,11 @@ HINT：轻微建议或可选优化，如微小的风格改进、可读性提升�
                     vim.ui.input({
                         prompt = "快速提问: ",
                     }, function(input)
+                        local extra = [[
+                            当你引用文件内容时, 请用自然语言额外告知引用的内容在文件中的行号, 以便我更快找到上下文.
+                            ]]
                         if input ~= "" then
-                            require("CopilotChat").ask(input, {
+                            require("CopilotChat").ask(input .. extra, {
                                 resources = { "selection", "buffer:active" }, -- 如果有选中内容，则将其作为资源传递给 AI
                             })
                         end
