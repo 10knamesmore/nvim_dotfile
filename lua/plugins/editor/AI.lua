@@ -3,6 +3,7 @@ return {
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         branch = "main",
+        lazy = false,
         cmd = "CopilotChat", -- 通过 :CopilotChat 命令懒加载
         opts = function()
             -- 获取当前用户名，用于聊天头部显示
@@ -201,9 +202,8 @@ HINT：轻微建议或可选优化，如微小的风格改进、可读性提升�
                     vim.ui.input({
                         prompt = "快速提问: ",
                     }, function(input)
-                        local extra = [[
-                            当你引用文件内容时, 请用自然语言额外告知引用的内容在文件中的行号, 以便我更快找到上下文.
-                            ]]
+                        local extra =
+                            "\n当你引用文件内容时, 请用自然语言额外告知引用的内容在文件中的行号, 以便我更快找到上下文."
                         if input ~= "" then
                             require("CopilotChat").reset()
                             require("CopilotChat").ask(input .. extra, {
