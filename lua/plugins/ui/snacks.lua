@@ -103,19 +103,35 @@ return {
                 -- end
                 return "markdown"
             end,
+            win = {
+                width = 0.6,
+                min_width = 100,
+                height = 0.8,
+                bo = { buftype = "", buflisted = false, bufhidden = "hide", swapfile = false },
+                minimal = false,
+                noautocmd = false,
+                -- position = "right",
+                zindex = 20,
+                wo = { winhighlight = "NormalFloat:Normal" },
+                footer_keys = true,
+                border = "rounded",
+                resize = true,
+            },
         }, -- 启用 scratch buffer，并命名为“草稿”
         statuscolumn = { enabled = true }, -- 启用状态列（通常用于显示行号、git 标记等）
         words = { enabled = false }, -- 单词增强功能禁用
-        styles = {
-            scratch = {
-                width = 160,
-                height = 48,
-            },
-        },
     },
     keys = {
         -- 禁用snacks exploers
         { "<leader>fe", mode = "n", false },
         { "<leader>fE", mode = "n", false },
+        { "<leader>S", mode = "n", false },
+        {
+            "<leader>,",
+            function()
+                Snacks.scratch.select()
+            end,
+            desc = "Select Scratch Buffer",
+        },
     },
 }
