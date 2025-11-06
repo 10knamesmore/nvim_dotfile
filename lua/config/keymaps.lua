@@ -59,14 +59,6 @@ vim.api.nvim_create_autocmd("User", {
         Snacks.toggle.profiler():map("<leader>dpp")
         Snacks.toggle.profiler_highlights():map("<leader>dph")
 
-        map("n", "<leader>bd", function()
-            Snacks.bufdelete()
-        end, { desc = "Delete Buffer" })
-
-        map("n", "<leader>bo", function()
-            Snacks.bufdelete.other()
-        end, { desc = "Delete Other Buffers" })
-
         if vim.lsp.inlay_hint then
             Snacks.toggle.inlay_hints():map("<leader>uh")
         end

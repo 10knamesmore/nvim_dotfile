@@ -1,57 +1,155 @@
 return {
     "nvim-telescope/telescope.nvim",
+    lazy = false,
+    opts = {
+        defaults = {
+            default_mappings = {
+                n = {
+                    ["?"] = require("telescope.actions").which_key,
+                    ["<Tab>"] = require("telescope.actions").toggle_selection
+                        + require("telescope.actions").move_selection_next,
+                    ["<S-Tab>"] = require("telescope.actions").toggle_selection
+                        + require("telescope.actions").move_selection_previous,
+                    ["q"] = require("telescope.actions").close,
+                    ["<Esc>"] = require("telescope.actions").close,
+                    ["j"] = require("telescope.actions").move_selection_next,
+                    ["k"] = require("telescope.actions").move_selection_previous,
+                    ["<CR>"] = require("telescope.actions").select_default,
+                    ["l"] = require("telescope.actions").select_default,
+                    ["gg"] = require("telescope.actions").move_to_top,
+                    ["G"] = require("telescope.actions").move_to_bottom,
+                    ["<C-u>"] = require("telescope.actions").preview_scrolling_up,
+                    ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
+                    ["<PageUp>"] = require("telescope.actions").results_scrolling_up,
+                    ["<PageDown>"] = require("telescope.actions").results_scrolling_down,
+                    ["z"] = require("telescope.actions").center,
+                    ["f"] = require("telescope.actions").to_fuzzy_refine,
+                },
+                i = {
+                    ["<CR>"] = require("telescope.actions").select_default,
+                    ["<Up>"] = require("telescope.actions").move_selection_previous,
+                    ["<Down>"] = require("telescope.actions").move_selection_next,
+                    ["<C-u>"] = require("telescope.actions").preview_scrolling_up,
+                    ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
+                    ["<PageUp>"] = require("telescope.actions").results_scrolling_up,
+                    ["<PageDown>"] = require("telescope.actions").results_scrolling_down,
+                },
+            },
+        },
+        pickers = {
+            current_buffer_fuzzy_find = {
+                sorting_strategy = "ascending",
+            },
+            buffers = {
+                initial_mode = "normal",
+                mappings = {
+                    n = {
+                        ["d"] = require("telescope.actions").delete_buffer,
+                        ["<leader>"] = require("telescope.actions").toggle_selection,
+                        ["l"] = require("telescope.actions").select_default,
+                        ["v"] = require("telescope.actions").select_vertical,
+                        ["s"] = require("telescope.actions").select_horizontal,
+                    },
+                },
+                dynamic_preview_title = true,
+            },
+            marks = {
+                initial_mode = "normal",
+                mappings = {
+                    n = {
+                        ["d"] = require("telescope.actions").delete_mark,
+                        ["<leader>"] = require("telescope.actions").toggle_selection,
+                        ["l"] = require("telescope.actions").select_default,
+                        ["v"] = require("telescope.actions").select_vertical,
+                        ["s"] = require("telescope.actions").select_horizontal,
+                    },
+                },
+            },
+        },
+    },
     keys = function()
         return {
             {
                 "?",
-                ":Telescope current_buffer_fuzzy_find<Cr>",
+                function()
+                    require("telescope.builtin").current_buffer_fuzzy_find()
+                end,
                 desc = "search in current buffer",
             },
-            {
-                "<leader>,",
-                "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
-                desc = "Switch Buffer",
-            },
             { "<leader>/", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
-            { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-            { "<leader><space>", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
-            -- find
             {
-                "<leader>fb",
-                "<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<cr>",
+                "<leader>:",
+                function()
+                    require("telescope.builtin").command_history()
+                end,
+                desc = "Command History",
+            },
+            { "<leader><space>", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+            {
+                "<leader>b",
+                function()
+                    require("telescope.builtin").buffers({
+                        sort_mru = true, -- 按最近使用排序
+                        sort_lastused = true, -- 当前 buffer 和上一个 buffer 排前两个
+                        ignore_current_buffer = true, -- 忽略当前buffer
+                    })
+                end,
                 desc = "Buffers",
             },
-            -- { "<leader>fc", LazyVim.pick.config_files(), desc = "nvim Config File" },
-            { "<leader>ff", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
-            -- search
-            { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
-            { "<leader>sb", ":Telescope buffers sort_mru=true sort_lastused=true<Cr>", desc = "Buffers" },
-            { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-            { "<leader>sC", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-            { "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
-            { "<leader>sD", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics" },
-            { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
-            { "<leader>sf", "<cmd>Telescope filetypes<cr>", desc = "Change Current Filetypes" },
-            { "<leader>sl", "<cmd>Telescope loclist<cr>", desc = "Location List" },
-            { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
-            { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-            { "<leader>sq", "<cmd>Telescope quickfix<cr>", desc = "Quickfix List" },
+            {
+                "<leader>sa",
+                function()
+                    require("telescope.builtin").autocommands()
+                end,
+                desc = "Auto Commands",
+            },
+            {
+                "<leader>sc",
+                function()
+                    require("telescope.builtin").commands()
+                end,
+                desc = "Commands",
+            },
+            {
+                "<leader>sk",
+                function()
+                    require("telescope.builtin").keymaps()
+                end,
+                desc = "Key Maps",
+            },
+            {
+                "<leader>sf",
+                function()
+                    require("telescope.builtin").filetypes()
+                end,
+                desc = "Change Current Filetypes",
+            },
+            {
+                "<leader>sm",
+                function()
+                    require("telescope.builtin").marks()
+                end,
+                desc = "Jump to Mark",
+            },
+            {
+                "<leader>so",
+                function()
+                    require("telescope.builtin").vim_options()
+                end,
+                desc = "Options",
+            },
             { "<leader>uC", LazyVim.pick("colorscheme", { enable_preview = true }), desc = "Colorscheme with Preview" },
             {
                 "<leader>ss",
                 function()
-                    require("telescope.builtin").lsp_document_symbols({
-                        symbols = LazyVim.config.get_kind_filter(),
-                    })
+                    require("telescope.builtin").lsp_document_symbols({ symbol_width = 40 })
                 end,
                 desc = "Goto Symbol",
             },
             {
                 "<leader>sS",
                 function()
-                    require("telescope.builtin").lsp_dynamic_workspace_symbols({
-                        symbols = LazyVim.config.get_kind_filter(),
-                    })
+                    require("telescope.builtin").lsp_dynamic_workspace_symbols({})
                 end,
                 desc = "Goto Symbol (Workspace)",
             },
