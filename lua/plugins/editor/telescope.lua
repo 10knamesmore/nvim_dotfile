@@ -75,6 +75,9 @@ return {
             jumplist = {
                 initial_mode = "normal",
             },
+            colorscheme = {
+                initial_mode = "normal",
+            },
         },
     },
     keys = function()
@@ -170,7 +173,13 @@ return {
                 end,
                 desc = "Jump List",
             },
-            { "<leader>uC", LazyVim.pick("colorscheme", { enable_preview = true }), desc = "Colorscheme with Preview" },
+            {
+                "<leader>sC",
+                function()
+                    require("telescope.builtin").colorscheme({ enable_preview = true, ignore_builtins = true })
+                end,
+                desc = "Colorscheme with Preview",
+            },
             {
                 "<leader>ss",
                 function()
