@@ -55,6 +55,7 @@ return {
         dashboard = { enabled = true, sections = dashboard_sections }, -- 启用仪表盘功能并加载定义的各部分
         explorer = { enabled = false, replace_netrw = false }, -- 文件浏览器功能禁用
         input = { enabled = true }, -- 启用输入增强（如 float 弹窗输入）
+        profiler = { enabled = false },
         indent = {
             indent = {
                 enabled = true, -- 启用缩进线
