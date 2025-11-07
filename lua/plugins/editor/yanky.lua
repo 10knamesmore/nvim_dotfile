@@ -1,30 +1,33 @@
--- 更好的yank
 -- <leader>sp 打开复制的历史
 -- p 复制到光标后
 -- P 复制到光标前
 return {
-    "gbprod/yanky.nvim",
-    recommended = true,
-    desc = "Better Yank/Paste",
-    event = "LazyFile",
-    opts = {
-        highlight = { timer = 150 },
-    },
-    keys = {
-        {
-            "<leader>sp",
-            function()
-                if LazyVim.pick.picker.name == "telescope" then
-                    require("telescope").extensions.yank_history.yank_history({})
-                else
-                    vim.cmd([[YankyRingHistory]])
-                end
-            end,
-            mode = { "n", "x" },
-            desc = "search Yank History",
+    {
+        "gbprod/yanky.nvim",
+        desc = "Better Yank/Paste",
+        event = "LazyFile",
+        opts = {
+            highlight = { timer = 150 },
+            picker = {
+                select = {
+                    action = nil,
+                },
+                telescope = {
+                    use_default_mappings = true,
+                    mappings = nil,
+                },
+            },
         },
-        { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
-        { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" },
-        { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" },
+        config = function(_, opts)
+            require("yanky").setup(opts)
+            vim.keymap.set({ "n", "x" }, "<leader>sp", function()
+                require("telescope").extensions.yank_history.yank_history({ initial_mode = "normal" })
+            end, { noremap = true, silent = true, desc = "Open Yank History" })
+        end,
+        keys = {
+            { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
+            { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" },
+            { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" },
+        },
     },
 }
