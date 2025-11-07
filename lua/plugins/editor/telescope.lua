@@ -6,11 +6,9 @@ return {
             default_mappings = {
                 n = {
                     ["?"] = require("telescope.actions").which_key,
-                    ["<Tab>"] = require("telescope.actions").toggle_selection
-                        + require("telescope.actions").move_selection_next,
-                    ["<S-Tab>"] = require("telescope.actions").toggle_selection
-                        + require("telescope.actions").move_selection_previous,
                     ["q"] = require("telescope.actions").close,
+                    ["<Tab>"] = require("telescope.actions").move_selection_next,
+                    ["<S-Tab>"] = require("telescope.actions").move_selection_previous,
                     ["<Esc>"] = require("telescope.actions").close,
                     ["j"] = require("telescope.actions").move_selection_next,
                     ["k"] = require("telescope.actions").move_selection_previous,
@@ -22,10 +20,12 @@ return {
                     ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
                     ["<PageUp>"] = require("telescope.actions").results_scrolling_up,
                     ["<PageDown>"] = require("telescope.actions").results_scrolling_down,
-                    ["z"] = require("telescope.actions").center,
+                    ["m"] = require("telescope.actions").center,
                     ["f"] = require("telescope.actions").to_fuzzy_refine,
                 },
                 i = {
+                    ["<Tab>"] = require("telescope.actions").move_selection_next,
+                    ["<S-Tab>"] = require("telescope.actions").move_selection_previous,
                     ["<CR>"] = require("telescope.actions").select_default,
                     ["<Up>"] = require("telescope.actions").move_selection_previous,
                     ["<Down>"] = require("telescope.actions").move_selection_next,
@@ -44,6 +44,10 @@ return {
                 initial_mode = "normal",
                 mappings = {
                     n = {
+                        ["<Tab>"] = require("telescope.actions").toggle_selection
+                            + require("telescope.actions").move_selection_next,
+                        ["<S-Tab>"] = require("telescope.actions").toggle_selection
+                            + require("telescope.actions").move_selection_previous,
                         ["d"] = require("telescope.actions").delete_buffer,
                         ["<leader>"] = require("telescope.actions").toggle_selection,
                         ["l"] = require("telescope.actions").select_default,
@@ -65,6 +69,12 @@ return {
                     },
                 },
             },
+            oldfiles = {
+                initial_mode = "normal",
+            },
+            jumplist = {
+                initial_mode = "normal",
+            },
         },
     },
     keys = function()
@@ -76,7 +86,13 @@ return {
                 end,
                 desc = "search in current buffer",
             },
-            { "<leader>/", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
+            {
+                "<leader>/",
+                function()
+                    require("telescope.builtin").live_grep()
+                end,
+                desc = "Grep (Root Dir)",
+            },
             {
                 "<leader>:",
                 function()
@@ -137,6 +153,22 @@ return {
                     require("telescope.builtin").vim_options()
                 end,
                 desc = "Options",
+            },
+            {
+                "<leader>sh",
+                function()
+                    require("telescope.builtin").oldfiles()
+                end,
+                desc = "History Files",
+            },
+            {
+                "<leader>h",
+                function()
+                    require("telescope.builtin").jumplist({
+                        trim_text = true,
+                    })
+                end,
+                desc = "Jump List",
             },
             { "<leader>uC", LazyVim.pick("colorscheme", { enable_preview = true }), desc = "Colorscheme with Preview" },
             {

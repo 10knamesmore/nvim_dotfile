@@ -12,7 +12,6 @@ local function opts(desc)
 end
 
 -- 有些keymaps需要等待LazyVim和Snacks
--- Hack 现在是推迟到
 vim.api.nvim_create_autocmd("User", {
     pattern = "LazyVimStarted",
     callback = function()
@@ -169,9 +168,9 @@ map("i", "jk", "<Esc>", opts())
 map("i", "kj", "<Esc>", opts())
 
 -- 移动光标
-map("n", "gb", "<C-o>", opts("LSP跳转返回"))
-map("n", "<C-o>", "<C-i>", opts("LSP跳转返回"))
-map("n", "<C-i>", "<C-o>", opts("LSP跳转返回"))
+map("n", "gb", "<C-o>", opts("Jump Backward"))
+map("n", "L", "<C-i>", opts("Jump Forward"))
+map("n", "H", "<C-o>", opts("Junp Backward"))
 -- -- JK光标移动多行
 map({ "n", "v" }, "J", "7gj", opts())
 map({ "n", "v" }, "K", "7gk", opts())
