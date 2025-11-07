@@ -56,6 +56,9 @@ return {
                     },
                 },
                 dynamic_preview_title = true,
+                layout_config = {
+                    preview_width = 0.6,
+                },
             },
             marks = {
                 initial_mode = "normal",
@@ -67,6 +70,19 @@ return {
                         ["v"] = require("telescope.actions").select_vertical,
                         ["s"] = require("telescope.actions").select_horizontal,
                     },
+                },
+                layout_config = {
+                    preview_width = 0.6,
+                },
+            },
+            lsp_document_symbols = {
+                layout_config = {
+                    preview_width = 0.7,
+                },
+            },
+            lsp_dynamic_workspace_symbols = {
+                layout_config = {
+                    preview_width = 0.6,
                 },
             },
             oldfiles = {
