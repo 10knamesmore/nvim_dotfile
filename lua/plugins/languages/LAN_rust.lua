@@ -1,5 +1,5 @@
 --- TODO: 配置rustlsp server
-vim.g.lazyvim_rust_diagnostics = "bacon-ls"
+vim.g.lazyvim_rust_diagnostics = "rust-analyzer" -- "bacon-ls" or "rust-analyzer"
 
 local diagnostics = vim.g.lazyvim_rust_diagnostics or "rust-analyzer"
 
@@ -104,7 +104,7 @@ return {
                             closureCaptureHints = {
                                 enable = true,
                             },
-                            genericParameterHints = { type = { enable = true } },
+                            -- genericParameterHints = { type = { enable = true } },
                         },
                         procMacro = {
                             enable = true,

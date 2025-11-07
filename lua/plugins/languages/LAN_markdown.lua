@@ -13,6 +13,11 @@ local render_md_opt = {
         -- Number of lines below cursor to show.
         below = 2,
     },
+    completions = {
+        lsp = {
+            enabled = true,
+        },
+    },
     code = {
         sign = false,
         width = "block",

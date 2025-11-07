@@ -1,8 +1,8 @@
 return {
     "lewis6991/gitsigns.nvim",
     -- luastyle
-    config = function()
-        require("gitsigns").setup({
+    opt = function()
+        return {
             signs = {
                 add = { text = "┃" },
                 change = { text = "┃" },
@@ -27,7 +27,29 @@ return {
             watch_gitdir = {
                 follow_files = true,
             },
-            auto_attach = true,
+            auto_attach = function(buffer)
+                local function map(mode, l, r, desc)
+                    vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
+                end
+
+        -- stylua: ignore start
+        map("n", "]h", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            require("gitsigns").nav_hunk("next")
+          end
+        end, "Next Hunk")
+        map("n", "[h", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            require("gitsigns").nav_hunk("prev")
+          end
+        end, "Prev Hunk")
+        map("n", "]H", function() require("gitsigns").nav_hunk("last") end, "Last Hunk")
+        map("n", "[H", function() require("gitsigns").nav_hunk("first") end, "First Hunk")
+            end,
             attach_to_untracked = false,
             current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
             current_line_blame_opts = {
@@ -50,6 +72,6 @@ return {
                 row = 0,
                 col = 1,
             },
-        })
+        }
     end,
 }

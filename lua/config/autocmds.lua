@@ -150,11 +150,3 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         vim.opt_local.wrap = false
     end,
 })
-
--- Markdown 文件中关闭 diagnostics
-vim.api.nvim_create_autocmd("BufRead", {
-    pattern = "markdown",
-    callback = function()
-        vim.diagnostic.enable(false)
-    end,
-})
