@@ -2,6 +2,7 @@ local M = {}
 
 M.lualine = require("utils.lualine")
 M.path = require("utils.path")
+M.plugins = require("utils.plugins")
 
 icons = {
     misc = {

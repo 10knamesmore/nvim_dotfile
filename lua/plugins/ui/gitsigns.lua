@@ -2,7 +2,7 @@ return {
     "lewis6991/gitsigns.nvim",
     -- luastyle
     config = function()
-        -- 用config 手动 setup, 覆盖 LazyVim
+        -- 用config 手动 setup, 覆盖 LazyVim, 当LazyVim完全删除后可以优化
         require("gitsigns").setup({
             signs_staged_enable = true,
             signcolumn = false, -- Toggle with `:Gitsigns toggle_signs`

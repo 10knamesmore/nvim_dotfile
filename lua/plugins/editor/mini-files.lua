@@ -12,13 +12,6 @@ return {
             end,
             desc = "Open mini.files (current file)",
         },
-        {
-            "<leader>E",
-            function()
-                require("mini.files").open(LazyVim.root(), true)
-            end,
-            desc = "open mini.files (root)",
-        },
     },
     opts = {
         windows = {

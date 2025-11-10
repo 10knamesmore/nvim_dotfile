@@ -119,7 +119,16 @@ return {
                 end,
                 desc = "Command History",
             },
-            { "<leader><space>", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+            {
+                "<leader><space>",
+                function()
+                    require("telescope.builtin").find_files({
+                        hidden = true,
+                        no_ignore = true,
+                    })
+                end,
+                desc = "Find Files (Root Dir)",
+            },
             {
                 "<leader>b",
                 function()
