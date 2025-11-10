@@ -25,7 +25,7 @@ return {
                 RGBA = true, -- 支持 #RGBA 格式（如 #abcd）
                 RRGGBB = true, -- 支持 #RRGGBB 格式（如 #aabbcc）
                 RRGGBBAA = false, -- 关闭 #RRGGBBAA 格式（带 alpha 通道的8位 hex）
-                AARRGGBB = false, -- 关闭 0xAARRGGBB 格式（以0x开头的8位颜色）
+                AARRGGBB = true, -- 开启 0xAARRGGBB 格式 (为了yabai JankyBorders)（以0x开头的8位颜色）
 
                 rgb_fn = false, -- 不启用 CSS 的 rgb()、rgba() 函数支持
                 hsl_fn = false, -- 不启用 CSS 的 hsl()、hsla() 函数支持

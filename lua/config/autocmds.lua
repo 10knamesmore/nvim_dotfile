@@ -127,9 +127,9 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 -- 自定义文件类型识别：.alias 和 .zshfunc 识别为 sh
 vim.api.nvim_create_autocmd({ "BufRead" }, {
     group = augroup("ft"),
-    pattern = { ".alias", ".zshfunc" },
+    pattern = { ".alias", ".zsh*" },
     callback = function()
-        vim.bo.filetype = "sh"
+        vim.bo.filetype = "bash"
     end,
 })
 
