@@ -1,25 +1,15 @@
 -- 格式化插件配置
 return {
-    "stevearc/conform.nvim", -- 插件名称，Conform 是一个异步格式化器，支持多种语言
+    "stevearc/conform.nvim",
 
-    dependencies = { "mason.nvim" }, -- 插件依赖：使用 mason.nvim 来安装/管理格式化工具
+    dependencies = { "mason.nvim" },
 
-    lazy = true, -- 延迟加载插件，不在启动时立刻加载
+    lazy = true,
 
-    cmd = "ConformInfo", -- 执行 :ConformInfo 命令时加载插件（用来查看可用 formatter 信息）
+    cmd = "ConformInfo",
 
     init = function()
-        -- vim.api.nvim_create_user_command("Format", function(args)
-        --     local range = nil
-        --     if args.count ~= -1 then
-        --         local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
-        --         range = {
-        --             start = { args.line1, 0 },
-        --             ["end"] = { args.line2, end_line:len() },
-        --         }
-        --     end
-        --     require("conform").format({ async = true, lsp_format = "fallback", range = range })
-        -- end, { range = true })
+        -- Lazyvim 会注册 format on save, LazyFormat, FormatterInfo
         LazyVim.on_very_lazy(function()
             LazyVim.format.register({
                 name = "conform.nvim", -- 注册的格式化器名称
@@ -59,18 +49,9 @@ return {
                     end
 
                     -- 获取 conform 模块
-                    local conform = require("conform")
-
-                    -- 打印当前 buffer 可用的 formatter（debug 用）
-                    local formatter_names = conform.list_formatters_for_buffer(bufnr)
-                    vim.notify_once(
-                        "可用的 formatters " .. vim.inspect(formatter_names),
-                        vim.log.levels.DEBUG,
-                        { title = "conform" }
-                    )
 
                     -- 执行格式化
-                    conform.format({
+                    require("conform").format({
                         bufnr = bufnr,
                     })
                 end,
@@ -113,7 +94,7 @@ return {
                 css = { "prettierd", "prettier" },
             },
         }
-        vim.keymap.set("", "<leader>=", function()
+        vim.keymap.set("n", "=", function()
             require("conform").format({ async = true, lsp_fallback = true })
         end, { desc = "[F]ormat" })
 

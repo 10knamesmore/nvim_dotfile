@@ -4,13 +4,6 @@ vim.g.lazyvim_rust_diagnostics = "rust-analyzer" -- "bacon-ls" or "rust-analyzer
 local diagnostics = vim.g.lazyvim_rust_diagnostics or "rust-analyzer"
 
 return {
-    recommended = function()
-        return LazyVim.extras.wants({
-            ft = "rust",
-            root = { "Cargo.toml", "rust-project.json" },
-        })
-    end,
-
     -- rust 生命周期可视化
     {
         "cordx56/rustowl",
