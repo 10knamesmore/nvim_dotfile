@@ -1,8 +1,11 @@
-LazyVim.on_very_lazy(function()
-    vim.filetype.add({
-        extension = { mdx = "markdown.mdx" },
-    })
-end)
+vim.api.nvim_create_autocmd("User", {
+    pattern = "VeryLazy",
+    callback = function()
+        vim.filetype.add({
+            extension = { mdx = "markdown.mdx" },
+        })
+    end,
+})
 
 ---@type render.md.UserConfig
 local render_md_opt = {
@@ -110,25 +113,16 @@ return {
         "mason-org/mason.nvim",
         opts = { ensure_installed = { "markdownlint-cli2", "markdown-toc" } },
     },
-    {
-        "nvimtools/none-ls.nvim",
-        optional = true,
-        opts = function(_, opts)
-            local nls = require("null-ls")
-            opts.sources = vim.list_extend(opts.sources or {}, {
-                nls.builtins.diagnostics.markdownlint_cli2,
-            })
-        end,
-    },
-    {
-        "mfussenegger/nvim-lint",
-        optional = true,
-        opts = {
-            linters_by_ft = {
-                markdown = { "markdownlint-cli2" },
-            },
-        },
-    },
+    -- markdown 不lint
+    -- {
+    --     "mfussenegger/nvim-lint",
+    --     optional = true,
+    --     opts = {
+    --         linters_by_ft = {
+    --             markdown = { "markdownlint-cli2" },
+    --         },
+    --     },
+    -- },
     {
         "neovim/nvim-lspconfig",
         opts = {
