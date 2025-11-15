@@ -1,8 +1,11 @@
-LazyVim.on_very_lazy(function()
-    vim.filetype.add({
-        extension = { mdx = "markdown.mdx" },
-    })
-end)
+vim.api.nvim_create_autocmd("User", {
+    pattern = "VeryLazy",
+    callback = function()
+        vim.filetype.add({
+            extension = { mdx = "markdown.mdx" },
+        })
+    end,
+})
 
 ---@type render.md.UserConfig
 local render_md_opt = {
@@ -23,35 +26,35 @@ local render_md_opt = {
         width = "block",
         right_pad = 4,
     },
-            -- stylua: ignore
-            callout = {
-                note      = { quote_icon = "█"},
-                tip       = { quote_icon = "█"},
-                important = { quote_icon = "█"},
-                warning   = { quote_icon = "█"},
-                caution   = { quote_icon = "█"},
-                abstract  = { quote_icon = "█"},
-                summary   = { quote_icon = "█"},
-                tldr      = { quote_icon = "█"},
-                info      = { quote_icon = "█"},
-                todo      = { quote_icon = "█"},
-                hint      = { quote_icon = "█"},
-                success   = { quote_icon = "█"},
-                check     = { quote_icon = "█"},
-                done      = { quote_icon = "█"},
-                question  = { quote_icon = "█"},
-                help      = { quote_icon = "█"},
-                faq       = { quote_icon = "█"},
-                attention = { quote_icon = "█"},
-                failure   = { quote_icon = "█"},
-                fail      = { quote_icon = "█"},
-                missing   = { quote_icon = "█"},
-                danger    = { quote_icon = "█"},
-                error     = { quote_icon = "█"},
-                bug       = { quote_icon = "█"},
-                example   = { quote_icon = "█"},
-                quote     = { quote_icon = "█"},
-                cite      = { quote_icon = "█"},
+    -- stylua: ignore
+    callout = {
+        note      = { quote_icon = "█"},
+        tip       = { quote_icon = "█"},
+        important = { quote_icon = "█"},
+        warning   = { quote_icon = "█"},
+        caution   = { quote_icon = "█"},
+        abstract  = { quote_icon = "█"},
+        summary   = { quote_icon = "█"},
+        tldr      = { quote_icon = "█"},
+        info      = { quote_icon = "█"},
+        todo      = { quote_icon = "█"},
+        hint      = { quote_icon = "█"},
+        success   = { quote_icon = "█"},
+        check     = { quote_icon = "█"},
+        done      = { quote_icon = "█"},
+        question  = { quote_icon = "█"},
+        help      = { quote_icon = "█"},
+        faq       = { quote_icon = "█"},
+        attention = { quote_icon = "█"},
+        failure   = { quote_icon = "█"},
+        fail      = { quote_icon = "█"},
+        missing   = { quote_icon = "█"},
+        danger    = { quote_icon = "█"},
+        error     = { quote_icon = "█"},
+        bug       = { quote_icon = "█"},
+        example   = { quote_icon = "█"},
+        quote     = { quote_icon = "█"},
+        cite      = { quote_icon = "█"},
             },
     heading = {
         sign = false,
@@ -77,12 +80,6 @@ local render_md_opt = {
 }
 
 return {
-    recommended = function()
-        return LazyVim.extras.wants({
-            ft = { "markdown", "markdown.mdx" },
-            root = "README.md",
-        })
-    end,
     {
         "stevearc/conform.nvim",
         optional = true,
@@ -116,25 +113,16 @@ return {
         "mason-org/mason.nvim",
         opts = { ensure_installed = { "markdownlint-cli2", "markdown-toc" } },
     },
-    {
-        "nvimtools/none-ls.nvim",
-        optional = true,
-        opts = function(_, opts)
-            local nls = require("null-ls")
-            opts.sources = vim.list_extend(opts.sources or {}, {
-                nls.builtins.diagnostics.markdownlint_cli2,
-            })
-        end,
-    },
-    {
-        "mfussenegger/nvim-lint",
-        optional = true,
-        opts = {
-            linters_by_ft = {
-                markdown = { "markdownlint-cli2" },
-            },
-        },
-    },
+    -- markdown 不lint
+    -- {
+    --     "mfussenegger/nvim-lint",
+    --     optional = true,
+    --     opts = {
+    --         linters_by_ft = {
+    --             markdown = { "markdownlint-cli2" },
+    --         },
+    --     },
+    -- },
     {
         "neovim/nvim-lspconfig",
         opts = {

@@ -56,6 +56,9 @@ return {
                     },
                 },
                 dynamic_preview_title = true,
+                layout_config = {
+                    preview_width = 0.6,
+                },
             },
             marks = {
                 initial_mode = "normal",
@@ -68,11 +71,27 @@ return {
                         ["s"] = require("telescope.actions").select_horizontal,
                     },
                 },
+                layout_config = {
+                    preview_width = 0.6,
+                },
+            },
+            lsp_document_symbols = {
+                layout_config = {
+                    preview_width = 0.7,
+                },
+            },
+            lsp_dynamic_workspace_symbols = {
+                layout_config = {
+                    preview_width = 0.6,
+                },
             },
             oldfiles = {
                 initial_mode = "normal",
             },
             jumplist = {
+                initial_mode = "normal",
+            },
+            colorscheme = {
                 initial_mode = "normal",
             },
         },
@@ -100,7 +119,16 @@ return {
                 end,
                 desc = "Command History",
             },
-            { "<leader><space>", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+            {
+                "<leader><space>",
+                function()
+                    require("telescope.builtin").find_files({
+                        hidden = true,
+                        no_ignore = true,
+                    })
+                end,
+                desc = "Find Files (Root Dir)",
+            },
             {
                 "<leader>b",
                 function()
@@ -170,7 +198,13 @@ return {
                 end,
                 desc = "Jump List",
             },
-            { "<leader>uC", LazyVim.pick("colorscheme", { enable_preview = true }), desc = "Colorscheme with Preview" },
+            {
+                "<leader>sC",
+                function()
+                    require("telescope.builtin").colorscheme({ enable_preview = true, ignore_builtins = true })
+                end,
+                desc = "Colorscheme with Preview",
+            },
             {
                 "<leader>ss",
                 function()

@@ -1,3 +1,4 @@
+_G.utils = require("utils")
 -- bootstrap lazy.nvim, LazyVim and your plugins
 if vim.g.neovide then
     require("config.lazy")
