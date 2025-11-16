@@ -1,3 +1,4 @@
+--- nvim-ufo 折叠插件配置
 return {
     "kevinhwang91/nvim-ufo",
     dependencies = { "kevinhwang91/promise-async" },

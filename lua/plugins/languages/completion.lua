@@ -56,7 +56,7 @@ return {
                 draw = {
                     columns = {
                         -- 第一列：图标 + label + 描述，紧凑排布
-                        { "kind_icon", "label", "label_description", gap = 0 },
+                        { "kind_icon", "label", gap = 0 },
                         -- 第二列：补全项的类型（如函数、变量等）
                         { "kind" },
                         -- 第三列：补全来源（如 lsp, buffer）
