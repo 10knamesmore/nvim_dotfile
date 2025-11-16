@@ -253,6 +253,14 @@ return {
             desc = "Flash",
         },
         {
+            "f",
+            mode = { "n", "x", "o" },
+            function()
+                require("flash").jump()
+            end,
+            desc = "Flash",
+        },
+        {
             "S",
             mode = { "n", "x", "o" },
             function()
@@ -266,39 +274,6 @@ return {
                 })
             end,
             desc = "Flash Treesitter",
-        },
-        {
-            "<c-s>",
-            mode = { "c" },
-            function()
-                require("flash").toggle()
-            end,
-            desc = "Toggle Flash Search",
-        },
-        {
-            "f",
-            mode = { "n", "x", "o" },
-            function()
-                require("flash").jump({
-                    search = { mode = "search", max_length = 2 },
-                    label = {
-                        uppercase = true,
-                        after = { 0, 0 },
-                        matches = true,
-                        rainbow = {
-                            enabled = true,
-                            -- 范围 1 到 9 的数字
-                            shade = 1,
-                        },
-                    },
-                    highlight = {
-                        backdrop = true,
-                    },
-                    jump = { pos = "start" },
-                    pattern = "^\\s*\\zs\\S",
-                })
-            end,
-            desc = "[Flash] Line jump",
         },
     },
 }

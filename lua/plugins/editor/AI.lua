@@ -199,12 +199,20 @@ HINT：轻微建议或可选优化，如微小的风格改进、可读性提升�
                 "<leader>aq",
                 function()
                     -- 弹出输入框进行快速提问
-                    vim.ui.input({
+                    Snacks.input({
                         prompt = "快速提问: ",
+                        win = {
+                            title_pos = "left",
+                            relative = "cursor",
+                            col = -5,
+                        },
                     }, function(input)
                         local system_prompt = [[
-当你引用文件内容时, 为了让我更快找到上下文, 请用 line:123-234 你的回答 的形式回复的.
+当你引用文件内容时, 为了让我更快找到上下文, 请用 
+line:123-234 你的回答
+的形式回复.
 当你可以给出代码片段时, 请直接给出不需要听取我的意见,并用代码块的形式返回.
+给出代码块不代表你需要停止回答, 你可以继续补充说明.
 请尽可能详细地回答我的问题.
 ]]
                         if input ~= "" then
