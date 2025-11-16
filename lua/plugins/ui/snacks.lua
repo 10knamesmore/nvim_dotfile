@@ -1,17 +1,20 @@
 -- 定义仪表盘各个部分的配置
 --- @type snacks.dashboard.Section
 local dashboard_sections = {
-    { section = "header" }, -- 显示头部内容（通常是 ASCII 艺术字或 Logo）
     {
-        pane = 2,
+        ttl = 0,
+        enabled = function()
+            return vim.o.lines > 40 and vim.o.columns > 100
+        end,
         section = "terminal",
-        cmd = "cowsay -y '今天你大便通畅吗?'", -- 使用 cowsay 显示有趣的提示语
-        height = 8, -- 终端高度
-        padding = 1, -- 上下边距
+        cmd = 'ascii-image-converter -c --color -H50 "' .. vim.fn.stdpath("config") .. '/data/mutsumi.jpg"',
+        height = 50,
+        padding = 2,
+        align = "center",
     },
-    { section = "keys", gap = 1, padding = 1 }, -- 显示按键绑定，设置间距与边距
+    -- { section = "keys", gap = 1, padding = 1 }, -- 显示按键绑定，设置间距与边距
     {
-        pane = 2,
+        pane = 1,
         icon = " ", -- 图标
         title = "Recent Files", -- 标题
         section = "recent_files", -- 显示最近打开的文件
@@ -19,26 +22,12 @@ local dashboard_sections = {
         padding = 1, -- 边距
     },
     {
-        pane = 2,
+        pane = 1,
         icon = " ",
         title = "Projects", -- 显示项目列表
         section = "projects",
         indent = 2,
         padding = 1,
-    },
-    {
-        pane = 2,
-        icon = " ",
-        title = "Git Status", -- 显示 Git 状态
-        section = "terminal",
-        enabled = function()
-            return Snacks.git.get_root() ~= nil -- 若在 git 仓库中则启用该模块
-        end,
-        cmd = "git status --short --branch --renames", -- 执行 git 命令显示状态
-        height = 5,
-        padding = 1,
-        ttl = 5 * 60, -- 缓存结果时间为 5 分钟
-        indent = 3,
     },
     { section = "startup" }, -- 启动状态
 }
@@ -52,7 +41,7 @@ return {
     opts = {
         animate = { enabled = true, fps = 180 }, -- 启用动画效果，帧率为 180
         bigfile = { enabled = false }, -- 启用大文件处理优化, 交给bigfil.lua处理
-        dashboard = { enabled = true, sections = dashboard_sections }, -- 启用仪表盘功能并加载定义的各部分
+        dashboard = { enabled = true, sections = dashboard_sections, width = 100 }, -- 启用仪表盘功能并加载定义的各部分
         explorer = { enabled = false, replace_netrw = false }, -- 文件浏览器功能禁用
         input = { enabled = true }, -- 启用输入增强（如 float 弹窗输入）
         profiler = { enabled = false },
