@@ -7,12 +7,11 @@ local dashboard_sections = {
             return vim.o.lines > 40 and vim.o.columns > 100
         end,
         section = "terminal",
-        cmd = 'ascii-image-converter -c --color -H50 "' .. vim.fn.stdpath("config") .. '/data/mutsumi.jpg"',
+        cmd = 'ascii-image-converter --color -H50 "' .. vim.fn.stdpath("config") .. '/data/mutsumi.jpg"',
         height = 50,
         padding = 2,
         align = "center",
     },
-    -- { section = "keys", gap = 1, padding = 1 }, -- 显示按键绑定，设置间距与边距
     {
         pane = 1,
         icon = " ", -- 图标
@@ -20,6 +19,7 @@ local dashboard_sections = {
         section = "recent_files", -- 显示最近打开的文件
         indent = 2, -- 缩进
         padding = 1, -- 边距
+        gap = 1,
     },
     {
         pane = 1,
@@ -28,7 +28,9 @@ local dashboard_sections = {
         section = "projects",
         indent = 2,
         padding = 1,
+        gap = 1,
     },
+    { section = "keys", gap = 1, padding = 1 }, -- 显示按键绑定，设置间距与边距
     { section = "startup" }, -- 启动状态
 }
 
@@ -41,7 +43,33 @@ return {
     opts = {
         animate = { enabled = true, fps = 180 }, -- 启用动画效果，帧率为 180
         bigfile = { enabled = false }, -- 启用大文件处理优化, 交给bigfil.lua处理
-        dashboard = { enabled = true, sections = dashboard_sections, width = 100 }, -- 启用仪表盘功能并加载定义的各部分
+        dashboard = {
+            enabled = true,
+            sections = dashboard_sections,
+            width = 100,
+            preset = {
+                keys = {
+                    { icon = "", key = "g", desc = "LazyGit", action = "<leader>gg" },
+                    { icon = "", key = "q", desc = "Quit", action = ":qa" },
+                    {
+                        icon = "✎",
+                        key = "s",
+                        desc = "New Scratch",
+                        action = function()
+                            require("snacks").scratch.open()
+                        end,
+                    },
+                    {
+                        icon = "✎",
+                        key = "S",
+                        desc = "Search Scratch",
+                        action = function()
+                            require("snacks").scratch.select()
+                        end,
+                    },
+                },
+            },
+        }, -- 启用仪表盘功能并加载定义的各部分
         explorer = { enabled = false, replace_netrw = false }, -- 文件浏览器功能禁用
         input = { enabled = true }, -- 启用输入增强（如 float 弹窗输入）
         profiler = { enabled = false },
@@ -87,12 +115,7 @@ return {
         scratch = {
             enabled = true,
             name = "草稿",
-            ft = function()
-                -- if vim.bo.buftype == "" and vim.bo.filetype ~= "" then
-                --     return vim.bo.filetype
-                -- end
-                return "markdown"
-            end,
+            ft = "markdown",
             win = {
                 width = 0.6,
                 min_width = 100,
@@ -108,7 +131,7 @@ return {
                 resize = true,
             },
         }, -- 启用 scratch buffer，并命名为“草稿”
-        statuscolumn = { enabled = true }, -- 启用状态列（通常用于显示行号、git 标记等）
+        statuscolumn = { enabled = false }, -- 启用状态列（通常用于显示行号、git 标记等）
         words = { enabled = false }, -- 单词增强功能禁用
     },
     keys = {
