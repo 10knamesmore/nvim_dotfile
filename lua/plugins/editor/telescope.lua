@@ -110,7 +110,7 @@ return {
                 function()
                     require("telescope.builtin").live_grep()
                 end,
-                desc = "Grep (Root Dir)",
+                desc = "Live Grep",
             },
             {
                 "<leader>:",
@@ -159,7 +159,7 @@ return {
                 function()
                     require("telescope.builtin").keymaps()
                 end,
-                desc = "Key Maps",
+                desc = "Keymaps",
             },
             {
                 "<leader>sf",
@@ -173,7 +173,7 @@ return {
                 function()
                     require("telescope.builtin").marks()
                 end,
-                desc = "Jump to Mark",
+                desc = "Marks",
             },
             {
                 "<leader>so",
@@ -203,21 +203,21 @@ return {
                 function()
                     require("telescope.builtin").colorscheme({ enable_preview = true, ignore_builtins = true })
                 end,
-                desc = "Colorscheme with Preview",
+                desc = "Colorscheme",
             },
             {
                 "<leader>ss",
                 function()
                     require("telescope.builtin").lsp_document_symbols({ symbol_width = 40 })
                 end,
-                desc = "Goto Symbol",
+                desc = "Symbol",
             },
             {
                 "<leader>sS",
                 function()
                     require("telescope.builtin").lsp_dynamic_workspace_symbols({})
                 end,
-                desc = "Goto Symbol (Workspace)",
+                desc = "Symbol (Workspace)",
             },
         }
     end,
