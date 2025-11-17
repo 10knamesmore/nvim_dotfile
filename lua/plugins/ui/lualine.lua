@@ -121,7 +121,7 @@ return {
                 lualine_b = {
                     {
                         function()
-                            return "󱉭  " .. dirname()
+                            return "󱉭 " .. dirname()
                         end,
                         cond = function()
                             return true
