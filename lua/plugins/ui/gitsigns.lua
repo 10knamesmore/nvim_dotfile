@@ -1,9 +1,12 @@
 return {
     "lewis6991/gitsigns.nvim",
-    -- luastyle
-    config = function()
-        -- 用config 手动 setup, 覆盖 LazyVim, 当LazyVim完全删除后可以优化
-        require("gitsigns").setup({
+    opts = function()
+        vim.keymap.set("n", "<leader>uG", function()
+            require("gitsigns").toggle_deleted()
+            require("gitsigns").toggle_linehl()
+            require("gitsigns").toggle_word_diff()
+        end, { noremap = true, desc = "Toggle Diff" })
+        local opts = {
             signs_staged_enable = true,
             signcolumn = false, -- Toggle with `:Gitsigns toggle_signs`
             numhl = true, -- Toggle with `:Gitsigns toggle_numhl`
@@ -38,6 +41,7 @@ return {
                     require("gitsigns").preview_hunk_inline
                 , "Word Diff")
             end,
-        })
+        }
+        return opts
     end,
 }

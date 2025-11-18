@@ -35,32 +35,8 @@ vim.api.nvim_create_autocmd("User", {
             end, { desc = "Lazygit (cwd)" })
         end
 
-        Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
         Snacks.toggle.diagnostics():map("<leader>ud")
-        Snacks.toggle.line_number():map("<leader>ul")
-        Snacks.toggle
-            .option(
-                "conceallevel",
-                { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "Conceal Level" }
-            )
-            :map("<leader>uc")
-        Snacks.toggle
-            .option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" })
-            :map("<leader>uA")
-        Snacks.toggle.treesitter():map("<leader>uT")
-        Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
         Snacks.toggle.dim():map("<leader>uD")
-        Snacks.toggle.animate():map("<leader>ua")
-        Snacks.toggle.indent():map("<leader>ug")
-        -- Snacks.toggle.scroll():map("<leader>uS") 用mini-animation替代了
-        Snacks.toggle.profiler():map("<leader>dpp")
-        Snacks.toggle.profiler_highlights():map("<leader>dph")
-
-        if vim.lsp.inlay_hint then
-            Snacks.toggle.inlay_hints():map("<leader>uh")
-        end
 
         map("n", "<leader>gl", function()
             Snacks.picker.git_log()
@@ -103,7 +79,9 @@ vim.api.nvim_create_autocmd("User", {
 
         -- treesitter inspect tree
         map("n", "<leader>uI", function()
-            vim.treesitter.inspect_tree()
+            vim.treesitter.inspect_tree({
+                command = (math.floor(vim.o.columns * 0.4)) .. "vnew",
+            })
             vim.api.nvim_input("I")
         end, { desc = "Inspect Tree" })
 
