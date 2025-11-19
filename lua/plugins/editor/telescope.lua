@@ -75,6 +75,15 @@ return {
                     preview_width = 0.6,
                 },
             },
+            find_files = {
+                file_ignore_patterns = { "node_modules", "target/" },
+            },
+            live_grep = {
+                file_ignore_patterns = { "node_modules", "target/" },
+            },
+            grep_string = {
+                file_ignore_patterns = { "node_modules", "target/" },
+            },
             lsp_document_symbols = {
                 layout_config = {
                     preview_width = 0.7,
@@ -116,7 +125,7 @@ return {
                 desc = "Live Grep",
             },
             {
-                "<leader>:",
+                "<leader>s:",
                 function()
                     require("telescope.builtin").command_history()
                 end,
@@ -131,6 +140,14 @@ return {
                     })
                 end,
                 desc = "Find Files (Root Dir)",
+            },
+            {
+                "<leader>sw",
+                function()
+                    require("telescope.builtin").grep_string()
+                end,
+                mode = { "n", "v" },
+                desc = "search current word",
             },
             {
                 "<leader>b",

@@ -140,7 +140,7 @@ return {
         { "<leader>fE", mode = "n", false },
         { "<leader>S", mode = "n", false },
         {
-            "<leader>,",
+            "<leader>s.",
             function()
                 Snacks.scratch.select()
             end,

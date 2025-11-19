@@ -56,7 +56,9 @@ vim.api.nvim_create_autocmd("User", {
 
         map("n", "<leader>gb", function()
             Snacks.picker.git_log_line()
-        end, { desc = "Git blame line" })
+        end, {
+            desc = "Git blame line",
+        })
 
         map("n", "<leader>gd", function()
             Snacks.picker.git_diff()
@@ -66,11 +68,7 @@ vim.api.nvim_create_autocmd("User", {
             Snacks.picker.git_log_file()
         end, { desc = "Git Current File History" })
 
-        map({ "n", "x" }, "<localleader>r", function()
-            Snacks.debug.run()
-        end, { desc = "Run Lua" })
-
-        map({ "n", "x" }, "<leader>gB", function()
+        map("n", "<leader>gB", function()
             Snacks.gitbrowse()
         end, { desc = "git open remote" })
 
