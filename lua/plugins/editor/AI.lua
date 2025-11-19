@@ -15,7 +15,7 @@ return {
                 auto_insert_mode = false, -- 聊天窗口不自动进入插入模式
                 language = "中文",
                 resources = {}, -- 默认通过 # 传过去的, 什么都不传
-                remember_as_sticky = false, --不把 models, tools, resources system_prompt 记为 sticky
+                remember_as_sticky = true, --不把 models, tools, resources system_prompt 记为 sticky
 
                 headers = {
                     user = "  " .. user .. " ", -- 用户头部图标和名称

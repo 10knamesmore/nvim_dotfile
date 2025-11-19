@@ -103,10 +103,6 @@ map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
--- buffers
-map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 
 -- 重绘
@@ -130,7 +126,7 @@ map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Commen
 map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
 -- diagnostic
-map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 
 -----------------------------------------------------------
 map("n", "<Space>", "", opts())
@@ -146,16 +142,17 @@ map("i", "jk", "<Esc>", opts())
 map("i", "kj", "<Esc>", opts())
 
 -- 移动光标
-map("n", "gb", "<C-o>", opts("Jump Backward"))
 map("n", "L", "<C-i>", opts("Jump Forward"))
 map("n", "H", "<C-o>", opts("Junp Backward"))
+
 -- -- JK光标移动多行
 map({ "n", "v" }, "J", "7gj", opts())
 map({ "n", "v" }, "K", "7gk", opts())
+
 -- -- 空格 + o/O 插入一行而不进入插入模式
 map("n", "<leader>o", "o<Esc>", opts("new line below"))
 map("n", "<leader>O", "O<Esc>", opts("new line above"))
-map("n", "gm", "'", opts("跳转到标签"))
+
 -- 目前让 <> 什么都不做
 map({ "n", "v" }, "<", "<Nop>")
 map({ "n", "v" }, ">", "<Nop>")
@@ -164,7 +161,7 @@ map({ "n", "v" }, ">", "<Nop>")
 -- -- 大写 W 切换窗口焦点
 map("n", "W", "<C-w>w", opts())
 -- --  左右方向键切换标签页,上下方向键什么都不干
-map("n", "<Left>", ":bp<CR>", opts())
-map("n", "<Right>", ":bn<CR>", opts())
+map("n", "<Left>", ":tabprevious<CR>", opts())
+map("n", "<Right>", ":tabNext<CR>", opts())
 map("n", "<Up>", "", opts())
 map("n", "<Down>", "", opts())

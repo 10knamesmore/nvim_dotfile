@@ -94,6 +94,9 @@ return {
             colorscheme = {
                 initial_mode = "normal",
             },
+            registers = {
+                initial_mode = "normal",
+            },
         },
     },
     keys = function()
@@ -188,6 +191,13 @@ return {
                     require("telescope.builtin").oldfiles()
                 end,
                 desc = "History Files",
+            },
+            {
+                "<leader>sr",
+                function()
+                    require("telescope.builtin").registers()
+                end,
+                desc = "registers",
             },
             {
                 "<leader>h",
