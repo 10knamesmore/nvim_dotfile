@@ -109,7 +109,7 @@ HINT：轻微建议或可选优化，如微小的风格改进、可读性提升�
 最后以：“**`如需清除缓冲区高亮，请提出其他问题。`**”结尾。
 
 如果未发现问题，请确认代码编写良好并说明原因。
-                        ]],
+]],
                         callback = function(response, source)
                             local diagnostics = {}
                             for line in response.content:gmatch("[^\r\n]+") do
