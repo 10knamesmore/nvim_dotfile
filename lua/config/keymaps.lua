@@ -17,11 +17,9 @@ vim.api.nvim_create_autocmd("User", {
     callback = function()
         LazyVim.format.snacks_toggle():map("<leader>uf")
         LazyVim.format.snacks_toggle(true):map("<leader>uF")
-        --
-        -- Clear search and stop snippet on escape
+
         map({ "i", "n", "s" }, "<esc>", function()
             vim.cmd("noh")
-            LazyVim.cmp.actions.snippet_stop()
             return "<esc>"
         end, { expr = true, desc = "Escape and Clear hlsearch" })
 
@@ -35,43 +33,6 @@ vim.api.nvim_create_autocmd("User", {
             end, { desc = "Lazygit (cwd)" })
         end
 
-        Snacks.toggle.diagnostics():map("<leader>ud")
-        Snacks.toggle.dim():map("<leader>uD")
-
-        map("n", "<leader>gl", function()
-            Snacks.picker.git_log()
-        end, { desc = "Git Log" })
-
-        map("n", "<leader>gc", function()
-            Snacks.picker.git_log()
-        end, { desc = "Git commits" })
-
-        map("n", "<leader>gs", function()
-            Snacks.picker.git_status()
-        end, { desc = "Git Status" })
-
-        map("n", "<leader>gS", function()
-            Snacks.picker.git_stash()
-        end, { desc = "Git stash" })
-
-        map("n", "<leader>gb", function()
-            Snacks.picker.git_log_line()
-        end, {
-            desc = "Git blame line",
-        })
-
-        map("n", "<leader>gd", function()
-            Snacks.picker.git_diff()
-        end, { desc = "Git Diff" })
-
-        map("n", "<leader>gf", function()
-            Snacks.picker.git_log_file()
-        end, { desc = "Git Current File History" })
-
-        map("n", "<leader>gB", function()
-            Snacks.gitbrowse()
-        end, { desc = "git open remote" })
-
         -- highlightgroup under cursor
         map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 
@@ -82,10 +43,6 @@ vim.api.nvim_create_autocmd("User", {
             })
             vim.api.nvim_input("I")
         end, { desc = "Inspect Tree" })
-
-        map({ "n", "t" }, "<c-/>", function()
-            Snacks.terminal(nil, { cwd = LazyVim.root() })
-        end, { desc = "Terminal (Root Dir)" })
     end,
 })
 
