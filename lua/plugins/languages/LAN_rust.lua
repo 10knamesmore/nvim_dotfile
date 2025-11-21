@@ -57,6 +57,8 @@ return {
             vim.list_extend(opts.ensure_installed, { "codelldb" })
             if diagnostics == "bacon-ls" then
                 vim.list_extend(opts.ensure_installed, { "bacon" })
+            else
+                vim.list_extend(opts.ensure_installed, { "rust-analyzer" })
             end
         end,
     },

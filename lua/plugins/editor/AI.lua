@@ -32,7 +32,7 @@ return {
                     width = 0.4,
                 },
 
-                log_level = "debug",
+                log_level = "info",
 
                 prompts = {
                     Translate = {

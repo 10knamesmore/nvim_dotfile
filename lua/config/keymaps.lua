@@ -114,7 +114,7 @@ map({ "n", "v" }, ">", "<Nop>")
 
 -- 移动__窗口
 -- -- 大写 W 切换窗口焦点
-map("n", "W", "<C-w>w", opts())
+map({ "n", "v" }, "W", "<C-w>w", opts())
 -- --  左右方向键切换标签页,上下方向键什么都不干
 map("n", "<Left>", ":tabprevious<CR>", opts())
 map("n", "<Right>", ":tabNext<CR>", opts())

@@ -25,7 +25,7 @@ return {
                     -- relative = "cursor",
                     --
                     type = "split", -- split window
-                    relative = "win", -- relative to current window
+                    relative = "editor", -- relative to current window
                     position = "right", -- right side
                     size = 0.3,
                 },
@@ -40,7 +40,11 @@ return {
             { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
             { "<leader>xb", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
             { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (Trouble)" },
-            { "gl", "<cmd>Trouble lsp toggle focus=true<cr>", desc = "LSP references/definitions/... (Trouble)" },
+            {
+                "gl",
+                "<cmd>Trouble lsp toggle focus=true<cr>",
+                desc = "LSP references/definitions/... (Trouble)",
+            },
         }
     end,
 }

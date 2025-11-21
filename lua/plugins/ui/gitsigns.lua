@@ -1,7 +1,7 @@
 return {
     "lewis6991/gitsigns.nvim",
     opts = function()
-        vim.keymap.set("n", "<leader>uG", function()
+        vim.keymap.set("n", "<leader>ug", function()
             require("gitsigns").toggle_deleted()
             require("gitsigns").toggle_linehl()
             require("gitsigns").toggle_word_diff()

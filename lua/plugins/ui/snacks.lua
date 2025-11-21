@@ -143,6 +143,13 @@ return {
         require("snacks").toggle.dim():map("<leader>uD")
         local keys = {
             {
+                ".",
+                function()
+                    require("snacks").scratch.open()
+                end,
+                desc = "Scratch",
+            },
+            {
                 "<leader>s.",
                 function()
                     require("snacks").scratch.select()
