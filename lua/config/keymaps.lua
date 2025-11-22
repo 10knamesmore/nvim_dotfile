@@ -97,6 +97,12 @@ map("n", "<leader>O", "O<Esc>", opts("new line above"))
 map({ "n", "v" }, "<", "<Nop>")
 map({ "n", "v" }, ">", "<Nop>")
 
+map("n", "<leader>yA", function()
+    local pos = vim.fn.getpos(".")
+    vim.cmd('normal! ggVG"+y')
+    vim.fn.setpos(".", pos)
+end, opts("Yank All"))
+
 -- 移动__窗口
 -- -- 大写 W 切换窗口焦点
 map({ "n", "v" }, "W", "<C-w>w", opts())

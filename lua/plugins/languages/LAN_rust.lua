@@ -8,10 +8,11 @@ return {
     {
         "cordx56/rustowl",
         version = "*", -- Latest stable version
+        enabled = false,
         build = "cargo binstall rustowl",
         lazy = false, -- This plugin is already lazy
         opts = {
-            auto_attach = false,
+            auto_attach = falsej,
             highlight_style = "underline",
             client = {
                 on_attach = function(_, buffer)
@@ -69,14 +70,6 @@ return {
         --- @type rustaceanvim.Opts
         opts = {
             server = {
-                on_attach = function(_, bufnr)
-                    vim.keymap.set("n", "<leader>cR", function()
-                        vim.cmd.RustLsp("codeAction")
-                    end, { desc = "Code Action", buffer = bufnr })
-                    vim.keymap.set("n", "<leader>dr", function()
-                        vim.cmd.RustLsp("debuggables")
-                    end, { desc = "Rust Debuggables", buffer = bufnr })
-                end,
                 -- see https://rust-analyzer.github.io/book/configuration
                 default_settings = {
                     -- rust-analyzer language server configuration
@@ -111,7 +104,6 @@ return {
                                 ".jj",
                                 ".github",
                                 ".gitlab",
-                                "bin",
                                 "node_modules",
                                 "target",
                                 "venv",

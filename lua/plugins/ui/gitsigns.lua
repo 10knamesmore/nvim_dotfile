@@ -20,28 +20,33 @@ return {
                     vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
                 end
 
-                -- stylua: ignore start
                 map("n", "]h", function()
-                if vim.wo.diff then
-                    vim.cmd.normal({ "]c", bang = true })
-                else
-                    require("gitsigns").nav_hunk("next")
-                end
+                    if vim.wo.diff then
+                        vim.cmd.normal({ "]c", bang = true })
+                    else
+                        require("gitsigns").nav_hunk("next")
+                    end
                 end, "Next Hunk")
+
                 map("n", "[h", function()
-                if vim.wo.diff then
-                    vim.cmd.normal({ "[c", bang = true })
-                else
-                    require("gitsigns").nav_hunk("prev")
-                end
+                    if vim.wo.diff then
+                        vim.cmd.normal({ "[c", bang = true })
+                    else
+                        require("gitsigns").nav_hunk("prev")
+                    end
                 end, "Prev Hunk")
-                map("n", "]H", function() require("gitsigns").nav_hunk("last") end, "Last Hunk")
-                map("n", "[H", function() require("gitsigns").nav_hunk("first") end, "First Hunk")
-                map("n", "<leader>gh",
-                    require("gitsigns").preview_hunk_inline
-                , "Word Diff")
+
+                map("n", "]H", function()
+                    require("gitsigns").nav_hunk("last")
+                end, "Last Hunk")
+
+                map("n", "[H", function()
+                    require("gitsigns").nav_hunk("first")
+                end, "First Hunk")
             end,
         }
+
+        vim.keymap.del("n", "<leader>uG")
         return opts
     end,
 }

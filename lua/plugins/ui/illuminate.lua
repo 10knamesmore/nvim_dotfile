@@ -1,6 +1,5 @@
 -- 使用lsp 自动高亮光标下的词在文中所有地方
 -- [[ ]] 用于在上一个,下一个之间跳转
--- <leader>ux切换开关
 return {
     "RRethy/vim-illuminate",
     event = "LazyFile",
