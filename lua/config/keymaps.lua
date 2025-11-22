@@ -1,6 +1,3 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
 local map = vim.keymap.set
 local function opts(desc)
     local opts = { noremap = true, silent = true }
@@ -28,7 +25,7 @@ map("n", "<leader>uI", function()
 end, { desc = "Inspect Tree" })
 
 map("n", "<leader>uf", function()
-    utils.format.toggle()
+    LazyVim.format.toggle()
 end, { desc = "Toggle Auto Format" })
 
 -- better up/down
@@ -78,8 +75,9 @@ map({ "n", "v" }, "B", "^", opts())
 
 -- 模式切换
 -- -- 插入模式下jk,kj退出
-map("i", "jk", "<Esc>", opts())
-map("i", "kj", "<Esc>", opts())
+-- 由 better-escape 插件处理
+-- map("i", "jk", "<Esc>", opts())
+-- map("i", "kj", "<Esc>", opts())
 
 -- 移动光标
 map("n", "L", "<C-i>", opts("Jump Forward"))

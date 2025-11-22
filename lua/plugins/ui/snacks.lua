@@ -198,14 +198,6 @@ return {
                 mode = "n",
             },
             {
-                "<leader>gd",
-                function()
-                    require("snacks").picker.git_diff()
-                end,
-                desc = "Git Diff",
-                mode = "n",
-            },
-            {
                 "<leader>gf",
                 function()
                     require("snacks").picker.git_log_file()

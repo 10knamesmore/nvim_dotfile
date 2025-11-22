@@ -82,6 +82,7 @@ return {
                 file_ignore_patterns = { "node_modules", "target/" },
             },
             grep_string = {
+                initial_mode = "normal",
                 file_ignore_patterns = { "node_modules", "target/" },
             },
             lsp_document_symbols = {
