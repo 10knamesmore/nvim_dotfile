@@ -1,8 +1,6 @@
 --- 给rename 添加一些增量预览功能
 return {
-
     -- Rename with cmdpreview
-    recommended = true,
     desc = "Incremental LSP renaming based on Neovim's command-preview feature",
     {
         "smjonas/inc-rename.nvim",

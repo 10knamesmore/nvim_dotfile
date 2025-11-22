@@ -11,27 +11,14 @@ local function opts(desc)
     return opts
 end
 
--- 有些keymaps需要等待LazyVim和Snacks
+-- 有些keymaps需要等待lv和Snacks
 vim.api.nvim_create_autocmd("User", {
     pattern = "LazyVimStarted",
     callback = function()
-        LazyVim.format.snacks_toggle():map("<leader>uf")
-        LazyVim.format.snacks_toggle(true):map("<leader>uF")
-
         map({ "i", "n", "s" }, "<esc>", function()
             vim.cmd("noh")
             return "<esc>"
         end, { expr = true, desc = "Escape and Clear hlsearch" })
-
-        -- lazygit
-        if vim.fn.executable("lazygit") == 1 then
-            map("n", "<leader>gg", function()
-                Snacks.lazygit({ cwd = LazyVim.root.git() })
-            end, { desc = "Lazygit (Root Dir)" })
-            map("n", "<leader>gG", function()
-                Snacks.lazygit()
-            end, { desc = "Lazygit (cwd)" })
-        end
 
         -- highlightgroup under cursor
         map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
@@ -45,6 +32,10 @@ vim.api.nvim_create_autocmd("User", {
         end, { desc = "Inspect Tree" })
     end,
 })
+
+map("n", "<leader>uf", function()
+    utils.format.toggle()
+end, { desc = "Toggle Auto Format" })
 
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })

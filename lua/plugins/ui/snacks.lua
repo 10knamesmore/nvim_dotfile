@@ -4,7 +4,7 @@ local dashboard_sections = {
     {
         ttl = 0,
         enabled = function()
-            return vim.o.lines > 40 and vim.o.columns > 100
+            return vim.o.lines > 75 and vim.o.columns > 110
         end,
         section = "terminal",
         cmd = 'ascii-image-converter --color -H50 "' .. vim.fn.stdpath("config") .. '/data/mutsumi.jpg"',
@@ -158,7 +158,7 @@ return {
             },
 
             {
-                "<leader>gG",
+                "<leader>gg",
                 function()
                     require("snacks").lazygit()
                 end,

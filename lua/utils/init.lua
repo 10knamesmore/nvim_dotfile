@@ -3,6 +3,7 @@ local M = {}
 M.lualine = require("utils.lualine")
 M.path = require("utils.path")
 M.plugins = require("utils.plugins")
+M.format = require("utils.format")
 
 icons = {
     misc = {
