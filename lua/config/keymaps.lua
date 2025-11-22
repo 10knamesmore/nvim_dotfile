@@ -11,27 +11,21 @@ local function opts(desc)
     return opts
 end
 
--- 有些keymaps需要等待lv和Snacks
-vim.api.nvim_create_autocmd("User", {
-    pattern = "LazyVimStarted",
-    callback = function()
-        map({ "i", "n", "s" }, "<esc>", function()
-            vim.cmd("noh")
-            return "<esc>"
-        end, { expr = true, desc = "Escape and Clear hlsearch" })
+map({ "i", "n", "s" }, "<esc>", function()
+    vim.cmd("noh")
+    return "<esc>"
+end, { expr = true, desc = "Escape and Clear hlsearch" })
 
-        -- highlightgroup under cursor
-        map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
+-- highlightgroup under cursor
+map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 
-        -- treesitter inspect tree
-        map("n", "<leader>uI", function()
-            vim.treesitter.inspect_tree({
-                command = (math.floor(vim.o.columns * 0.4)) .. "vnew",
-            })
-            vim.api.nvim_input("I")
-        end, { desc = "Inspect Tree" })
-    end,
-})
+-- treesitter inspect tree
+map("n", "<leader>uI", function()
+    vim.treesitter.inspect_tree({
+        command = (math.floor(vim.o.columns * 0.4)) .. "vnew",
+    })
+    vim.api.nvim_input("I")
+end, { desc = "Inspect Tree" })
 
 map("n", "<leader>uf", function()
     utils.format.toggle()
