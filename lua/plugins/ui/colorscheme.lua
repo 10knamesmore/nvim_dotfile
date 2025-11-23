@@ -4,8 +4,25 @@ return {
         lazy = true, -- make sure we load this during startup if it is your main colorscheme
         opts = function()
             vim.api.nvim_set_hl(0, "@keyword.import.rust", { link = "@Keyword" })
-            return { transparent = false, style = "moon" }
+            return {
+                transparent = false,
+                style = "moon",
+                styles = {
+                    functions = { italic = true },
+                    keywords = { italic = true, bold = true },
+                },
+            }
         end,
+    },
+    {
+        "rebelot/kanagawa.nvim",
+        opts = {},
+    },
+    {
+        "bluz71/vim-moonfly-colors",
+        name = "moonfly",
+        lazy = false,
+        priority = 1000,
     },
     {
         "catppuccin/nvim",
@@ -51,6 +68,12 @@ return {
                 treesitter_context = true,
                 which_key = true,
             },
+        },
+    },
+    {
+        "LazyVim/LazyVim",
+        opts = {
+            colorscheme = "kanagawa",
         },
     },
 }

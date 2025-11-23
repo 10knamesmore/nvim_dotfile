@@ -20,7 +20,7 @@ return {
         },
         config = function(_, opts)
             require("yanky").setup(opts)
-            vim.keymap.set("n", "<leader>sp", function()
+            vim.keymap.set({ "n", "v" }, "<leader>sp", function()
                 require("telescope").extensions.yank_history.yank_history({ initial_mode = "normal" })
             end, { noremap = true, silent = true, desc = "Open Yank History" })
         end,
