@@ -27,6 +27,15 @@ return {
                 mode = { "n", "x" },
                 desc = "Format Injected Langs",
             },
+            {
+                "=",
+                function()
+                    vim.cmd("LazyFormat")
+                    vim.cmd("w")
+                end,
+                mode = { "n", "x", "v" },
+                desc = "Format File",
+            },
         }
     end,
 }

@@ -141,7 +141,7 @@ return {
                 },
 
                 lualine_c = {
-                    { utils.lualine.pretty_path(), separator = "" },
+                    { LazyVim.lualine.pretty_path(), separator = "" },
 
                     { "filetype", icon_only = true, padding = { left = 1, right = 0 } },
 

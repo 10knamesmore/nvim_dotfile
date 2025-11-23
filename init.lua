@@ -1,4 +1,5 @@
 _G.utils = require("utils")
+-- package.loaded["lazyvim.config.options"] = true -- 不加载LazyVim的options
 if vim.g.neovide then
     require("config.lazy")
     require("config.keymaps")

@@ -84,8 +84,8 @@ return {
     },
     {
         "rmagatti/goto-preview", -- 插件名称：用于“预览跳转”功能，如函数定义/引用的浮动窗口预览
-        dependencies = { "rmagatti/logger.nvim" }, -- 插件依赖项（记录日志用）
         enabled = false,
+        dependencies = { "rmagatti/logger.nvim" }, -- 插件依赖项（记录日志用）
         event = "BufEnter", -- 在进入缓冲区时懒加载该插件
 
         config = true, -- 启用自动加载 setup 配置（必须为 true，否则 issue #88 会导致失效）
@@ -120,5 +120,9 @@ return {
             zindex = 1, -- 浮动窗口的 z-index 层级（用于叠加窗口排序）
             vim_ui_input = true, -- 是否使用 goto-preview 的浮动窗口替代 `vim.ui.input`（可用于插件交互）
         },
+    },
+    {
+        "MagicDuck/grug-far.nvim",
+        enabled = false,
     },
 }

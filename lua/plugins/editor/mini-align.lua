@@ -1,6 +1,7 @@
 return {
     "nvim-mini/mini.align",
     version = false,
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     opts = function()
         -- No need to copy this inside `setup()`. Will be used automatically.
         local opts = {

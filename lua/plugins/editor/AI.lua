@@ -358,6 +358,7 @@ line:123-234 你的回答
                 callback = function()
                     -- TODO
                     vim.wo.signcolumn = "no"
+                    vim.wo.number = false
                 end,
             })
 
@@ -371,7 +372,7 @@ line:123-234 你的回答
             table.insert(
                 opts.sections.lualine_x,
                 2,
-                utils.lualine.status(" ", function()
+                LazyVim.lualine.status(" ", function()
                     local clients = package.loaded["copilot"] and vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
                         or {}
                     if #clients > 0 then
