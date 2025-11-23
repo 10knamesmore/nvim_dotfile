@@ -1,6 +1,5 @@
 return {
     "nvim-telescope/telescope.nvim",
-    lazy = false,
     opts = {
         defaults = {
             default_mappings = {

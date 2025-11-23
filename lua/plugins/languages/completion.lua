@@ -1,7 +1,9 @@
 return {
     "saghen/blink.cmp", -- 插件名称，blink.cmp 是一个补全框架，支持 LSP/snippet 等多种来源
 
-    event = { "BufReadPost", "BufNewFile" },
+    event = function()
+        return { "BufReadPost", "BufNewFile" }
+    end,
     version = "1.*",
     deppendencies = { "xzbdmw/colorful-menu.nvim", opts = {} },
 

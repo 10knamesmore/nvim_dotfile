@@ -3,7 +3,6 @@ return {
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         branch = "main",
-        lazy = false,
         cmd = "CopilotChat", -- 通过 :CopilotChat 命令懒加载
         opts = function()
             -- 获取当前用户名，用于聊天头部显示
@@ -368,7 +367,6 @@ line:123-234 你的回答
     {
         "nvim-lualine/lualine.nvim",
         optional = true,
-        event = "VeryLazy",
         opts = function(_, opts)
             table.insert(
                 opts.sections.lualine_x,

@@ -11,7 +11,6 @@ end
 
 return {
     "nvim-mini/mini.files",
-    lazy = false,
     keys = {
         {
             "<leader>e",

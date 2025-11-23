@@ -2,7 +2,7 @@
 -- [[ ]] 用于在上一个,下一个之间跳转
 return {
     "RRethy/vim-illuminate",
-    event = "LazyFile",
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     opts = {
         delay = 200,
         large_file_cutoff = 2000,
