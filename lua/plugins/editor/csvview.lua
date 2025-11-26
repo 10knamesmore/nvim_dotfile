@@ -21,5 +21,5 @@ return {
             jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
         },
     },
-    cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+    cmd = { "CsvViewToggle" },
 }
