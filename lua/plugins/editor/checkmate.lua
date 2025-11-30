@@ -2,18 +2,16 @@
 return {
     {
         "folke/which-key.nvim",
-        optional = true,
         opts = {
             spec = {
                 { "<leader>t", group = "TODO Manage", icon = "" },
                 {
-                    "<leader>.",
+                    "t",
                     function()
                         local project_dir = utils.path.get_root()
                         local file = project_dir .. "/" .. ".todo.md"
                         local current_file_path = vim.api.nvim_buf_get_name(0)
                         if current_file_path == file then
-                            vim.notify("Already in project TODO file")
                             return
                         end
 
