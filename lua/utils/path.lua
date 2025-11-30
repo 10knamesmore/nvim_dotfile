@@ -101,11 +101,9 @@ end
 M.cache = {} -- bunr -> dir
 
 --- 获取指定 buffer 的根目录（优先级：LSP workspace > LSP root_dir > 文件名模式 > cwd）
----@param opts? {normalize?:boolean, buf?:number}
 ---@return string
-function M.get_root(opts)
-    opts = opts or {}
-    local buf = opts.buf or vim.api.nvim_get_current_buf()
+function M.get_root()
+    local buf = vim.api.nvim_get_current_buf()
     local ret = M.cache[buf]
 
     if not ret then

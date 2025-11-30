@@ -20,14 +20,35 @@ return {
         },
         config = function(_, opts)
             require("yanky").setup(opts)
-            vim.keymap.set({ "n", "v" }, "<leader>sp", function()
+            vim.keymap.set({ "n", "v" }, "<leader>sy", function()
                 require("telescope").extensions.yank_history.yank_history({ initial_mode = "normal" })
-            end, { noremap = true, silent = true, desc = "Open Yank History" })
+            end, { noremap = true, silent = true, desc = "Yank History" })
         end,
         keys = {
             { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
             { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" },
             { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" },
+        },
+    },
+    {
+        "folke/which-key.nvim",
+        opts = {
+            spec = {
+                {
+                    { "<leader>y", group = "yank", icon = "" },
+                },
+            },
+        },
+        keys = {
+            {
+                "<leader>yy",
+                function()
+                    local pos = vim.fn.getpos(".")
+                    vim.cmd('normal! ggVG"+y')
+                    vim.fn.setpos(".", pos)
+                end,
+                desc = "Yank All",
+            },
         },
     },
 }

@@ -152,7 +152,7 @@ return {
             {
                 "<leader>s.",
                 function()
-                    require("snacks").scratch.select()
+                    Snacks.picker.scratch({ focus = "list" })
                 end,
                 desc = "Select Scratch Buffer",
             },
