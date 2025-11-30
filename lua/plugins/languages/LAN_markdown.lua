@@ -12,9 +12,9 @@ local render_md_opt = {
     render_modes = true,
     anti_conceal = {
         -- Number of lines above cursor to show.
-        above = 2,
+        above = 0,
         -- Number of lines below cursor to show.
-        below = 2,
+        below = 0,
     },
     completions = {
         lsp = {
@@ -55,15 +55,41 @@ local render_md_opt = {
         example   = { quote_icon = "█"},
         quote     = { quote_icon = "█"},
         cite      = { quote_icon = "█"},
-            },
+    },
     heading = {
         sign = false,
         position = "inline",
         width = "full",
     },
     checkbox = {
-        unchecked = { icon = "✘ " },
-        checked = { scope_highlight = "@markup.strikethrough", icon = "✔ " },
+        enabled = true,
+        bullet = false,
+        left_pad = 0,
+        right_pad = 1,
+        unchecked = {
+            icon = "󰄱 ",
+            highlight = "RenderMarkdownUnchecked",
+            scope_highlight = nil,
+        },
+        checked = {
+            icon = "󰱒 ",
+            highlight = "RenderMarkdownChecked",
+            scope_highlight = nil,
+        },
+        custom = {
+            todo = {
+                raw = "[-]",
+                rendered = "󰥔 ",
+                highlight = "RenderMarkdownTodo",
+                scope_highlight = nil,
+            },
+            important = {
+                raw = "[~]",
+                rendered = "󰓎 ",
+                highlight = "DiagnosticWarn",
+            },
+        },
+        scope_priority = nil,
     },
     latex = {
         enabled = true,
