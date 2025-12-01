@@ -10,37 +10,20 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-
-        -- 根据文件类型控制插件是否启用
-        enabled = function()
-            -- 在 markdown 文件中禁用补全（如写文档时不希望触发自动补全）
-            if vim.tbl_contains({ "markdown" }, vim.bo.filetype) then
-                return false
-            else
-                return true
-            end
-        end,
+        -- 外观设置
+        appearance = {
+            -- 使用普通 Nerd Font（normal 更适配非 mono 风格的图标）
+            nerd_font_variant = "normal",
+        },
 
         -- 是否启用命令行补全（默认关闭）
         cmdline = { enabled = false },
 
-        -- 键位映射设置
-        keymap = {
-            preset = "none", -- 不使用预设，完全自定义
-            ["<Up>"] = { "select_prev", "fallback" }, -- 向上选择补全项
-            ["<Down>"] = { "select_next", "fallback" }, -- 向下选择补全项
-            ["<Tab>"] = { "select_next", "fallback" }, -- Tab 选择下一个
-            ["<S-Tab>"] = { "select_prev", "fallback" }, -- Shift-Tab 选择上一个
-            ["<Cr>"] = { "accept", "fallback" }, -- 回车接受当前项
-            ["<C-d>"] = { "cancel", "fallback" }, -- Ctrl-d 取消补全
-
-            ["<C-n>"] = { "scroll_documentation_down", "fallback" }, -- 向下滚动文档
-            ["<C-f>"] = { "scroll_documentation_up", "fallback" }, -- 向上滚动文档
-        },
-
         -- 补全逻辑相关设置
         completion = {
-            keyword = { range = "prefix" }, -- 匹配关键字的范围，使用前缀匹配
+            keyword = {
+                range = "prefix", -- 只匹配光标前
+            },
 
             accept = {
                 auto_brackets = { enabled = true }, -- 自动接受时是否添加括号
@@ -58,7 +41,7 @@ return {
                 draw = {
                     columns = {
                         -- 第一列：图标 + label + 描述，紧凑排布
-                        { "kind_icon", "label", gap = 0 },
+                        { "kind_icon", "label", "label_description" },
                         -- 第二列：补全项的类型（如函数、变量等）
                         { "kind" },
                         -- 第三列：补全来源（如 lsp, buffer）
@@ -73,13 +56,34 @@ return {
                                 return require("colorful-menu").blink_components_highlight(ctx)
                             end,
                         },
+
+                        source_name = {
+                            width = { max = 30 },
+                            text = function(ctx)
+                                if ctx.item.client_name then
+                                    local client_name = ctx.item.client_name
+                                    if client_name == "rust-analyzer" then
+                                        return "Rust"
+                                    end
+
+                                    return client_name
+                                else
+                                    return ctx.source_name
+                                end
+                            end,
+                            highlight = "BlinkCmpSource",
+                        },
                     },
                 },
-                -- border = "padded", -- 可启用边框（此处注释掉）
+                border = "rounded",
+                scrollbar = false,
+                max_height = 15, -- 最大高度为 15 行
             },
 
             documentation = {
                 auto_show = true, -- 自动显示补全项的文档说明
+                auto_show_delay_ms = 0,
+                window = { border = "rounded" },
             },
 
             ghost_text = {
@@ -87,21 +91,10 @@ return {
             },
         },
 
-        -- 外观设置
-        appearance = {
-            -- 使用普通 Nerd Font（normal 更适配非 mono 风格的图标）
-            nerd_font_variant = "normal",
-        },
-
-        -- 默认启用的补全来源，其他配置中可通过 opts_extend 扩展此表
-        sources = {
-            default = { "lsp", "snippets", "buffer", "path" },
-        },
-
         -- 模糊匹配设置
         fuzzy = {
             -- 优先使用 Rust 实现的算法，若失败则警告
-            implementation = "prefer_rust_with_warning",
+            implementation = "rust",
 
             sorts = {
                 -- 自定义排序函数：将以 "_" 开头的补全项排到后面
@@ -117,6 +110,27 @@ return {
                 "sort_text",
             },
         },
+
+        -- 键位映射设置
+        keymap = {
+            preset = "none", -- 不使用预设，完全自定义
+            ["<Up>"] = { "select_prev", "fallback" }, -- 向上选择补全项
+            ["<Down>"] = { "select_next", "fallback" }, -- 向下选择补全项
+            ["<Tab>"] = { "select_next", "fallback" }, -- Tab 选择下一个
+            ["<S-Tab>"] = { "select_prev", "fallback" }, -- Shift-Tab 选择上一个
+            ["<Cr>"] = { "accept", "fallback" }, -- 回车接受当前项
+            ["<C-c>"] = { "cancel", "fallback" }, -- Ctrl-c 关闭补全菜单
+
+            ["<C-d>"] = { "scroll_documentation_down" }, -- 向下滚动文档
+            ["<C-u>"] = { "scroll_documentation_up" }, -- 向上滚动文档
+        },
+
+        -- 默认启用的补全来源，其他配置中可通过 opts_extend 扩展此表
+        sources = {
+            default = { "lsp", "snippets", "buffer", "path", "omni" },
+        },
+
+        snippets = { preset = "default" },
 
         -- 启用函数参数签名提示
         signature = { enabled = true },
