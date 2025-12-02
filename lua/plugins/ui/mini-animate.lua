@@ -17,13 +17,6 @@ return {
                 end, { expr = true })
             end
 
-            vim.api.nvim_create_autocmd("FileType", {
-                pattern = "grug-far",
-                callback = function()
-                    vim.b.minianimate_disable = true
-                end,
-            })
-
             local animate = require("mini.animate")
             return vim.tbl_deep_extend("force", opts, {
                 cursor = {

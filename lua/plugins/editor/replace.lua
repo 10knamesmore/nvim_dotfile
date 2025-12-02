@@ -1,3 +1,4 @@
+-- Search and replace using ripgrep
 return {
     "chrisgrieser/nvim-rip-substitute",
     opts = {
@@ -8,7 +9,7 @@ return {
             noMatchHlGroup = "ErrorMsg",
             position = "top", ---@type "top"|"bottom"
             hideSearchReplaceLabels = false,
-            hideKeymapHints = false,
+            hideKeymapHints = true,
             disableCompletions = true, -- such as from blink.cmp
         },
         prefill = {
@@ -45,7 +46,7 @@ return {
     },
     keys = {
         {
-            "<leader>r",
+            "R",
             function()
                 require("rip-substitute").sub()
             end,

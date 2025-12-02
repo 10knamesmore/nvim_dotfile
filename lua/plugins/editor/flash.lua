@@ -133,7 +133,7 @@ return {
                 -- 为 true 时，在普通搜索中默认启用 flash
                 -- 使用 require("flash").toggle() 可随时切换
                 enabled = true,
-                highlight = { backdrop = true },
+                highlight = { backdrop = false },
                 jump = { history = true, register = true, nohlsearch = true },
                 search = {
                     -- `forward` 会自动设置为搜索方向
