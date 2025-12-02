@@ -18,7 +18,7 @@ return {
             ---@type Flash.Pattern.Mode
             -- 每种模式都会考虑 ignorecase 和 smartcase。
             -- * exact：精确匹配
-            -- * search：普通搜索
+            -- * search：正则搜索
             -- * fuzzy：模糊搜索
             -- * fun(str)：返回模式的自定义函数
             --   例如，仅匹配单词开头：
@@ -132,8 +132,8 @@ return {
             search = {
                 -- 为 true 时，在普通搜索中默认启用 flash
                 -- 使用 require("flash").toggle() 可随时切换
-                enabled = false,
-                highlight = { backdrop = false },
+                enabled = true,
+                highlight = { backdrop = true },
                 jump = { history = true, register = true, nohlsearch = true },
                 search = {
                     -- `forward` 会自动设置为搜索方向
@@ -243,37 +243,31 @@ return {
             motion = false,
         },
     },
-    keys = {
-        {
-            "s",
-            mode = { "n", "x", "o" },
-            function()
-                require("flash").jump()
-            end,
-            desc = "Flash",
-        },
-        {
-            "f",
-            mode = { "n", "x", "o" },
-            function()
-                require("flash").jump()
-            end,
-            desc = "Flash",
-        },
-        {
-            "S",
-            mode = { "n", "x", "o" },
-            function()
-                require("flash").treesitter({
-                    label = {
-                        rainbow = {
-                            enabled = true,
-                            shade = 2,
+    keys = function()
+        return {
+            {
+                "f",
+                mode = { "n", "x", "o" },
+                function()
+                    require("flash").jump()
+                end,
+                desc = "Flash",
+            },
+            {
+                "S",
+                mode = { "n", "x", "o" },
+                function()
+                    require("flash").treesitter({
+                        label = {
+                            rainbow = {
+                                enabled = true,
+                                shade = 2,
+                            },
                         },
-                    },
-                })
-            end,
-            desc = "Flash Treesitter",
-        },
-    },
+                    })
+                end,
+                desc = "Flash Treesitter",
+            },
+        }
+    end,
 }
