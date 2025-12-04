@@ -117,6 +117,26 @@ return {
                 end,
                 desc = "search in current buffer",
             },
+
+            {
+                "gd",
+                function()
+                    require("telescope.builtin").lsp_definitions({
+                        show_line = false,
+                    })
+                end,
+                desc = "Goto Definition",
+            },
+            {
+                "gr",
+                function()
+                    require("telescope.builtin").lsp_references({
+                        show_line = false,
+                    })
+                end,
+                desc = "References",
+                nowait = true,
+            },
             {
                 "<leader>/",
                 function()
