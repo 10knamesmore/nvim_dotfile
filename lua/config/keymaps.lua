@@ -10,6 +10,7 @@ end
 
 map({ "i", "n", "s" }, "<esc>", function()
     vim.cmd("noh")
+    vim.snippet.stop()
     return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
 
@@ -94,7 +95,6 @@ map("n", "<leader>O", "O<Esc>", opts("new line above"))
 -- 目前让 <> 什么都不做
 map({ "n", "v" }, "<", "<Nop>")
 map({ "n", "v" }, ">", "<Nop>")
-
 
 -- 移动__窗口
 -- -- 大写 W 切换窗口焦点
