@@ -11,6 +11,7 @@ return {
 
             --- @type CopilotChat.config.Config
             return {
+                model = "gpt-4o",
                 auto_insert_mode = false, -- 聊天窗口不自动进入插入模式
                 language = "中文",
                 system_prompt = [[
