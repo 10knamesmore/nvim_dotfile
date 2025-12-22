@@ -150,3 +150,15 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         vim.opt_local.wrap = false
     end,
 })
+
+-- =========================================
+-- JS/TS/HTML 文件缩进设为 2
+vim.api.nvim_create_autocmd("FileType", {
+    group = augroup("indent_2"),
+    pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact", "html", "css", "scss", "json", "jsonc", "yaml", "vue", "svelte" },
+    callback = function()
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.tabstop = 2
+        vim.opt_local.softtabstop = 2
+    end,
+})
