@@ -134,6 +134,15 @@ return {
             }, -- 启用 scratch buffer，并命名为“草稿”
             statuscolumn = { enabled = false }, -- 启用状态列（通常用于显示行号、git 标记等）
             words = { enabled = false }, -- 单词增强功能禁用
+            terminal = {
+                terminal = {
+                    win = {
+                        keys = {
+                            hide_slash = { "<C-/>", "hide", desc = "Hide Terminal", mode = { "t", "n" } },
+                        },
+                    },
+                },
+            },
         }
 
         return opts
