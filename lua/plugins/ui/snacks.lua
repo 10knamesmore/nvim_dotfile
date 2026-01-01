@@ -228,7 +228,9 @@ return {
             {
                 "<c-/>",
                 function()
-                    require("snacks").terminal(nil, { cwd = require("lazyvim.util.root")() })
+                    require("snacks").terminal.toggle(nil, {
+                        cwd = require("lazyvim.util.root")(),
+                    })
                 end,
                 desc = "Terminal (Root Dir)",
                 mode = { "n", "t" },
