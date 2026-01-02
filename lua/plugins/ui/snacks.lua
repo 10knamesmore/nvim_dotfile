@@ -217,18 +217,14 @@ return {
             {
                 "<leader>n",
                 function()
-                    if require("snacks").config.picker and require("snacks").config.picker.enabled then
-                        require("snacks").picker.notifications()
-                    else
-                        require("snacks").notifier.show_history()
-                    end
+                    require("snacks").notifier.show_history()
                 end,
                 desc = "Notification History",
             },
             {
                 "<c-/>",
                 function()
-                    require("snacks").terminal(nil, { cwd = require("lazyvim.util.root")() })
+                    require("snacks").terminal()
                 end,
                 desc = "Terminal (Root Dir)",
                 mode = { "n", "t" },

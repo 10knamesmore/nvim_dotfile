@@ -10,6 +10,8 @@ return {
         "neovim/nvim-lspconfig",
         event = { "BufReadPost", "BufNewFile" },
         opts = function(_, opts)
+            opts.servers = opts.servers or {}
+            opts.servers.systemd_ls = { enabled = false }
             opts.servers["*"].keys = {
                 {
                     "<leader>cR",

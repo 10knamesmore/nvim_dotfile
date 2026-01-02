@@ -4,6 +4,7 @@ return {
         "CopilotC-Nvim/CopilotChat.nvim",
         branch = "main",
         cmd = "CopilotChat", -- 通过 :CopilotChat 命令懒加载
+        enabled = false,
         opts = function()
             -- 获取当前用户名，用于聊天头部显示
             local user = vim.env.USER or "User"
@@ -384,26 +385,26 @@ line:123-234 你的回答
             )
         end,
     },
-    {
-        "saghen/blink.cmp",
-        optional = true,
-        ---@module 'blink.cmp'
-        ---@type blink.cmp.Config
-        opts = {
-            sources = {
-                providers = {
-                    path = {
-                        -- Path sources triggered by "/" interfere with CopilotChat commands
-                        enabled = function()
-                            return vim.bo.filetype ~= "copilot-chat"
-                        end,
-                    },
-                },
-            },
-        },
-    },
-    {
-        "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "copilot-chat" },
-    },
+    -- {
+    --     "saghen/blink.cmp",
+    --     optional = true,
+    --     ---@module 'blink.cmp'
+    --     ---@type blink.cmp.Config
+    --     opts = {
+    --         sources = {
+    --             providers = {
+    --                 path = {
+    --                     -- Path sources triggered by "/" interfere with CopilotChat commands
+    --                     enabled = function()
+    --                         return vim.bo.filetype ~= "copilot-chat"
+    --                     end,
+    --                 },
+    --             },
+    --         },
+    --     },
+    -- },
+    -- {
+    --     "MeanderingProgrammer/render-markdown.nvim",
+    --     ft = { "copilot-chat" },
+    -- },
 }
