@@ -16,7 +16,7 @@ return {
         ---@type sidekick.Config
         opts = {
             nes = {
-                enabled = true,
+                enabled = false,
             },
             mux = {
                 backend = "zellij",
@@ -25,7 +25,7 @@ return {
             cli = {
                 prompts = {
                     changes = "请 review 我 git 更改的部分",
-                    commit = "请为我生成一个合适的 git 提交信息",
+                    commit = "阅读git diff --staged记录, 请为我生成一个合适的 git 中文提交信息\n请根据 commitizen 规范为更改编写提交信息。标题保持在 50 个字符以内，正文每行不超过 72 个字符。以 gitcommit 代码块格式输出.",
                     diagnostics = "帮我修复这个文件的诊断信息 {file}?\n{diagnostics}",
                     document = "为这里添加文档注释 {function|line}",
                     explain = "详细解释, 包括背后底层原理,背景信息, 如何实现, 步骤如何 {this}",
@@ -35,7 +35,7 @@ return {
                     tests = "帮我为 {this} 编写测试",
                 },
                 win = {
-                    layout = "float",
+                    layout = "right",
                     keys = {
                         hide_esc = { "<Esc>", "hide", mode = "n", desc = "hide the terminal window" },
                     },
@@ -44,18 +44,6 @@ return {
             },
         },
         keys = {
-            -- nes is also useful in normal mode
-            {
-                "<tab>",
-                function()
-                    if require("sidekick").nes_jump_or_apply() then
-                        return
-                    end
-                    return "<tab>"
-                end,
-                mode = { "n", "i" },
-                expr = true,
-            },
             { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
             {
                 "<leader>aa",

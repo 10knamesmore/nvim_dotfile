@@ -8,9 +8,17 @@ return {
                 transparent = false,
                 style = "moon",
                 styles = {
-                    functions = { italic = true },
+                    functions = { italic = true, bold = true },
                     keywords = { italic = true, bold = true },
                 },
+                ---@param highlights tokyonight.Highlights
+                ---@param colors ColorScheme
+                on_highlights = function(highlights, _)
+                    require("tokyonight")
+                    highlights["String"].italic = true
+                    highlights["Constant"].italic = true
+                    highlights["Constant"].bold = true
+                end,
             }
         end,
     },

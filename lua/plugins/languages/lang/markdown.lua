@@ -7,6 +7,8 @@ vim.api.nvim_create_autocmd("User", {
     end,
 })
 
+vim.api.nvim_set_hl(0, "@spell", { italic = true })
+
 ---@type render.md.UserConfig
 local render_md_opt = {
     render_modes = true,

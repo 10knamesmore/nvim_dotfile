@@ -1,6 +1,23 @@
 -- CopilotChat.nvim 插件配置，为 Neovim 提供 AI 助手功能
 return {
     {
+        "nvim-lualine/lualine.nvim",
+        opts = function(_, opts)
+            table.insert(
+                opts.sections.lualine_x,
+                2,
+                LazyVim.lualine.status(" ", function()
+                    local clients = package.loaded["copilot"] and vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
+                        or {}
+                    if #clients > 0 then
+                        local status = require("copilot.status").data.status
+                        return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
+                    end
+                end)
+            )
+        end,
+    },
+    {
         "CopilotC-Nvim/CopilotChat.nvim",
         branch = "main",
         cmd = "CopilotChat", -- 通过 :CopilotChat 命令懒加载
@@ -365,24 +382,6 @@ line:123-234 你的回答
             })
 
             chat.setup(opts) -- 用配置初始化插件
-        end,
-    },
-    {
-        "nvim-lualine/lualine.nvim",
-        optional = true,
-        opts = function(_, opts)
-            table.insert(
-                opts.sections.lualine_x,
-                2,
-                LazyVim.lualine.status(" ", function()
-                    local clients = package.loaded["copilot"] and vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
-                        or {}
-                    if #clients > 0 then
-                        local status = require("copilot.status").data.status
-                        return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
-                    end
-                end)
-            )
         end,
     },
     -- {

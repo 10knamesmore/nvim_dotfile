@@ -1,3 +1,4 @@
+vim.api.nvim_set_hl(0, "BlinkCmpSource", { italic = true, fg = "#c0caf5", bold = true })
 return {
     "saghen/blink.cmp", -- 插件名称，blink.cmp 是一个补全框架，支持 LSP/snippet 等多种来源
 
@@ -26,7 +27,12 @@ return {
             },
 
             accept = {
-                auto_brackets = { enabled = true }, -- 自动接受时是否添加括号
+                auto_brackets = {
+                    enabled = true,
+                    kind_resolution = {
+                        blocked_filetypes = {},
+                    },
+                }, -- 自动接受时是否添加括号
             },
 
             list = {
@@ -38,6 +44,7 @@ return {
 
             menu = {
                 auto_show = true, -- 自动显示补全菜单
+                winblend = 5,
                 draw = {
                     columns = {
                         -- 第一列：图标 + label + 描述，紧凑排布
