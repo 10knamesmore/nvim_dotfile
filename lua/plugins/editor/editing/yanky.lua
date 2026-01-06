@@ -43,9 +43,9 @@ return {
             {
                 "<leader>yy",
                 function()
-                    local pos = vim.fn.getpos(".")
+                    local view = vim.fn.winsaveview()
                     vim.cmd('normal! ggVG"+y')
-                    vim.fn.setpos(".", pos)
+                    vim.fn.winrestview(view)
                 end,
                 desc = "Yank All",
             },
