@@ -1,3 +1,4 @@
+local ignore_patterns = { "node_modules", "target/", ".venv" }
 return {
     "nvim-telescope/telescope.nvim",
     opts = {
@@ -75,14 +76,14 @@ return {
                 },
             },
             find_files = {
-                file_ignore_patterns = { "node_modules", "target/" },
+                file_ignore_patterns = ignore_patterns,
             },
             live_grep = {
-                file_ignore_patterns = { "node_modules", "target/" },
+                file_ignore_patterns = ignore_patterns,
             },
             grep_string = {
                 initial_mode = "normal",
-                file_ignore_patterns = { "node_modules", "target/" },
+                file_ignore_patterns = ignore_patterns,
             },
             lsp_document_symbols = {
                 layout_config = {
