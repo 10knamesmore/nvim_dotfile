@@ -71,6 +71,18 @@ return {
                     },
                 },
             }, -- 启用仪表盘功能并加载定义的各部分
+            dim = {
+                scope = {
+                    min_size = 10,
+                    siblings = true,
+                },
+                animate = {
+                    duration = {
+                        step = 15,
+                        total = 150,
+                    },
+                },
+            },
             explorer = { enabled = false, replace_netrw = false }, -- 文件浏览器功能禁用
             input = { enabled = true }, -- 启用输入增强（如 float 弹窗输入）
             profiler = { enabled = false },
@@ -143,6 +155,14 @@ return {
                     },
                 },
             },
+            zen = {
+                toggles = {
+                    dim = false,
+                },
+                win = {
+                    width = 160,
+                },
+            },
         }
 
         return opts
@@ -150,6 +170,7 @@ return {
     keys = function()
         require("snacks").toggle.diagnostics():map("<leader>ud")
         require("snacks").toggle.dim():map("<leader>uD")
+        require("snacks").toggle.zen():map("<leader>uz")
         local keys = {
             {
                 ".",
