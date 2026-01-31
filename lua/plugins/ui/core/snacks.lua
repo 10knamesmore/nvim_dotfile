@@ -147,11 +147,59 @@ return {
             statuscolumn = { enabled = false }, -- 启用状态列（通常用于显示行号、git 标记等）
             words = { enabled = false }, -- 单词增强功能禁用
             terminal = {
-                terminal = {
-                    win = {
-                        keys = {
-                            hide_slash = { "<C-/>", "hide", desc = "Hide Terminal", mode = { "t", "n" } },
+                win = {
+                    keys = {
+                        -- 终端导航辅助（从 core/util.lua 合并）
+                        nav_h = {
+                            "<C-h>",
+                            function(self)
+                                return self:is_floating() and "<c-h>"
+                                    or vim.schedule(function()
+                                        vim.cmd.wincmd("h")
+                                    end)
+                            end,
+                            desc = "Go to Left Window",
+                            expr = true,
+                            mode = "t",
                         },
+                        nav_j = {
+                            "<C-j>",
+                            function(self)
+                                return self:is_floating() and "<c-j>"
+                                    or vim.schedule(function()
+                                        vim.cmd.wincmd("j")
+                                    end)
+                            end,
+                            desc = "Go to Lower Window",
+                            expr = true,
+                            mode = "t",
+                        },
+                        nav_k = {
+                            "<C-k>",
+                            function(self)
+                                return self:is_floating() and "<c-k>"
+                                    or vim.schedule(function()
+                                        vim.cmd.wincmd("k")
+                                    end)
+                            end,
+                            desc = "Go to Upper Window",
+                            expr = true,
+                            mode = "t",
+                        },
+                        nav_l = {
+                            "<C-l>",
+                            function(self)
+                                return self:is_floating() and "<c-l>"
+                                    or vim.schedule(function()
+                                        vim.cmd.wincmd("l")
+                                    end)
+                            end,
+                            desc = "Go to Right Window",
+                            expr = true,
+                            mode = "t",
+                        },
+                        hide_slash = { "<C-/>", "hide", desc = "Hide Terminal", mode = { "t", "n" } },
+                        hide_underscore = { "<c-_>", "hide", desc = "which_key_ignore", mode = { "t", "n" } },
                     },
                 },
             },
