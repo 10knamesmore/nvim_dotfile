@@ -210,26 +210,6 @@ opt.winminwidth = 5
 -- 一行超出范围换行
 opt.wrap = true
 
----------------- LazyVim 默认配置, 但暂时不需要的 ----------------
-
--- -- Snacks animations
--- -- Set to `false` to globally disable all snacks animations
--- vim.g.snacks_animate = true
-
--- -- Can be one of: telescope, fzf
--- -- Leave it to "auto" to automatically use the picker
--- enabled with `:LazyExtras`
-vim.g.lazyvim_picker = "telescope"
-
--- -- LazyVim completion engine to use.
--- -- Can be one of: nvim-cmp, blink.cmp
--- -- Leave it to "auto" to automatically use the completion engine
--- -- enabled with `:LazyExtras`
--- vim.g.lazyvim_cmp = "auto"
---
--- -- if the completion engine supports the AI source,
--- -- use that instead of inline suggestions
-vim.g.ai_cmp = true
 --
 -- LazyVim root dir detection
 -- Each entry can be:
@@ -241,10 +221,3 @@ vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 -- Set LSP servers to be ignored when used with `util.root.detectors.lsp`
 -- for detecting the LSP root
 vim.g.root_lsp_ignore = { "copilot" }
-
--- -- Hide deprecation warnings
--- vim.g.deprecation_warnings = false
---
--- Show the current document symbols location from Trouble in lualine
--- You can disable this for a buffer by setting `vim.b.trouble_lualine = false`
-vim.g.trouble_lualine = true

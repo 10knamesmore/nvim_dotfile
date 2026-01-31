@@ -173,10 +173,6 @@ function M.init()
   lazy_clipboard = vim.opt.clipboard:get()
   vim.opt.clipboard = ""
 
-  if vim.g.deprecation_warnings == false then
-    vim.deprecate = function() end
-  end
-
   Util.plugin.setup()
 end
 
