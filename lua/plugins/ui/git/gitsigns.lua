@@ -35,6 +35,10 @@ return {
                 end
             end, "Diff This")
 
+            map("n", "<leader>gk", function()
+                require("gitsigns").preview_hunk()
+            end, "diff line")
+
             map("n", "]h", function()
                 if vim.wo.diff then
                     vim.cmd.normal({ "]c", bang = true })
