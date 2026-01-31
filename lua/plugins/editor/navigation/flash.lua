@@ -243,31 +243,29 @@ return {
             motion = false,
         },
     },
-    keys = function()
-        return {
-            {
-                "f",
-                mode = { "n", "x", "o" },
-                function()
-                    require("flash").jump()
-                end,
-                desc = "Flash",
-            },
-            {
-                "S",
-                mode = { "n", "x", "o" },
-                function()
-                    require("flash").treesitter({
-                        label = {
-                            rainbow = {
-                                enabled = true,
-                                shade = 2,
-                            },
+    keys = {
+        {
+            "f",
+            mode = { "n", "x", "o" },
+            function()
+                require("flash").jump()
+            end,
+            desc = "Flash",
+        },
+        {
+            "S",
+            mode = { "n", "x", "o" },
+            function()
+                require("flash").treesitter({
+                    label = {
+                        rainbow = {
+                            enabled = true,
+                            shade = 6,
                         },
-                    })
-                end,
-                desc = "Flash Treesitter",
-            },
-        }
-    end,
+                    },
+                })
+            end,
+            desc = "Flash Treesitter",
+        },
+    },
 }
