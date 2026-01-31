@@ -169,48 +169,15 @@ return {
 
                 lualine_x = {
                     -- Copilot 状态
-                    {
-                        function()
-                            local icon = utils.icons.kinds.Copilot
-                            if not package.loaded["copilot"] then
-                                return ""
-                            end
-
-                            local clients = vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
-                            if #clients == 0 then
-                                return ""
-                            end
-
+                    utils.lualine.status(utils.icons.kinds.Copilot, function()
+                        local clients = package.loaded["copilot"]
+                                and vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
+                            or {}
+                        if #clients > 0 then
                             local status = require("copilot.status").data.status
-                            if status == "InProgress" then
-                                return icon .. "InProgress" -- 进行中
-                            elseif status == "Warning" then
-                                return icon .. "Warn" -- 警告
-                            else
-                                return icon -- 正常
-                            end
-                        end,
-                        cond = function()
-                            return package.loaded["copilot"] ~= nil
-                        end,
-                        color = function()
-                            if not package.loaded["copilot"] then
-                                return { fg = colors.gray }
-                            end
-                            local clients = vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
-                            if #clients == 0 then
-                                return { fg = colors.gray }
-                            end
-                            local status = require("copilot.status").data.status
-                            if status == "InProgress" then
-                                return { fg = colors.yellow }
-                            elseif status == "Warning" then
-                                return { fg = colors.red }
-                            else
-                                return { fg = colors.green }
-                            end
-                        end,
-                    },
+                            return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
+                        end
+                    end),
 
                     { "searchcount", color = { fg = colors.cyan } },
                     -- 当前命令提示

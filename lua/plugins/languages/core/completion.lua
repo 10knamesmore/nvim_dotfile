@@ -15,6 +15,7 @@ return {
         appearance = {
             -- 使用普通 Nerd Font（normal 更适配非 mono 风格的图标）
             nerd_font_variant = "mono",
+            kind_icons = utils.icons.kinds,
         },
 
         -- 是否启用命令行补全（默认关闭）
