@@ -5,24 +5,25 @@ return {
         opts = {
             spec = {
                 { "<leader>t", group = "TODO Manage", icon = "" },
-                {
-                    "t",
-                    function()
-                        local project_dir = utils.path.get_root()
-                        local file = project_dir .. "/" .. ".todo.md"
-                        local current_file_path = vim.api.nvim_buf_get_name(0)
-                        if current_file_path == file then
-                            return
-                        end
+            },
+        },
+        keys = {
+            {
+                "t",
+                function()
+                    local project_dir = utils.path.get_root()
+                    local file = project_dir .. "/" .. ".todo.md"
+                    local current_file_path = vim.api.nvim_buf_get_name(0)
+                    if current_file_path == file then
+                        return
+                    end
 
-                        Snacks.scratch.open({
-                            file = file,
-                            name = "TODO: " .. file,
-                        })
-                    end,
-                    desc = "Project TODO",
-                    icon = "",
-                },
+                    Snacks.scratch.open({
+                        file = file,
+                        name = "TODO: " .. file,
+                    })
+                end,
+                desc = "Project TODO",
             },
         },
     },
