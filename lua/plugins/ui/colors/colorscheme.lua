@@ -1,7 +1,8 @@
 return {
     {
         "folke/tokyonight.nvim",
-        lazy = true, -- make sure we load this during startup if it is your main colorscheme
+        lazy = false, -- 立即加载（默认配色）
+        priority = 1000, -- 最高优先级，确保最先加载
         opts = function()
             vim.api.nvim_set_hl(0, "@keyword.import.rust", { link = "@Keyword" })
             return {
@@ -20,6 +21,10 @@ return {
                     highlights["Constant"].bold = true
                 end,
             }
+        end,
+        config = function(_, opts)
+            require("tokyonight").setup(opts)
+            vim.cmd.colorscheme("tokyonight-moon") -- 应用配色
         end,
     },
     {
