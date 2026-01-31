@@ -79,10 +79,10 @@ end
 
 return {
     "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    -- event = function()
-    --     return { "BufReadPost", "BufWritePost", "BufNewFile" }
-    -- end,
+    -- event = "VeryLazy",
+    event = function()
+        return { "BufReadPost", "BufWritePost", "BufNewFile" }
+    end,
     init = function()
         vim.g.lualine_laststatus = vim.o.laststatus
         if vim.fn.argc(-1) > 0 then

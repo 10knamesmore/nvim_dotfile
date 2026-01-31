@@ -17,10 +17,10 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     spec = {
         -- import/override with your plugins
-        { import = "plugins" },
+        -- { import = "plugins" },
+        { import = "plugins.editor" },
         { import = "plugins.ui" },
         { import = "plugins.languages" },
-        { import = "plugins.editor" },
     },
     defaults = {
         lazy = true,

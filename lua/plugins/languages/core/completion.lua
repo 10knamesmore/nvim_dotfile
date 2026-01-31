@@ -14,7 +14,7 @@ return {
         -- 外观设置
         appearance = {
             -- 使用普通 Nerd Font（normal 更适配非 mono 风格的图标）
-            nerd_font_variant = "normal",
+            nerd_font_variant = "mono",
         },
 
         -- 是否启用命令行补全（默认关闭）
@@ -48,7 +48,7 @@ return {
                 draw = {
                     columns = {
                         -- 第一列：图标 + label + 描述，紧凑排布
-                        { "kind_icon", "label", "label_description" },
+                        { "kind_icon", "label", "label_description", gap = 1 },
                         -- 第二列：补全项的类型（如函数、变量等）
                         { "kind" },
                         -- 第三列：补全来源（如 lsp, buffer）
