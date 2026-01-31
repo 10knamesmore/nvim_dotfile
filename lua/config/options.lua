@@ -1,6 +1,3 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
 -- 手动格式化
 vim.g.autoformat = false
 
@@ -60,7 +57,7 @@ opt.foldlevel = 99
 opt.foldmethod = "indent"
 
 opt.foldtext = ""
-opt.formatexpr = "v:lua.LazyVim.format.formatexpr()"
+opt.formatexpr = "v:lua.utils.format.formatexpr()"
 opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
@@ -185,8 +182,6 @@ opt.splitkeep = "screen"
 -- Put new windows right of current
 opt.splitright = true
 
-opt.statuscolumn = [[%!v:lua.LazyVim.statuscolumn()]]
-
 -- 字符tab显示宽度
 opt.tabstop = 4 -- Number of spaces tabs count for
 
@@ -221,7 +216,6 @@ opt.wrap = true
 -- -- Set to `false` to globally disable all snacks animations
 -- vim.g.snacks_animate = true
 
--- -- LazyVim picker to use.
 -- -- Can be one of: telescope, fzf
 -- -- Leave it to "auto" to automatically use the picker
 -- enabled with `:LazyExtras`

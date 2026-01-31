@@ -1,5 +1,4 @@
 -- 工具函数模块
--- 包含原有的 utils 和从 LazyVim 迁移的工具函数
 
 local M = {}
 
@@ -12,9 +11,9 @@ setmetatable(M, {
       rawset(t, k, module)
       return module
     end
-    -- 回退到 lazy.nvim 的工具函数
-    local LazyUtil = require("lazy.core.util")
-    if LazyUtil[k] then
+    -- 回退到 lazy.nvim 的工具函数（如果存在）
+    local ok2, LazyUtil = pcall(require, "lazy.core.util")
+    if ok2 and LazyUtil[k] then
       return LazyUtil[k]
     end
   end,
@@ -114,6 +113,93 @@ function M.try(fn, opts)
     end
   end
   return ok
+end
+
+--- 性能追踪
+local track_stack = {}
+function M.track(event)
+  if event then
+    track_stack[#track_stack + 1] = event
+  elseif #track_stack > 0 then
+    table.remove(track_stack)
+  end
+end
+
+--- 在插件加载后执行回调
+---@param name string
+---@param fn fun(name:string)
+function M.on_load(name, fn)
+  if M.is_loaded(name) then
+    fn(name)
+  else
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "LazyLoad",
+      callback = function(event)
+        if event.data == name then
+          fn(name)
+          return true
+        end
+      end,
+    })
+  end
+end
+
+--- 延迟通知直到 vim.notify 被替换
+function M.lazy_notify()
+  local notifs = {}
+  local function temp(...)
+    table.insert(notifs, vim.F.pack_len(...))
+  end
+
+  local orig = vim.notify
+  vim.notify = temp
+
+  local timer = vim.uv.new_timer()
+  local check = assert(vim.uv.new_check())
+
+  local replay = function()
+    timer:stop()
+    check:stop()
+    if vim.notify == temp then
+      vim.notify = orig
+    end
+    vim.schedule(function()
+      for _, notif in ipairs(notifs) do
+        vim.notify(vim.F.unpack_len(notif))
+      end
+    end)
+  end
+
+  -- 等待 vim.notify 被替换
+  check:start(function()
+    if vim.notify ~= temp then
+      replay()
+    end
+  end)
+  -- 或者 500ms 后重放
+  timer:start(500, 0, replay)
+end
+
+--- 检查插件是否已加载
+---@param name string
+---@return boolean
+function M.is_loaded(name)
+  local Config = require("lazy.core.config")
+  return Config.plugins[name] and Config.plugins[name]._.loaded
+end
+
+--- 设置默认选项值（如果尚未设置）
+--- 返回是否成功设置（true = 设置了新值，false = 已有值）
+---@param option string
+---@param value any
+---@return boolean
+function M.set_default(option, value)
+  local current = vim.api.nvim_get_option_value(option, { scope = "local" })
+  if current == "" or current == nil then
+    vim.api.nvim_set_option_value(option, value, { scope = "local" })
+    return true
+  end
+  return false
 end
 
 -- 原有的 icons

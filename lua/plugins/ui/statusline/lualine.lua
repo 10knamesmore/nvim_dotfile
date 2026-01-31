@@ -79,9 +79,10 @@ end
 
 return {
     "nvim-lualine/lualine.nvim",
-    event = function()
-        return { "BufReadPost", "BufWritePost", "BufNewFile" }
-    end,
+    event = "VeryLazy",
+    -- event = function()
+    --     return { "BufReadPost", "BufWritePost", "BufNewFile" }
+    -- end,
     init = function()
         vim.g.lualine_laststatus = vim.o.laststatus
         if vim.fn.argc(-1) > 0 then
@@ -141,7 +142,7 @@ return {
                 },
 
                 lualine_c = {
-                    { LazyVim.lualine.pretty_path(), separator = "" },
+                    { utils.lualine.pretty_path(), separator = "" },
 
                     { "filetype", icon_only = true, padding = { left = 1, right = 0 } },
 

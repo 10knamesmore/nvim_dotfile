@@ -1,8 +1,7 @@
 _G.utils = require("utils")
--- 加载 LazyVim 兼容层，提供 _G.LazyVim API
-require("util_compat")
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
--- package.loaded["lazyvim.config.options"] = true -- 不加载LazyVim的options
 if vim.g.neovide then
     require("config.lazy")
     require("config.keymaps")

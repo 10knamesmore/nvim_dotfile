@@ -1,5 +1,4 @@
 -- 格式化工具模块
--- 来源: LazyVim util/format.lua
 -- 提供代码格式化功能，包括自动格式化和手动格式化
 
 ---@class util.format

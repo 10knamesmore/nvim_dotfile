@@ -30,7 +30,7 @@ return {
                 diagnostics = "nvim_lsp",
                 always_show_bufferline = false,
                 diagnostics_indicator = function(_, _, diag)
-                    local icons = LazyVim.config.icons.diagnostics
+                    local icons = utils.config.icons.diagnostics
                     local ret = (diag.error and icons.Error .. diag.error .. " " or "")
                         .. (diag.warning and icons.Warn .. diag.warning or "")
                     return vim.trim(ret)
@@ -59,7 +59,7 @@ return {
                 separator_style = "slope",
                 ---@param opts bufferline.IconFetcherOpts
                 get_element_icon = function(opts)
-                    return LazyVim.config.icons.ft[opts.filetype]
+                    return utils.config.icons.ft[opts.filetype]
                 end,
                 sort_by = function(buffer_a, buffer_b)
                     -- -- add custom logic

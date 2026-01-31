@@ -1,5 +1,4 @@
 -- 根目录检测模块
--- 来源: LazyVim util/root.lua
 -- 提供项目根目录检测功能，支持 LSP、git、文件模式等多种检测方式
 
 ---@class util.root

@@ -30,7 +30,7 @@ return {
                     mode = { "n", "x" },
                     has = "codeAction",
                 },
-                { "<leader>cA", LazyVim.lsp.action.source, desc = "Source Action", has = "codeAction" },
+                { "<leader>cA", utils.lsp.action.source, desc = "Source Action", has = "codeAction" },
                 {
                     "]]",
                     function()

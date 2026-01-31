@@ -26,7 +26,7 @@ map("n", "<leader>uI", function()
 end, { desc = "Inspect Tree" })
 
 map("n", "<leader>uf", function()
-    LazyVim.format.toggle()
+    utils.format.toggle()
 end, { desc = "Toggle Auto Format" })
 
 -- better up/down
@@ -65,10 +65,6 @@ map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Commen
 
 -- diagnostic
 map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
-
-map({ "n", "t" }, "<c-/>", function()
-    Snacks.terminal(nil, { cwd = LazyVim.root() })
-end, { desc = "Terminal (Root Dir)" })
 
 -----------------------------------------------------------
 map("n", "<Space>", "", opts())

@@ -16,23 +16,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     spec = {
-        {
-            "LazyVim/LazyVim",
-            import = "lazyvim.plugins",
-            opts = {
-                defaults = {
-                    autocmds = false,
-                    keymaps = false,
-                },
-                news = {
-                    lazyvim = false,
-                },
-            },
-        },
+        { import = "plugins.core" },
         -- import/override with your plugins
         { import = "plugins" },
-        { import = "plugins.languages" },
         { import = "plugins.ui" },
+        { import = "plugins.languages" },
         { import = "plugins.editor" },
     },
     defaults = {

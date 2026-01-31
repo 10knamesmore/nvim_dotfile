@@ -3,10 +3,14 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         opts = function(_, opts)
+            -- 确保 sections 和 lualine_x 存在
+            opts.sections = opts.sections or {}
+            opts.sections.lualine_x = opts.sections.lualine_x or {}
+            
             table.insert(
                 opts.sections.lualine_x,
                 2,
-                LazyVim.lualine.status(" ", function()
+                utils.lualine.status(" ", function()
                     local clients = package.loaded["copilot"] and vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
                         or {}
                     if #clients > 0 then
