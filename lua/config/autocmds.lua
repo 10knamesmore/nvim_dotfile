@@ -175,13 +175,3 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.softtabstop = 2
     end,
 })
-
--- 格式化命令
-vim.api.nvim_create_user_command("Format", function()
-    require("utils.format").format({ force = true })
-end, { desc = "Format buffer" })
-
--- 获取格式化信息
-vim.api.nvim_create_user_command("FormatInfo", function()
-    require("utils.format").info()
-end, { desc = "Show formatter info" })
