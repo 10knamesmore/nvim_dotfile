@@ -1,5 +1,4 @@
 -- Pick 工具模块
--- 来源: LazyVim util/pick.lua  
 -- 提供 picker (telescope/fzf) 辅助功能
 
 ---@class util.pick

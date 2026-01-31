@@ -1,4 +1,3 @@
--- LazyVim 配置初始化模块
 -- 提供配置管理和初始化功能
 
 local Util = require("utils")

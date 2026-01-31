@@ -1,5 +1,4 @@
 -- LSP 工具模块
--- 来源: LazyVim util/lsp.lua
 -- 提供 LSP 相关的辅助功能
 
 ---@class util.lsp

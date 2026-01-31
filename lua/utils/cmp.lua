@@ -1,5 +1,4 @@
 -- CMP 工具模块
--- 来源: LazyVim util/cmp.lua
 -- 提供补全相关的辅助功能
 
 ---@class util.cmp
