@@ -7,9 +7,9 @@ return {
         event = "BufReadPost",
         opts = {
             suggestion = {
-                enabled = not vim.g.ai_cmp,
+                enabled = true,
                 auto_trigger = true,
-                hide_during_completion = vim.g.ai_cmp,
+                hide_during_completion = false,
                 keymap = {
                     accept = false, -- handled by nvim-cmp / blink.cmp
                     next = "<M-]>",
@@ -50,29 +50,29 @@ return {
     },
 
     -- lualine
-    {
-        "nvim-lualine/lualine.nvim",
-        optional = true,
-        event = "VeryLazy",
-        opts = function(_, opts)
-            -- 防御性初始化
-            opts.sections = opts.sections or {}
-            opts.sections.lualine_x = opts.sections.lualine_x or {}
-
-            table.insert(
-                opts.sections.lualine_x,
-                2,
-                utils.lualine.status(utils.config.icons.kinds.Copilot, function()
-                    local clients = package.loaded["copilot"] and vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
-                        or {}
-                    if #clients > 0 then
-                        local status = require("copilot.status").data.status
-                        return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
-                    end
-                end)
-            )
-        end,
-    },
+    -- {
+    --     "nvim-lualine/lualine.nvim",
+    --     optional = true,
+    --     event = "VeryLazy",
+    --     opts = function(_, opts)
+    --         -- 防御性初始化
+    --         opts.sections = opts.sections or {}
+    --         opts.sections.lualine_x = opts.sections.lualine_x or {}
+    --
+    --         table.insert(
+    --             opts.sections.lualine_x,
+    --             2,
+    --             utils.lualine.status(utils.config.icons.kinds.Copilot, function()
+    --                 local clients = package.loaded["copilot"] and vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
+    --                     or {}
+    --                 if #clients > 0 then
+    --                     local status = require("copilot.status").data.status
+    --                     return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
+    --                 end
+    --             end)
+    --         )
+    --     end,
+    -- },
 
     -- copilot cmp source
     {
