@@ -22,10 +22,10 @@ return {
                     severity_sort = true,
                     signs = {
                         text = {
-                            [vim.diagnostic.severity.ERROR] = Util.config.icons.diagnostics.Error,
-                            [vim.diagnostic.severity.WARN] = Util.config.icons.diagnostics.Warn,
-                            [vim.diagnostic.severity.HINT] = Util.config.icons.diagnostics.Hint,
-                            [vim.diagnostic.severity.INFO] = Util.config.icons.diagnostics.Info,
+                            [vim.diagnostic.severity.ERROR] = Util.icons.diagnostics.Error,
+                            [vim.diagnostic.severity.WARN] = Util.icons.diagnostics.Warn,
+                            [vim.diagnostic.severity.HINT] = Util.icons.diagnostics.Hint,
+                            [vim.diagnostic.severity.INFO] = Util.icons.diagnostics.Info,
                         },
                     },
                 },
