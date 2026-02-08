@@ -9,6 +9,16 @@ return {
         },
         -- enabled = false,
         opts = {
+            messages = {
+                enabled = true,
+                view = "notify",
+                view_error = "notify",
+                view_warn = "notify",
+            },
+            notify = {
+                enabled = true,
+                view = "notify",
+            },
             lsp = {
                 override = {
                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -95,6 +105,7 @@ return {
             fps = 60,
             stages = "slide",
             timeout = 4000,
+            top_down = true,
         },
     },
 }
