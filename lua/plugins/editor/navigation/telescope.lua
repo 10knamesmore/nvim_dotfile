@@ -2,6 +2,7 @@ local ignore_patterns = { "node_modules", "target/", ".venv" }
 return {
     {
         "nvim-telescope/telescope.nvim",
+        event = "VeryLazy",
         dependencies = {
             "nvim-telescope/telescope-ui-select.nvim",
             {
