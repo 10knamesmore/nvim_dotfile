@@ -211,7 +211,7 @@ return {
                 end,
             },
         },
-        opts = function()
+        config = function()
             local dap = require("dap")
 
             for _, adapterType in ipairs({ "node", "chrome", "msedge" }) do

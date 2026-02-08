@@ -6,7 +6,7 @@ return {
         return { "BufReadPost", "BufNewFile" }
     end,
     version = "1.*",
-    deppendencies = { "xzbdmw/colorful-menu.nvim", opts = {} },
+    dependencies = { "xzbdmw/colorful-menu.nvim", opts = {} },
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
