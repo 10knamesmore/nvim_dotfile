@@ -4,6 +4,11 @@ return {
         "nvim-telescope/telescope.nvim",
         dependencies = {
             "nvim-telescope/telescope-ui-select.nvim",
+            {
+                -- native fzf in C
+                "nvim-telescope/telescope-fzf-native.nvim",
+                build = "make",
+            },
         },
         opts = function()
             local actions = require("telescope.actions")
@@ -121,6 +126,13 @@ return {
                     ["ui-select"] = {
                         themes.get_dropdown({}),
                     },
+                    -- native C fzf
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                        case_mode = "smart_case",
+                    },
                 },
             }
         end,
@@ -128,6 +140,8 @@ return {
             local telescope = require("telescope")
             telescope.setup(opts)
             telescope.load_extension("ui-select")
+            -- native C fzf
+            pcall(telescope.load_extension, "fzf")
         end,
         keys = function()
             return {
