@@ -144,16 +144,17 @@ return {
                 lualine_c = {
                     { utils.lualine.pretty_path(), separator = "" },
 
-                    { "filetype", icon_only = true, padding = { left = 1, right = 0 } },
+                    { "filetype", icon_only = true, padding = { left = 0, right = 0 } },
 
+                    -- deprecated 使用 dropbar 替代
                     -- trouble 提供的当前 symbol
-                    {
-                        symbols and symbols.get,
-
-                        cond = function()
-                            return symbols.has()
-                        end,
-                    },
+                    -- {
+                    --     symbols and symbols.get,
+                    --
+                    --     cond = function()
+                    --         return symbols.has()
+                    --     end,
+                    -- },
 
                     {
                         "diagnostics",

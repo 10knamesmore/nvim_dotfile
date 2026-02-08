@@ -5,6 +5,9 @@ return {
         "nvim-tree/nvim-web-devicons",
     },
     opts = {
+        symbol = {
+            on_click = false,
+        },
         bar = {
             enable = function(buf, win, _)
                 if not vim.api.nvim_win_is_valid(win) then
