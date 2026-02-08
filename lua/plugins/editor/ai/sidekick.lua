@@ -14,6 +14,9 @@ return {
     {
         "folke/sidekick.nvim",
         ---@type sidekick.Config
+        dependencies = {
+            "nvim-telescope/telescope.nvim",
+        },
         opts = {
             nes = {
                 enabled = false,
