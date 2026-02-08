@@ -122,7 +122,7 @@ return {
                     },
                 },
             },
-            notifier = { enabled = true }, -- 启用消息通知系统
+            notifier = { enabled = false }, -- 禁用，交给 noice + nvim-notify 处理
             quickfile = { enabled = true }, -- 启用快速文件访问
             scroll = { enabled = false },
             scratch = {
