@@ -257,7 +257,7 @@ return {
                     desc = "registers",
                 },
                 {
-                    "<leader>h",
+                    "<leader>sj",
                     function()
                         require("telescope.builtin").jumplist({
                             trim_text = true,
