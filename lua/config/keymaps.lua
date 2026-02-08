@@ -74,6 +74,8 @@ map({ "n", "v" }, "q", "", opts())
 map({ "n", "v" }, "E", "$", opts())
 map({ "n", "v" }, "B", "^", opts())
 
+map({ "n" }, "F", "*", opts())
+
 -- 模式切换
 -- -- 插入模式下jk,kj退出
 -- 由 better-escape 插件处理
