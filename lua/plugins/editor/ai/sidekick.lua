@@ -19,7 +19,7 @@ return {
         },
         opts = {
             nes = {
-                enabled = false,
+                enabled = true,
             },
             mux = {
                 backend = "zellij",
@@ -47,6 +47,16 @@ return {
             },
         },
         keys = {
+            {
+                "<tab>",
+                function()
+                    if not require("sidekick").nes_jump_or_apply() then
+                        return "<Tab>"
+                    end
+                end,
+                expr = true,
+                desc = "Goto/Apply Next Edit Suggestion",
+            },
             { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
             {
                 "<leader>aa",
@@ -100,30 +110,6 @@ return {
                 end,
                 mode = { "n", "x" },
                 desc = "Prompt",
-            },
-        },
-    },
-
-    {
-        "folke/snacks.nvim",
-        optional = true,
-        opts = {
-            picker = {
-                actions = {
-                    sidekick_send = function(...)
-                        return require("sidekick.cli.picker.snacks").send(...)
-                    end,
-                },
-                win = {
-                    input = {
-                        keys = {
-                            ["<a-a>"] = {
-                                "sidekick_send",
-                                mode = { "n", "i" },
-                            },
-                        },
-                    },
-                },
             },
         },
     },
