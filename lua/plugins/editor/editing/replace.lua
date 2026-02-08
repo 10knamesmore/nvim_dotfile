@@ -20,8 +20,8 @@ return {
         },
         keymaps = { -- normal mode (if not stated otherwise)
             abort = "<Esc>",
-            confirm = "<CR>",
-            insertModeConfirm = "<C-CR>",
+            confirmAndSubstituteInBuffer = "<CR>",
+            insertModeConfirmAndSubstituteInBuffer = "<C-CR>",
             prevSubstitutionInHistory = "<Up>",
             nextSubstitutionInHistory = "<Down>",
             toggleFixedStrings = "<C-f>", -- ripgrep's `--fixed-strings`
