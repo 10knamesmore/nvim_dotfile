@@ -199,7 +199,7 @@ return {
                 pattern = "markdown",
                 callback = function()
                     vim.b.md_left_margin = vim.b.md_left_margin or 0.5
-                    vim.keymap.set("n", "<leader>cp", function()
+                    vim.keymap.set("n", "<leader>cm", function()
                         local cfg = vim.deepcopy(render_md_opt)
 
                         if vim.b.md_left_margin == 0.5 then
