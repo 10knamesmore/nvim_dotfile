@@ -5,9 +5,6 @@ return {
         "nvim-tree/nvim-web-devicons",
     },
     opts = {
-        symbol = {
-            on_click = false,
-        },
         bar = {
             enable = function(buf, win, _)
                 if not vim.api.nvim_win_is_valid(win) then
@@ -42,6 +39,20 @@ return {
             win_configs = {
                 border = "rounded",
             },
+            keymaps = {
+                ["h"] = "<C-w>q",
+                ["l"] = function()
+                    local menu = require("dropbar.utils").menu.get_current()
+                    if not menu then
+                        return
+                    end
+                    local cursor = vim.api.nvim_win_get_cursor(menu.win)
+                    local component = menu.entries[cursor[1]]:first_clickable(cursor[2])
+                    if component then
+                        menu:click_on(component, nil, 1, "l")
+                    end
+                end,
+            },
         },
     },
     keys = {
@@ -66,20 +77,5 @@ return {
             end,
             desc = "Dropbar Next Context",
         },
-        {
-            "<leader>s;",
-            function()
-                local api = require("dropbar.api")
-                if type(api.pick_mode) == "function" then
-                    api.pick_mode()
-                else
-                    api.pick()
-                end
-            end,
-            desc = "Dropbar Pick (Compat)",
-        },
     },
-    config = function(_, opts)
-        require("dropbar").setup(opts)
-    end,
 }
