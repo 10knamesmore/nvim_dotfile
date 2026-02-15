@@ -1,30 +1,5 @@
---- TODO: 配置rustlsp server
-vim.g.lazyvim_rust_diagnostics = "rust-analyzer" -- "bacon-ls" or "rust-analyzer"
-
-local diagnostics = vim.g.lazyvim_rust_diagnostics or "rust-analyzer"
-
 return {
-    -- rust 生命周期可视化
-    {
-        "cordx56/rustowl",
-        version = "*", -- Latest stable version
-        enabled = false,
-        build = "cargo binstall rustowl",
-        lazy = false, -- This plugin is already lazy
-        opts = {
-            auto_attach = false,
-            highlight_style = "underline",
-            client = {
-                on_attach = function(_, buffer)
-                    vim.keymap.set("n", "<leader>uo", function()
-                        require("rustowl").toggle(buffer)
-                    end, { buffer = buffer, desc = "Toggle RustOwl" })
-                end,
-            },
-        },
-    },
-
-    -- LSP for Cargo.toml
+    -- Cargo.toml 补全/跳转
     {
         "Saecki/crates.nvim",
         event = { "BufRead Cargo.toml" },
@@ -55,12 +30,7 @@ return {
         optional = true,
         opts = function(_, opts)
             opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { "codelldb" })
-            if diagnostics == "bacon-ls" then
-                vim.list_extend(opts.ensure_installed, { "bacon" })
-            else
-                vim.list_extend(opts.ensure_installed, { "rust-analyzer" })
-            end
+            vim.list_extend(opts.ensure_installed, { "codelldb", "rust-analyzer" })
         end,
     },
 
@@ -75,18 +45,15 @@ return {
                     -- rust-analyzer language server configuration
                     ["rust-analyzer"] = {
                         cargo = {
-                            -- TODO: 想一个方法能配置传给cargo的features
                             allFeatures = true,
                             loadOutDirsFromCheck = true,
                             buildScripts = {
                                 enable = true,
                             },
                         },
-                        -- Add clippy lints for Rust if using rust-analyzer
-                        checkOnSave = diagnostics == "rust-analyzer",
-                        -- Enable diagnostics if using rust-analyzer
+                        checkOnSave = true,
                         diagnostics = {
-                            enable = diagnostics == "rust-analyzer",
+                            enable = true,
                         },
                         inlayHints = {
                             closureCaptureHints = {
@@ -117,14 +84,6 @@ return {
             },
         },
         config = function(_, opts)
-            if utils.plugins.has("mason.nvim") then
-                local codelldb = vim.fn.exepath("codelldb")
-                local codelldb_lib_ext = io.popen("uname"):read("*l") == "Linux" and ".so" or ".dylib"
-                local library_path = vim.fn.expand("$MASON/opt/lldb/lib/liblldb" .. codelldb_lib_ext)
-                opts.dap = {
-                    adapter = require("rustaceanvim.config").get_codelldb_adapter(codelldb, library_path),
-                }
-            end
             vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
             if vim.fn.executable("rust-analyzer") == 0 then
                 vim.notify(
@@ -140,9 +99,6 @@ return {
         "neovim/nvim-lspconfig",
         opts = {
             servers = {
-                bacon_ls = {
-                    enabled = diagnostics == "bacon-ls",
-                },
                 rust_analyzer = { enabled = false },
             },
         },
