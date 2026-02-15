@@ -36,4 +36,24 @@ return {
             },
         },
     },
+    -- {
+    --     "10knamesmore/json-to-types.nvim",
+    --     build = "sh install.sh pnpm",
+    --     ft = "json",
+    --     keys = {
+    --         {
+    --             "<leader>cj",
+    --             function()
+    --                 local choices = require("json-to-types.utils").language_map
+    --                 vim.ui.select(choices, { prompt = "choose a file type" }, function(choice)
+    --                     if choice then
+    --                         require("json-to-types").convertTypesBuffer(choice)
+    --                     end
+    --                 end)
+    --             end,
+    --             -- "<CMD>ConvertJSONtoLang<CR>",
+    --             desc = "Convert JSON Lang",
+    --         },
+    --     },
+    -- },
 }
