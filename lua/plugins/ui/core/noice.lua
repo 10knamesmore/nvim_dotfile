@@ -41,7 +41,6 @@ return {
             },
         },
         keys = {
-            -- { "<leader>sn", "", desc = "+noice" },
             {
                 "<S-Enter>",
                 function()
