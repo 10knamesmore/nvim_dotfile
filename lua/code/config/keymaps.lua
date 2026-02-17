@@ -20,6 +20,7 @@ keymap({ "i", "n", "s" }, "<esc>", function()
     -- 调用 VSCode 的关闭小部件命令
     vim.fn.VSCodeNotify("closeFindWidget")
     vim.fn.VSCodeNotify("closeParameterHints")
+    codeAction("workbench.action.closeSideBar")
     return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
 
@@ -43,13 +44,9 @@ keymap("n", "<leader>O", "O<Esc>", opts)
 keymap("n", "<leader>e", codeAction("workbench.files.action.focusFilesExplorer"), opts)
 keymap("n", "W", codeAction("workbench.action.focusSideBar"), opts)
 -- leader+a 切换辅助栏（由 keybindings.json 处理智能聚焦）
-keymap("n", "<leader>a", codeAction("workbench.action.toggleAuxiliaryBar"), opts)
 
 -- ========== Buffer 管理 ==========
 keymap("n", "<leader>b", codeAction("workbench.action.showAllEditors"), opts)
-keymap("n", "<leader>bd", codeAction("workbench.action.closeActiveEditor"), opts)
-keymap("n", "<leader>bl", codeAction("workbench.action.closeEditorsToTheRight"), opts)
-keymap("n", "<leader>bh", codeAction("workbench.action.closeEditorsToTheLeft"), opts)
 
 -- ========== 窗口管理 ==========
 keymap("n", "<leader>wv", codeAction("workbench.action.splitEditor"), opts)
