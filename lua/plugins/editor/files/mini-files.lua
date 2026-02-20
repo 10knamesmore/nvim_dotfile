@@ -1,7 +1,7 @@
 -- mini file 文件浏览/管理
 -- <leader>e 打开于当前文件
 --
-local filter_show = function(fs_entry)
+local filter_show = function(_)
     return true
 end
 
