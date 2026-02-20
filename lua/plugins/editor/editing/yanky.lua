@@ -49,6 +49,35 @@ return {
                 end,
                 desc = "Yank All",
             },
+            {
+                "gy",
+                function()
+                    local filepath = vim.api.nvim_buf_get_name(0)
+                    if filepath == "" then
+                        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+                        return
+                    end
+                    local filename = vim.fs.basename(filepath)
+                    vim.fn.setreg("+", filename)
+                    vim.notify("Yanked filename: " .. filename, vim.log.levels.INFO)
+                end,
+                mode = "n",
+                desc = "Yank Filename",
+            },
+            {
+                "gY",
+                function()
+                    local filepath = vim.api.nvim_buf_get_name(0)
+                    if filepath == "" then
+                        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+                        return
+                    end
+                    vim.fn.setreg("+", filepath)
+                    vim.notify("Yanked absolute path: " .. filepath, vim.log.levels.INFO)
+                end,
+                mode = "n",
+                desc = "Yank Absolute Path",
+            },
         },
     },
 }

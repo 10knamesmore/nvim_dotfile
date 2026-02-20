@@ -69,13 +69,29 @@ return {
             require("mini.files").refresh({ content = { filter = new_filter } })
         end
 
-        local yank_path = function()
-            local path = (MiniFiles.get_fs_entry() or {}).path
-            if path == nil then
-                return vim.notify("Cursor is not on valid entry")
+        --- 复制文件名
+        local yank_filename = function()
+            local filepath = (MiniFiles.get_fs_entry() or {}).path
+            if filepath == nil then
+                vim.notify("Cursor is not on valid entry", vim.log.levels.WARN)
+                return
             end
-            vim.notify("Yanked: " .. path)
-            vim.fn.setreg(vim.v.register, path)
+
+            local filename = vim.fs.basename(filepath)
+            vim.fn.setreg("+", filename)
+            vim.notify("Yanked filename: " .. filename, vim.log.levels.INFO)
+        end
+
+        --- 复制文件路径
+        local yank_filepath = function()
+            local filepath = (MiniFiles.get_fs_entry() or {}).path
+            if filepath == nil then
+                vim.notify("Cursor is not on valid entry", vim.log.levels.WARN)
+                return
+            end
+
+            vim.fn.setreg("+", filepath)
+            vim.notify("Yanked absolute path: " .. filepath, vim.log.levels.INFO)
         end
 
         vim.api.nvim_create_autocmd("User", {
@@ -83,7 +99,8 @@ return {
             callback = function(args)
                 local buf_id = args.data.buf_id
                 vim.keymap.set("n", ".", toggle_dotfiles, { buffer = buf_id, desc = "Toggle hidden files" })
-                vim.keymap.set("n", "gy", yank_path, { buffer = buf_id, desc = "Yank path" })
+                vim.keymap.set("n", "gy", yank_filename, { buffer = buf_id, desc = "Yank Filename" })
+                vim.keymap.set("n", "gY", yank_filepath, { buffer = buf_id, desc = "Yank Absolute Path" })
             end,
         })
 
