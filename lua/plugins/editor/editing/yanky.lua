@@ -78,6 +78,23 @@ return {
                 mode = "n",
                 desc = "Yank Absolute Path",
             },
+            {
+                "<leader>yl",
+                function()
+                    local filepath = vim.api.nvim_buf_get_name(0)
+                    if filepath == "" then
+                        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+                        return
+                    end
+
+                    local line = vim.api.nvim_win_get_cursor(0)[1]
+                    local location = string.format('%s:%d', filepath, line)
+                    vim.fn.setreg("+", location)
+                    vim.notify("Yanked path with line: " .. location, vim.log.levels.INFO)
+                end,
+                mode = "n",
+                desc = "Yank Path:Line",
+            },
         },
     },
 }
