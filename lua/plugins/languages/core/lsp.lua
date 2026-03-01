@@ -7,6 +7,18 @@ return {
         dependencies = {
             "mason.nvim",
             { "mason-org/mason-lspconfig.nvim", config = function() end },
+            {
+                "folke/lazydev.nvim",
+                ft = "lua",
+                cmd = "LazyDev",
+                opts = {
+                    library = {
+                        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                        { path = "snacks.nvim", words = { "Snacks" } },
+                        { path = "lazy.nvim", words = { "LazyVim" } },
+                    },
+                },
+            },
         },
         opts_extend = { "servers.*.keys" },
         opts = function()
@@ -333,20 +345,6 @@ return {
         "folke/neoconf.nvim",
         cmd = "Neoconf",
         opts = {},
-    },
-
-    -- lazydev.nvim
-    {
-        "folke/lazydev.nvim",
-        ft = "lua",
-        cmd = "LazyDev",
-        opts = {
-            library = {
-                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                { path = "snacks.nvim", words = { "Snacks" } },
-                { path = "lazy.nvim", words = { "LazyVim" } },
-            },
-        },
     },
 
     -- SchemaStore
