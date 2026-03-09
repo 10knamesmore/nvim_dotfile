@@ -37,6 +37,16 @@ return {
     {
         "mrcjkb/rustaceanvim",
         ft = { "rust" },
+        keys = {
+            {
+                "<leader>ce",
+                function()
+                    vim.cmd.RustLsp("expandMacro")
+                end,
+                desc = "Expand Macro",
+                ft = "rust",
+            },
+        },
         --- @type rustaceanvim.Opts
         opts = {
             server = {
