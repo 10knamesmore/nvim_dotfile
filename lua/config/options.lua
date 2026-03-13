@@ -6,6 +6,9 @@ local opt = vim.opt
 -- 运行 next等 自动写入
 opt.autowrite = true
 
+-- 允许项目根目录的 .nvim.lua 提供本地配置
+opt.exrc = true
+
 -- 在SSH下用OSC 等插件处理剪切板.
 opt.clipboard = vim.env.SSH_CONNECTION and "" or "unnamedplus" -- Sync with system clipboard
 

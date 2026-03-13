@@ -1,4 +1,4 @@
-local lsp = vim.g.lazyvim_python_lsp or "pyright"
+local lsp = vim.g.lazyvim_python_lsp or "basedpyright"
 local ruff = vim.g.lazyvim_python_ruff or "ruff"
 
 return {
@@ -10,6 +10,45 @@ return {
         "neovim/nvim-lspconfig",
         opts = {
             servers = {
+                pyright = {
+                    settings = {
+                        pyright = {
+                            disableOrganizeImports = true,
+                        },
+                        python = {
+                            analysis = {
+                                inlayHints = {
+                                    variableTypes = true,
+                                    functionReturnTypes = true,
+                                    callArgumentNames = true,
+                                },
+                            },
+                        },
+                    },
+                },
+                basedpyright = {
+                    settings = {
+                        basedpyright = {
+                            disableOrganizeImports = true,
+                            analysis = {
+                                inlayHints = {
+                                    variableTypes = true,
+                                    functionReturnTypes = true,
+                                    callArgumentNames = true,
+                                },
+                            },
+                        },
+                        python = {
+                            analysis = {
+                                inlayHints = {
+                                    variableTypes = true,
+                                    functionReturnTypes = true,
+                                    callArgumentNames = true,
+                                },
+                            },
+                        },
+                    },
+                },
                 ruff = {
                     cmd_env = { RUFF_TRACE = "messages" },
                     init_options = {
@@ -22,7 +61,7 @@ return {
             setup = {
                 [ruff] = function()
                     Snacks.util.lsp.on({ name = ruff }, function(_, client)
-                        -- Disable hover in favor of Pyright
+                        -- Disable hover in favor of the primary Python LSP
                         client.server_capabilities.hoverProvider = false
                     end)
                 end,

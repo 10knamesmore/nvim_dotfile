@@ -91,6 +91,14 @@ return {
                 },
                 formatters = {
                     injected = { options = { ignore_errors = true } },
+                    stylua = {
+                        prepend_args = {
+                            "--indent-type",
+                            "Spaces",
+                            "--indent-width",
+                            "4",
+                        },
+                    },
                 },
             }
             return opts

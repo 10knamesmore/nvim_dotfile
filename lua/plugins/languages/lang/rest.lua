@@ -112,7 +112,28 @@ return {
                 ft = "http",
             },
         },
-        opts = {},
+        opts = {
+            contenttypes = {
+                ["application/json"] = {
+                    ft = "json",
+                    formatter = function(body)
+                        local ok, decoded = pcall(vim.json.decode, body)
+                        if ok and type(decoded) == "string" then
+                            return decoded
+                        end
+
+                        if vim.fn.executable("jq") == 1 then
+                            local out = vim.fn.system({ "jq", "." }, body)
+                            if vim.v.shell_error == 0 and out ~= "" then
+                                return out
+                            end
+                        end
+
+                        return body
+                    end,
+                },
+            },
+        },
     },
     {
         "nvim-treesitter/nvim-treesitter",

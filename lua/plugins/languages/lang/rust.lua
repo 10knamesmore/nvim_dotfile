@@ -64,6 +64,7 @@ return {
                         checkOnSave = true,
                         diagnostics = {
                             enable = true,
+                            warningAsHint = { "inactive-code" },
                         },
                         inlayHints = {
                             closureCaptureHints = {

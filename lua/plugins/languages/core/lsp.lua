@@ -201,17 +201,33 @@ return {
                 end
             end
 
-            -- inlay hints
+            -- Inlay hints need a direct LspAttach check; relying only on capability
+            -- observers can miss buffers that were already attached.
             if opts.inlay_hints.enabled then
-                Snacks.util.lsp.on({ method = "textDocument/inlayHint" }, function(buffer)
+                local function enable_inlay_hints(buffer, client)
                     if
                         vim.api.nvim_buf_is_valid(buffer)
                         and vim.bo[buffer].buftype == ""
                         and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
+                        and client
+                        and client.supports_method("textDocument/inlayHint", { bufnr = buffer })
                     then
                         vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
                     end
-                end)
+                end
+
+                vim.api.nvim_create_autocmd("LspAttach", {
+                    callback = function(event)
+                        local client = vim.lsp.get_client_by_id(event.data.client_id)
+                        enable_inlay_hints(event.buf, client)
+                    end,
+                })
+
+                for _, client in ipairs(vim.lsp.get_clients()) do
+                    for buffer in pairs(client.attached_buffers or {}) do
+                        enable_inlay_hints(buffer, client)
+                    end
+                end
             end
 
             -- folds
