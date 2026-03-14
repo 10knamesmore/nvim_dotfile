@@ -14,11 +14,20 @@ return {
                 },
                 ---@param highlights tokyonight.Highlights
                 ---@param colors ColorScheme
-                on_highlights = function(highlights, _)
+                on_highlights = function(highlights, colors)
                     require("tokyonight")
                     highlights["String"].italic = true
                     highlights["Constant"].italic = true
                     highlights["Constant"].bold = true
+                    -- Vue 内建 HTML 标签用蓝色
+                    highlights["@tag.builtin.vue"] = { fg = colors.blue }
+                    -- Vue 组件标签用红色，和 React 保持一致
+                    highlights["@tag.vue"] = { fg = colors.red }
+                    highlights["@lsp.type.component.vue"] = { fg = colors.red }
+                    -- Vue 顶层块标签分别使用独立颜色
+                    highlights["@tag.template.vue"] = { fg = colors.purple, bold = true }
+                    highlights["@tag.script.vue"] = { fg = colors.yellow, bold = true }
+                    highlights["@tag.style.vue"] = { fg = colors.green, bold = true }
                 end,
             }
         end,
