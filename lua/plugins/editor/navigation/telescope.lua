@@ -147,7 +147,7 @@ return {
         keys = function()
             return {
                 {
-                    "s",
+                    "f",
                     function()
                         require("telescope.builtin").current_buffer_fuzzy_find()
                     end,
