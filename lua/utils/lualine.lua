@@ -130,45 +130,4 @@ function M.pretty_path(opts)
     end
 end
 
-function M.root_dir()
-    -- 组件选项,用于控制不同目录关系下的显示
-    local opts = {
-        color = function()
-            return { fg = vim.api.nvim_get_hl(0, { name = "Special", link = false, create = false }) }
-        end,
-    }
-
-    -- 获取根目录与 cwd 的关系,返回目录名或 nil
-    local function get()
-        local cwd = utils.path.cwd()
-        local root = utils.path.get_root({ normalize = true })
-        local name = vim.fs.basename(root)
-
-        if root == cwd then
-            -- 根目录即为 cwd
-            return name
-        elseif root and cwd and root:find(cwd, 1, true) == 1 then
-            -- 根目录是 cwd 的子目录
-            return name
-        elseif root and cwd and cwd:find(root, 1, true) == 1 then
-            -- 根目录是 cwd 的父目录
-            return name
-        else
-            -- 根目录与 cwd 无关
-            return name
-        end
-    end
-
-    -- 返回 lualine 组件配置
-    return {
-        function()
-            return "󱉭  " .. get()
-        end,
-        cond = function()
-            return true
-        end,
-        color = opts.color,
-    }
-end
-
 return M

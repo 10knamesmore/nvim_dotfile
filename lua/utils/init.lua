@@ -30,15 +30,6 @@ function M.get_plugin(name)
   return require("lazy.core.config").spec.plugins[name]
 end
 
---- 获取插件路径
----@param name string
----@param path string?
-function M.get_plugin_path(name, path)
-  local plugin = M.get_plugin(name)
-  path = path and "/" .. path or ""
-  return plugin and (plugin.dir .. path)
-end
-
 --- 检查插件是否已安装
 ---@param plugin string
 function M.has(plugin)
@@ -77,12 +68,6 @@ for _, level in ipairs({ "info", "warn", "error" }) do
   end
 end
 
---- 状态栏列渲染
---- 使用 snacks.statuscolumn 如果可用
-function M.statuscolumn()
-  return package.loaded.snacks and require("snacks.statuscolumn").get() or ""
-end
-
 --- 规范化路径
 ---@param path string
 ---@return string
@@ -113,43 +98,6 @@ function M.try(fn, opts)
     end
   end
   return ok
-end
-
---- 性能追踪
-local track_stack = {}
-function M.track(event)
-  if event then
-    track_stack[#track_stack + 1] = event
-  elseif #track_stack > 0 then
-    table.remove(track_stack)
-  end
-end
-
---- 在插件加载后执行回调
----@param name string
----@param fn fun(name:string)
-function M.on_load(name, fn)
-  if M.is_loaded(name) then
-    fn(name)
-  else
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "LazyLoad",
-      callback = function(event)
-        if event.data == name then
-          fn(name)
-          return true
-        end
-      end,
-    })
-  end
-end
-
---- 检查插件是否已加载
----@param name string
----@return boolean
-function M.is_loaded(name)
-  local Config = require("lazy.core.config")
-  return Config.plugins[name] and Config.plugins[name]._.loaded
 end
 
 --- 设置默认选项值（如果尚未设置）

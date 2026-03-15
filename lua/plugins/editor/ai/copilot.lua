@@ -36,20 +36,6 @@ return vim.g.copilot_enabled == false and {}
             },
         },
 
-        -- add ai_accept action
-        {
-            "zbirenbaum/copilot.lua",
-            opts = function()
-                utils.cmp.actions.ai_accept = function()
-                    if require("copilot.suggestion").is_visible() then
-                        utils.create_undo()
-                        require("copilot.suggestion").accept()
-                        return true
-                    end
-                end
-            end,
-        },
-
         -- lualine
         -- {
         --     "nvim-lualine/lualine.nvim",
