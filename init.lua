@@ -31,8 +31,8 @@ local init_neovide = function()
         inc_font_key = "<C-+>"
         dec_font_key = "<C-_>"
     elseif os == "Macos" then
-        inc_font_key = "<C-+>"
-        dec_font_key = "<C-_>"
+        inc_font_key = "<C-=>"
+        dec_font_key = "<C-->"
     end
 
     vim.keymap.set("n", inc_font_key, function()
