@@ -7,6 +7,12 @@ return {
     {
         "neovim/nvim-lspconfig",
         opts = function(_, opts)
+            -- Vue 文件也启用 inlay hint，沿用 vtsls 的 TypeScript 类型提示配置
+            opts.inlay_hints = opts.inlay_hints or {}
+            opts.inlay_hints.exclude = vim.tbl_filter(function(filetype)
+                return filetype ~= "vue"
+            end, opts.inlay_hints.exclude or {})
+
             opts.servers = opts.servers or {}
             opts.servers.vue_ls = opts.servers.vue_ls or {}
 

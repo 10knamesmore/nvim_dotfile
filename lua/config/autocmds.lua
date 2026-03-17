@@ -166,7 +166,7 @@ vim.api.nvim_create_autocmd("FileType", {
         "json",
         "jsonc",
         "yaml",
-        "vue",
+        -- "vue",
         "svelte",
     },
     callback = function()
