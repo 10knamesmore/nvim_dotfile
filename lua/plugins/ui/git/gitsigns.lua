@@ -11,8 +11,17 @@ return {
             follow_files = true,
         },
         on_attach = function(buffer)
+            local gs = require("gitsigns")
+
             local function map(mode, l, r, desc)
                 vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
+            end
+
+            --- @param direction 'first'|'last'|'next'|'prev'
+            local function nav_hunk_with_staged_fallback(direction)
+                local unstaged_hunks = gs.get_hunks(buffer) or {}
+                local target = vim.tbl_isempty(unstaged_hunks) and "staged" or "unstaged"
+                gs.nav_hunk(direction, { target = target })
             end
 
             map("n", "<leader>gd", function()
@@ -36,14 +45,14 @@ return {
             end, "Diff This")
 
             map("n", "<leader>gk", function()
-                require("gitsigns").preview_hunk()
+                gs.preview_hunk()
             end, "diff line")
 
             map("n", "]h", function()
                 if vim.wo.diff then
                     vim.cmd.normal({ "]c", bang = true })
                 else
-                    require("gitsigns").nav_hunk("next")
+                    nav_hunk_with_staged_fallback("next")
                 end
             end, "Next Hunk")
 
@@ -51,7 +60,7 @@ return {
                 if vim.wo.diff then
                     vim.cmd.normal({ "[c", bang = true })
                 else
-                    require("gitsigns").nav_hunk("prev")
+                    nav_hunk_with_staged_fallback("prev")
                 end
             end, "Prev Hunk")
 
@@ -62,18 +71,18 @@ return {
                     if start_line > end_line then
                         start_line, end_line = end_line, start_line
                     end
-                    require("gitsigns").stage_hunk({ start_line, end_line })
+                    gs.stage_hunk({ start_line, end_line })
                 else
-                    require("gitsigns").stage_hunk()
+                    gs.stage_hunk()
                 end
             end, "Stage Hunk")
 
             map("n", "]H", function()
-                require("gitsigns").nav_hunk("last")
+                nav_hunk_with_staged_fallback("last")
             end, "Last Hunk")
 
             map("n", "[H", function()
-                require("gitsigns").nav_hunk("first")
+                nav_hunk_with_staged_fallback("first")
             end, "First Hunk")
         end,
     },

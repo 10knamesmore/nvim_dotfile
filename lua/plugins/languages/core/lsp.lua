@@ -40,6 +40,9 @@ return {
                             [vim.diagnostic.severity.INFO] = Util.icons.diagnostics.Info,
                         },
                     },
+                    globals = {
+                        "vim",
+                    },
                 },
                 inlay_hints = {
                     enabled = true,
