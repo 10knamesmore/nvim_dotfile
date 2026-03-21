@@ -4,7 +4,7 @@
 ---@class util.lsp
 local M = {}
 
---- 创建 LSP 格式化器
+--- 创建一个基于当前 LSP 客户端的格式化器描述。
 ---@param opts? {filter?: (string|vim.lsp.get_clients.Filter)}
 function M.formatter(opts)
     opts = opts or {}
@@ -36,7 +36,7 @@ function M.formatter(opts)
     return vim.tbl_deep_extend("force", ret, opts)
 end
 
---- LSP 格式化
+--- 使用 `conform.nvim` 或原生 LSP 执行格式化。
 ---@param opts? {timeout_ms?: number, format_options?: table, bufnr?: number}
 function M.format(opts)
     local Util = require("utils")
@@ -75,7 +75,7 @@ M.action = setmetatable({}, {
     end,
 })
 
---- 执行 LSP 命令
+--- 执行工作区级 LSP 命令，可选通过 Trouble 打开结果。
 ---@param opts {command: string, arguments?: any[], open?: boolean, handler?: function}
 function M.execute(opts)
     local params = {
@@ -103,6 +103,7 @@ M.keymaps = {}
 ---@type LazyKeysLspSpec[]|nil
 M.keymaps._keys = {}
 
+--- 为满足过滤条件的 LSP 客户端批量注册按键。
 ---@param filter vim.lsp.get_clients.Filter
 ---@param spec LazyKeysLspSpec[]
 function M.keymaps.set(filter, spec)

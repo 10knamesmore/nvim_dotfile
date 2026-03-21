@@ -18,7 +18,7 @@ local M = setmetatable({}, {
 
 M.formatters = {} ---@type Formatter[]
 
---- 注册格式化器
+--- 注册一个格式化器，并按优先级降序排序。
 ---@param formatter Formatter
 function M.register(formatter)
   M.formatters[#M.formatters + 1] = formatter
@@ -27,7 +27,8 @@ function M.register(formatter)
   end)
 end
 
---- 格式化表达式，用于 vim.opt.formatexpr
+--- 返回当前缓冲区使用的 `formatexpr` 实现。
+---@return string|function
 function M.formatexpr()
   local Util = require("utils")
   if Util.has("conform.nvim") then
@@ -36,7 +37,7 @@ function M.formatexpr()
   return vim.lsp.formatexpr({ timeout_ms = 3000 })
 end
 
---- 解析当前缓冲区可用的格式化器
+--- 解析当前缓冲区可用的格式化器，并标记当前激活项。
 ---@param buf? number
 ---@return (Formatter|{active:boolean,resolved:string[]})[]
 function M.resolve(buf)
@@ -54,7 +55,7 @@ function M.resolve(buf)
   end, M.formatters)
 end
 
---- 显示格式化器信息
+--- 显示当前缓冲区的格式化状态与可用格式化器列表。
 ---@param buf? number
 function M.info(buf)
   buf = buf or vim.api.nvim_get_current_buf()
@@ -89,8 +90,9 @@ function M.info(buf)
   )
 end
 
---- 检查格式化是否启用
+--- 检查指定缓冲区是否启用自动格式化。
 ---@param buf? number
+---@return boolean
 function M.enabled(buf)
   buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
   local gaf = vim.g.autoformat
@@ -105,13 +107,13 @@ function M.enabled(buf)
   return gaf == nil or gaf
 end
 
---- 切换格式化开关
+--- 切换全局或缓冲区级别的格式化开关。
 ---@param buf? boolean
 function M.toggle(buf)
   M.enable(not M.enabled(), buf)
 end
 
---- 启用/禁用格式化
+--- 启用或禁用格式化，并刷新状态提示。
 ---@param enable? boolean
 ---@param buf? boolean
 function M.enable(enable, buf)
@@ -127,7 +129,7 @@ function M.enable(enable, buf)
   M.info()
 end
 
---- 执行格式化
+--- 对目标缓冲区执行格式化。
 ---@param opts? {force?:boolean, buf?:number}
 function M.format(opts)
   opts = opts or {}

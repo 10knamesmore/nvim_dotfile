@@ -3,6 +3,7 @@ local os_utils = require("utils.os")
 
 local M = {}
 
+--- 将字体缩放值裁剪并保留两位小数。
 ---@param scale number
 ---@param min_value number
 ---@param max_value number
@@ -11,6 +12,7 @@ local function normalize_font_scale(scale, min_value, max_value)
     return math_utils.clamp(math_utils.round(scale, 2), min_value, max_value)
 end
 
+--- 配置 Neovide 的字体、动画与缩放快捷键。
 function M.setup()
     local os = os_utils.get_os()
 
@@ -25,6 +27,7 @@ function M.setup()
     local font_scale_max = 2.0
     local font_scale_default = 1.0
 
+    --- 调整当前 Neovide 字体缩放比例。
     ---@param delta number
     local function adjust_font_scale(delta)
         local current = vim.g.neovide_scale_factor or font_scale_default

@@ -1,7 +1,7 @@
 ---@class util.lualine
 local M = {}
 
--- 根据 传入的status, 设置 icon的 hlgroup
+--- 根据状态函数返回值构造带高亮的图标组件。
 ---@param icon string
 ---@param status fun(): nil|"ok"|"error"|"pending"
 function M.status(icon, status)
@@ -23,6 +23,7 @@ function M.status(icon, status)
     }
 end
 
+--- 按指定高亮组包装 lualine 文本片段。
 ---@param component any
 ---@param text string
 ---@param hl_group? string
@@ -54,7 +55,9 @@ function M.format(component, text, hl_group)
     return component:format_hl(lualine_hl_group) .. text .. component:get_default_hl()
 end
 
--- 将路径中的 `~` 替换为用户主目录，并将反斜杠转换为斜杠，最后去除末尾多余的斜杠。
+--- 规范化文件路径，展开 `~` 并统一路径分隔符。
+---@param path string
+---@return string
 function M.norm(path)
     if path:sub(1, 1) == "~" then
         local home = vim.uv.os_homedir()
@@ -67,7 +70,9 @@ function M.norm(path)
     return path:sub(-1) == "/" and path:sub(1, -2) or path
 end
 
+--- 生成用于 lualine 的紧凑路径显示函数。
 ---@param opts? {relative: "cwd"|"root", modified_hl: string?, directory_hl: string?, filename_hl: string?, modified_sign: string?, readonly_icon: string?, length: number?}
+---@return fun(self:any): string
 function M.pretty_path(opts)
     opts = vim.tbl_extend("force", {
         relative = "cwd",

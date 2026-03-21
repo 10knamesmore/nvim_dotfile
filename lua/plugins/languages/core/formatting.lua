@@ -3,6 +3,7 @@
 
 local M = {}
 
+--- 初始化 conform.nvim，并清理不兼容的旧配置项。
 ---@param opts table
 function M.setup(_, opts)
     for _, key in ipairs({ "format_on_save", "format_after_save" }) do

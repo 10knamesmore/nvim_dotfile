@@ -44,6 +44,10 @@ return {
             end
             lint.linters_by_ft = opts.linters_by_ft
 
+            --- 为函数创建防抖包装，避免频繁触发 lint。
+            ---@param ms integer
+            ---@param fn function
+            ---@return function
             function M.debounce(ms, fn)
                 local timer = vim.uv.new_timer()
                 return function(...)
@@ -55,6 +59,7 @@ return {
                 end
             end
 
+            --- 根据当前文件类型解析并执行可用的 linter。
             function M.lint()
                 -- 解析文件类型对应的 linters
                 local names = lint._resolve_linter_by_ft(vim.bo.filetype)

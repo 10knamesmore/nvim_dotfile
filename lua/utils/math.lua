@@ -1,5 +1,6 @@
 local M = {}
 
+--- 按指定精度对数字进行四舍五入。
 ---@param value number
 ---@param precision? integer
 ---@return number
@@ -8,6 +9,7 @@ function M.round(value, precision)
     return math.floor(value * factor + 0.5) / factor
 end
 
+--- 将数值限制在给定区间内。
 ---@param value number
 ---@param min_value number
 ---@param max_value number

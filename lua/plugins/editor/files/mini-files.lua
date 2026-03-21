@@ -3,19 +3,29 @@
 --
 local path_utils = require("utils.path")
 
+--- 显示所有文件系统条目。
+---@param _ fs_entry?
+---@return boolean
 local filter_show = function(_)
     return true
 end
 
+--- 隐藏以 `.` 开头的文件。
+---@param fs_entry fs_entry
+---@return boolean
 local filter_hide = function(fs_entry)
     return not vim.startswith(fs_entry.name, ".")
 end
 
 local root_augroup = vim.api.nvim_create_augroup("MiniFilesTabRoot", { clear = false })
+local transient_mini_files_tabs = {}
 
+--- 在新标签页中打开 mini.files，并为后续进入的文件设置 tab 根目录。
+--- @param tab_id integer
 local set_tab_root_on_file_enter = function(tab_id)
     local autocmd_id
 
+    --- 进入真实文件后更新标签页根目录，并取消临时 mini.files 状态。
     autocmd_id = vim.api.nvim_create_autocmd("BufEnter", {
         group = root_augroup,
         callback = function(args)
@@ -41,21 +51,95 @@ local set_tab_root_on_file_enter = function(tab_id)
                 vim.cmd.tcd(vim.fn.fnameescape(root))
             end
 
+            transient_mini_files_tabs[tab_id] = nil
             pcall(vim.api.nvim_del_autocmd, autocmd_id)
         end,
     })
 end
 
+--- 关闭尚未进入实际文件的临时 mini.files 标签页。
+---@param tab_id integer
+local close_transient_mini_files_tab = function(tab_id)
+    if not transient_mini_files_tabs[tab_id] or not vim.api.nvim_tabpage_is_valid(tab_id) then
+        transient_mini_files_tabs[tab_id] = nil
+        return
+    end
+
+    transient_mini_files_tabs[tab_id] = nil
+    vim.schedule(function()
+        if vim.api.nvim_tabpage_is_valid(tab_id) and #vim.api.nvim_list_tabpages() > 1 then
+            vim.cmd(vim.api.nvim_tabpage_get_number(tab_id) .. "tabclose")
+        end
+    end)
+end
+
+--- 在新标签页中以当前路径为锚点打开 mini.files。
 local open_mini_files_in_new_tab = function()
     local current_path = vim.api.nvim_buf_get_name(0)
     local anchor = current_path ~= "" and current_path or vim.uv.cwd()
 
     vim.cmd.tabnew()
-    set_tab_root_on_file_enter(vim.api.nvim_get_current_tabpage())
+    local tab_id = vim.api.nvim_get_current_tabpage()
+    transient_mini_files_tabs[tab_id] = true
+    set_tab_root_on_file_enter(tab_id)
     require("mini.files").open(anchor, true)
 end
 
+local symlink_target_ns = vim.api.nvim_create_namespace("mini-files-symlink-target")
+
+--- 将主目录前缀折叠为 `~`，便于缩短路径显示。
+---@param path string
+---@return string
+local shorten_home_path = function(path)
+    local home = vim.uv.os_homedir()
+    if not home or home == "" then
+        return path
+    end
+
+    return (path:gsub("^" .. vim.pesc(home), "~/"))
+end
+
+--- 为符号链接返回专用图标，其余条目沿用默认前缀。
+---@param fs_entry { path: string }
+---@return string, string
+local prefix_with_symlink_icon = function(fs_entry)
+    local stat = vim.uv.fs_lstat(fs_entry.path)
+    if stat and stat.type == "link" then
+        return "󰌷 ", "MiniIconsGreen"
+    end
+
+    return MiniFiles.default_prefix(fs_entry)
+end
+
+--- 在 mini.files 行尾渲染符号链接的目标路径。
+---@param buf_id integer
+local show_symlink_targets = function(buf_id)
+    vim.api.nvim_buf_clear_namespace(buf_id, symlink_target_ns, 0, -1)
+
+    for line = 1, vim.api.nvim_buf_line_count(buf_id) do
+        local fs_entry = MiniFiles.get_fs_entry(buf_id, line)
+        if fs_entry then
+            ---@cast fs_entry { path: string }
+            local stat = vim.uv.fs_lstat(fs_entry.path)
+            if stat and stat.type == "link" then
+                local target = vim.uv.fs_readlink(fs_entry.path)
+                if target and target ~= "" then
+                    vim.api.nvim_buf_set_extmark(buf_id, symlink_target_ns, line - 1, 0, {
+                        virt_text = { { "-> " .. shorten_home_path(target), "Comment" } },
+                        virt_text_pos = "eol",
+                    })
+                end
+            end
+        end
+    end
+end
+
+--- 为 mini.files 创建分屏打开映射，并更新目标窗口。
+---@param buf_id integer
+---@param lhs string
+---@param direction string
 local map_split = function(buf_id, lhs, direction)
+    --- 在新分屏中打开当前条目。
     local rhs = function()
         -- Make new window and set it as target
         local cur_target = MiniFiles.get_explorer_state().target_window
@@ -98,7 +182,10 @@ return {
             preview = true,
             width_preview = 80,
         },
-        content = { filter = filter_hide },
+        content = {
+            filter = filter_hide,
+            prefix = prefix_with_symlink_icon,
+        },
         mappings = {
             trim_left = "H",
             trim_right = "L",
@@ -114,13 +201,14 @@ return {
         -- 默认显示
         local show_dotfiles = false
 
+        --- 切换 mini.files 中隐藏文件的显示状态。
         local toggle_dotfiles = function()
             show_dotfiles = not show_dotfiles
             local new_filter = show_dotfiles and filter_show or filter_hide
             require("mini.files").refresh({ content = { filter = new_filter } })
         end
 
-        --- 复制文件名
+        --- 复制光标所在条目的文件名到系统剪贴板。
         local yank_filename = function()
             local filepath = (MiniFiles.get_fs_entry() or {}).path
             if filepath == nil then
@@ -133,7 +221,7 @@ return {
             vim.notify("Yanked filename: " .. filename, vim.log.levels.INFO)
         end
 
-        --- 复制文件路径
+        --- 复制光标所在条目的绝对路径到系统剪贴板。
         local yank_filepath = function()
             local filepath = (MiniFiles.get_fs_entry() or {}).path
             if filepath == nil then
@@ -145,6 +233,7 @@ return {
             vim.notify("Yanked absolute path: " .. filepath, vim.log.levels.INFO)
         end
 
+        --- 在目录缓冲区创建后注册 mini.files 专属按键。
         vim.api.nvim_create_autocmd("User", {
             pattern = "MiniFilesBufferCreate",
             callback = function(args)
@@ -155,6 +244,15 @@ return {
             end,
         })
 
+        --- 在目录缓冲区刷新后重新渲染符号链接目标。
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "MiniFilesBufferUpdate",
+            callback = function(args)
+                show_symlink_targets(args.data.buf_id)
+            end,
+        })
+
+        --- 在 mini.files 重命名后同步 snacks 的文件重命名处理。
         vim.api.nvim_create_autocmd("User", {
             pattern = "MiniFilesActionRename",
             callback = function(event)
@@ -162,6 +260,15 @@ return {
             end,
         })
 
+        --- 关闭未进入实际文件的临时 mini.files 标签页。
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "MiniFilesExplorerClose",
+            callback = function()
+                close_transient_mini_files_tab(vim.api.nvim_get_current_tabpage())
+            end,
+        })
+
+        --- 在 mini.files 窗口打开时应用浮窗样式。
         vim.api.nvim_create_autocmd("User", {
             pattern = "MiniFilesWindowOpen",
             callback = function(args)
@@ -175,6 +282,7 @@ return {
             end,
         })
 
+        --- 在目录缓冲区创建后注册分屏打开快捷键。
         vim.api.nvim_create_autocmd("User", {
             pattern = "MiniFilesBufferCreate",
             callback = function(args)

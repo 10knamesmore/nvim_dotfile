@@ -119,6 +119,7 @@ return {
                 end,
                 vtsls = function(_, opts)
                     if vim.lsp.config.denols and vim.lsp.config.vtsls then
+                        --- 为 denols 与 vtsls 生成互斥的根目录解析逻辑。
                         ---@param server string
                         local resolve = function(server)
                             local markers, root_dir =

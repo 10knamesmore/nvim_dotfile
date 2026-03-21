@@ -1,5 +1,6 @@
 local M = {}
 
+--- 获取当前操作系统的简化标识。
 ---@return "Linux"|"Macos"|"Win"
 function M.get_os()
     local sysname = vim.uv.os_uname().sysname

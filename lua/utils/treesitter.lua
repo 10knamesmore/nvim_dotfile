@@ -7,8 +7,9 @@ local M = {}
 M._installed = nil ---@type table<string,boolean>?
 M._queries = {} ---@type table<string,boolean>
 
---- 获取已安装的 parser 列表
+--- 获取已安装的 Treesitter parser 列表。
 ---@param update boolean?
+---@return table<string, boolean>
 function M.get_installed(update)
   if update then
     M._installed, M._queries = {}, {}
@@ -22,9 +23,10 @@ function M.get_installed(update)
   return M._installed or {}
 end
 
---- 检查是否有特定的 query
+--- 检查某语言是否存在指定 query，并缓存结果。
 ---@param lang string
 ---@param query string
+---@return boolean
 function M.have_query(lang, query)
   local key = lang .. ":" .. query
   if M._queries[key] == nil then
@@ -50,18 +52,20 @@ function M.have(what, query)
   return true
 end
 
---- Treesitter fold 表达式
+--- 返回适用于 `foldexpr` 的 Treesitter 表达式。
+---@return string
 function M.foldexpr()
   return M.have(nil, "folds") and vim.treesitter.foldexpr() or "0"
 end
 
---- Treesitter indent 表达式
+--- 返回适用于 `indentexpr` 的 Treesitter 表达式。
+---@return integer
 function M.indentexpr()
   local ok, TS = pcall(require, "nvim-treesitter")
   return ok and M.have(nil, "indents") and TS.indentexpr() or -1
 end
 
---- 在 Windows 上查找 cl.exe
+--- 在 Windows 环境下查找可用的 `cl.exe`。
 ---@return string?
 local function win_find_cl()
   local path = "C:/Program Files (x86)/Microsoft Visual Studio"
@@ -69,7 +73,7 @@ local function win_find_cl()
   return vim.fn.globpath(path, pattern, true, true)[1]
 end
 
---- 健康检查
+--- 检查 Treesitter 运行依赖是否齐全。
 ---@return boolean ok, table<string,boolean> health
 function M.check()
   local is_win = vim.fn.has("win32") == 1
@@ -100,7 +104,7 @@ function M.check()
   return ok, ret
 end
 
---- 构建 treesitter（检查依赖并执行回调）
+--- 检查依赖后执行 Treesitter 构建回调。
 ---@param cb fun()
 function M.build(cb)
   M.ensure_treesitter_cli(function(ok, err)
@@ -129,7 +133,7 @@ function M.build(cb)
   end)
 end
 
---- 确保 tree-sitter CLI 已安装
+--- 确保 `tree-sitter` CLI 可用，必要时尝试通过 Mason 安装。
 ---@param cb fun(ok:boolean, err?:string)
 function M.ensure_treesitter_cli(cb)
   if vim.fn.executable("tree-sitter") == 1 then

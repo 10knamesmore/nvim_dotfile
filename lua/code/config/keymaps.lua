@@ -1,6 +1,9 @@
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
+--- 生成 VSCode 命令调用表达式。
+---@param command string
+---@return string
 local codeAction = function(command)
     return "<Cmd>lua require('vscode').action('" .. command .. "')<Cr>"
 end
