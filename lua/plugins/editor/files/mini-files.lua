@@ -1,12 +1,58 @@
 -- mini file 文件浏览/管理
 -- <leader>e 打开于当前文件
 --
+local path_utils = require("utils.path")
+
 local filter_show = function(_)
     return true
 end
 
 local filter_hide = function(fs_entry)
     return not vim.startswith(fs_entry.name, ".")
+end
+
+local root_augroup = vim.api.nvim_create_augroup("MiniFilesTabRoot", { clear = false })
+
+local set_tab_root_on_file_enter = function(tab_id)
+    local autocmd_id
+
+    autocmd_id = vim.api.nvim_create_autocmd("BufEnter", {
+        group = root_augroup,
+        callback = function(args)
+            if vim.api.nvim_get_current_tabpage() ~= tab_id then
+                return
+            end
+
+            local buf_id = args.buf
+            local filetype = vim.bo[buf_id].filetype
+            if vim.bo[buf_id].buftype ~= "" or filetype == "minifiles" or filetype == "minifiles-help" then
+                return
+            end
+
+            local filepath = path_utils.bufpath(buf_id)
+            local stat = filepath and vim.uv.fs_stat(filepath) or nil
+            if not stat or stat.type ~= "file" then
+                return
+            end
+
+            local roots = path_utils.detect({ all = false, buf = buf_id })
+            local root = roots[1] and roots[1].paths[1] or vim.fs.dirname(filepath) or vim.uv.cwd()
+            if root and root ~= "" then
+                vim.cmd.tcd(vim.fn.fnameescape(root))
+            end
+
+            pcall(vim.api.nvim_del_autocmd, autocmd_id)
+        end,
+    })
+end
+
+local open_mini_files_in_new_tab = function()
+    local current_path = vim.api.nvim_buf_get_name(0)
+    local anchor = current_path ~= "" and current_path or vim.uv.cwd()
+
+    vim.cmd.tabnew()
+    set_tab_root_on_file_enter(vim.api.nvim_get_current_tabpage())
+    require("mini.files").open(anchor, true)
 end
 
 local map_split = function(buf_id, lhs, direction)
@@ -40,6 +86,11 @@ return {
                 require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
             end,
             desc = "Open mini.files (current file)",
+        },
+        {
+            "<leader>tn",
+            open_mini_files_in_new_tab,
+            desc = "New tab with mini.files",
         },
     },
     opts = {

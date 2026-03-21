@@ -29,6 +29,17 @@ map("n", "<leader>uf", function()
     utils.format.toggle()
 end, { desc = "Toggle Auto Format" })
 
+map("n", "<leader>uh", function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+    local new_enabled = not enabled
+    vim.lsp.inlay_hint.enable(new_enabled, { bufnr = bufnr })
+    vim.api.nvim_echo({
+        { "inlay_hint ", "Normal" },
+        { new_enabled and "ENABLED" or "DISABLED", new_enabled and "DiagnosticOk" or "DiagnosticWarn" },
+    }, false, {})
+end, { desc = "Toggle Inlay Hints" })
+
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -106,3 +117,8 @@ map("n", "<Left>", ":tabprevious<CR>", opts())
 map("n", "<Right>", ":tabNext<CR>", opts())
 map("n", "<Up>", "", opts())
 map("n", "<Down>", "", opts())
+
+-- Tabs
+map("n", "<leader>tl", "<cmd>tabnext<cr>", opts("Next tab"))
+map("n", "<leader>th", "<cmd>tabprevious<cr>", opts("Prev tab"))
+map("n", "<leader>td", "<cmd>tabclose<cr>", opts("Close tab"))
