@@ -12,9 +12,15 @@ return {
         },
         on_attach = function(buffer)
             local gs = require("gitsigns")
+            local gitsigns_cache = require("gitsigns.cache").cache
 
             local function map(mode, l, r, desc)
                 vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
+            end
+
+            local function get_staged_hunks(bufnr)
+                local bcache = gitsigns_cache[bufnr]
+                return bcache and bcache:get_hunks(false, true) or {}
             end
 
             --- @param direction 'first'|'last'|'next'|'prev'
@@ -35,12 +41,19 @@ return {
                     end
                 else
                     local bufnr = vim.api.nvim_get_current_buf()
-                    local hunks = require("gitsigns").get_hunks(bufnr) or {}
-                    if vim.tbl_isempty(hunks) then
+                    local unstaged_hunks = gs.get_hunks(bufnr) or {}
+                    if not vim.tbl_isempty(unstaged_hunks) then
+                        gs.diffthis()
+                        return
+                    end
+
+                    local staged_hunks = get_staged_hunks(bufnr)
+                    if vim.tbl_isempty(staged_hunks) then
                         vim.notify("No changes to diff", vim.log.levels.INFO)
                         return
                     end
-                    require("gitsigns").diffthis("~1")
+
+                    gs.diffthis("HEAD")
                 end
             end, "Diff This")
 
