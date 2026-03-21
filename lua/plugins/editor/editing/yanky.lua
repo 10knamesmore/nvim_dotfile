@@ -39,61 +39,24 @@ return {
                 },
             },
         },
-        keys = {
-            {
-                "<leader>yy",
-                function()
-                    local view = vim.fn.winsaveview()
-                    vim.cmd('normal! ggVG"+y')
-                    vim.fn.winrestview(view)
-                end,
-                desc = "Yank All",
+    },
+    {
+        "10knamesmore/yank-more.nvim",
+        event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+        opts = {
+            highlight = {
+                timer = 150,
             },
-            {
-                "gy",
-                function()
-                    local filepath = vim.api.nvim_buf_get_name(0)
-                    if filepath == "" then
-                        vim.notify("No file path for current buffer", vim.log.levels.WARN)
-                        return
-                    end
-                    local filename = vim.fs.basename(filepath)
-                    vim.fn.setreg("+", filename)
-                    vim.notify("Yanked filename: " .. filename, vim.log.levels.INFO)
-                end,
-                mode = "n",
-                desc = "Yank Filename",
-            },
-            {
-                "gY",
-                function()
-                    local filepath = vim.api.nvim_buf_get_name(0)
-                    if filepath == "" then
-                        vim.notify("No file path for current buffer", vim.log.levels.WARN)
-                        return
-                    end
-                    vim.fn.setreg("+", filepath)
-                    vim.notify("Yanked absolute path: " .. filepath, vim.log.levels.INFO)
-                end,
-                mode = "n",
-                desc = "Yank Absolute Path",
-            },
-            {
-                "<leader>yl",
-                function()
-                    local filepath = vim.api.nvim_buf_get_name(0)
-                    if filepath == "" then
-                        vim.notify("No file path for current buffer", vim.log.levels.WARN)
-                        return
-                    end
-
-                    local line = vim.api.nvim_win_get_cursor(0)[1]
-                    local location = string.format('%s:%d', filepath, line)
-                    vim.fn.setreg("+", location)
-                    vim.notify("Yanked path with line: " .. location, vim.log.levels.INFO)
-                end,
-                mode = "n",
-                desc = "Yank Path:Line",
+            mappings = {
+                yank_filename = { key = "gy", mode = "n" },
+                yank_filepath = { key = "gY", mode = "n" },
+                yank_location = { key = "<leader>yl", mode = { "n", "x" } },
+                yank_all = { key = "<leader>yy", mode = "n" },
+                yank_filepath_and_content = {
+                    key = "<leader>yY",
+                    mode = "n",
+                    desc = "Yank Filepath + Content",
+                },
             },
         },
     },
