@@ -47,6 +47,9 @@ return {
             highlight = {
                 timer = 150,
             },
+            diagnostic = {
+                no_diag_action = "notify", -- "yank" 或 "notify"
+            },
             mappings = {
                 yank_filename = { key = "gy", mode = "n" },
                 yank_filepath = { key = "gY", mode = "n" },
