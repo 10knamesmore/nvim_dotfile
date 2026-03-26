@@ -233,14 +233,27 @@ return {
             vim.notify("Yanked absolute path: " .. filepath, vim.log.levels.INFO)
         end
 
+        --- 为 mini.files 缓冲区补齐专属按键。
+        --- `MiniFilesBufferCreate` 已保证目标就是 mini.files buffer，不依赖 filetype 已就绪。
+        ---@param buf_id integer
+        local set_mini_files_keymaps = function(buf_id)
+            if not vim.api.nvim_buf_is_valid(buf_id) then
+                return
+            end
+
+            vim.keymap.set("n", ".", toggle_dotfiles, { buffer = buf_id, desc = "Toggle hidden files" })
+            vim.keymap.set("n", "gy", yank_filename, { buffer = buf_id, desc = "Yank Filename" })
+            vim.keymap.set("n", "gY", yank_filepath, { buffer = buf_id, desc = "Yank Absolute Path" })
+            map_split(buf_id, "<C-s>", "belowright horizontal")
+            map_split(buf_id, "<C-v>", "belowright vertical")
+        end
+
         --- 在目录缓冲区创建后注册 mini.files 专属按键。
         vim.api.nvim_create_autocmd("User", {
             pattern = "MiniFilesBufferCreate",
             callback = function(args)
                 local buf_id = args.data.buf_id
-                vim.keymap.set("n", ".", toggle_dotfiles, { buffer = buf_id, desc = "Toggle hidden files" })
-                vim.keymap.set("n", "gy", yank_filename, { buffer = buf_id, desc = "Yank Filename" })
-                vim.keymap.set("n", "gY", yank_filepath, { buffer = buf_id, desc = "Yank Absolute Path" })
+                set_mini_files_keymaps(buf_id)
             end,
         })
 
@@ -282,15 +295,5 @@ return {
             end,
         })
 
-        --- 在目录缓冲区创建后注册分屏打开快捷键。
-        vim.api.nvim_create_autocmd("User", {
-            pattern = "MiniFilesBufferCreate",
-            callback = function(args)
-                local buf_id = args.data.buf_id
-                -- Tweak keys to your liking
-                map_split(buf_id, "<C-s>", "belowright horizontal")
-                map_split(buf_id, "<C-v>", "belowright vertical")
-            end,
-        })
     end,
 }
