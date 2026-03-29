@@ -163,6 +163,13 @@ return {
                     desc = "Goto Definition",
                 },
                 {
+                    "gi",
+                    function()
+                        require("telescope.builtin").lsp_implementations()
+                    end,
+                    desc = "Goto Implementations",
+                },
+                {
                     "gr",
                     function()
                         require("telescope.builtin").lsp_references({
