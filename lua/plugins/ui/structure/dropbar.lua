@@ -34,6 +34,9 @@ return {
 
                 return not vim.tbl_contains(ignore_ft, vim.bo[buf].filetype)
             end,
+            pick = {
+                pivots = "asdfghjkl;qwertyuiop"
+            }
         },
         menu = {
             win_configs = {
