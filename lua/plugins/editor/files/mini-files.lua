@@ -248,20 +248,14 @@ return {
             map_split(buf_id, "<C-v>", "belowright vertical")
         end
 
-        --- 在目录缓冲区创建后注册 mini.files 专属按键。
+        --- 在目录缓冲区创建或刷新后注册专属按键并渲染符号链接。
+        --- 同时监听 BufferCreate 和 BufferUpdate，确保导航到已缓存的目录时按键仍可用。
         vim.api.nvim_create_autocmd("User", {
-            pattern = "MiniFilesBufferCreate",
+            pattern = { "MiniFilesBufferCreate", "MiniFilesBufferUpdate" },
             callback = function(args)
                 local buf_id = args.data.buf_id
                 set_mini_files_keymaps(buf_id)
-            end,
-        })
-
-        --- 在目录缓冲区刷新后重新渲染符号链接目标。
-        vim.api.nvim_create_autocmd("User", {
-            pattern = "MiniFilesBufferUpdate",
-            callback = function(args)
-                show_symlink_targets(args.data.buf_id)
+                show_symlink_targets(buf_id)
             end,
         })
 
