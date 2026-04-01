@@ -49,7 +49,7 @@ return {
                     exclude = { "vue" },
                 },
                 codelens = {
-                    enabled = false,
+                    enabled = true,
                 },
                 folds = {
                     enabled = true,
@@ -78,13 +78,14 @@ return {
                                 desc = "Lsp Info",
                             },
                             -- { "<c-k>", function() return vim.lsp.buf.signature_help() end, mode = "i", desc = "Signature Help", has = "signatureHelp" }, //有了pretty hover
-                            {
-                                "<leader>ca",
-                                vim.lsp.buf.code_action,
-                                desc = "Code Action",
-                                mode = { "n", "x" },
-                                has = "codeAction",
-                            },
+                            -- <leader>ca 由 actions-preview.nvim 处理 (codeaction.lua)
+                            -- {
+                            --     "<leader>ca",
+                            --     vim.lsp.buf.code_action,
+                            --     desc = "Code Action",
+                            --     mode = { "n", "x" },
+                            --     has = "codeAction",
+                            -- },
                             {
                                 "<leader>cc",
                                 vim.lsp.codelens.run,
