@@ -214,7 +214,7 @@ return {
                         and vim.bo[buffer].buftype == ""
                         and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
                         and client
-                        and client.supports_method("textDocument/inlayHint", { bufnr = buffer })
+                        and client:supports_method("textDocument/inlayHint")
                     then
                         vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
                     end
